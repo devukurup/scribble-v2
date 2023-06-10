@@ -48,6 +48,12 @@ group :development, :test do
   # For code formatting and linting
   gem "rubocop", require: false
   gem "rubocop-rails", require: false
+
+  # Rails integration for factory_bot, a replacement for fixtures
+  gem "factory_bot_rails"
+
+  # For auto-generating demo data
+  gem "faker"
 end
 
 group :development do
@@ -65,7 +71,8 @@ group :development do
 end
 
 group :test do
-  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
+  # Code coverage analysis tool
+  gem "simplecov", require: false
 end
 
 gem "webpacker"
