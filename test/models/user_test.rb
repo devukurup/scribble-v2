@@ -60,7 +60,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   def test_validation_should_accept_valid_addresses
-    valid_emails = %w[user@example.com USER@example.COM US-ER@example.org first.last@example.in user+one@example.ac.in ]
+    valid_emails = %w[user@example.com USER@example.COM US-ER@example.org first.last@example.in user+one@example.ac.in]
     valid_emails.each do |email|
       @user.email = email
 

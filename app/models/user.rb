@@ -8,11 +8,11 @@ class User < ApplicationRecord
   validates :first_name, presence: true, length: { maximum: MAX_NAME_LENGTH }
   validates :last_name, presence: true, length: { maximum: MAX_NAME_LENGTH }
 
-  before_validation :email_to_lowercase
+  before_validation :email_to_lowercase!
 
   private
 
-    def email_to_lowercase
+    def email_to_lowercase!
       email.downcase!
     end
 end

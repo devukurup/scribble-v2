@@ -20,7 +20,6 @@ def create_sample_data!
 end
 
 def create_user!(options = {})
-  user_attributes = { first_name: "Oliver", last_name: "Smith" }
-  attributes = user_attributes.merge options
-  User.create! attributes
+  user_attributes = { first_name: "Oliver", last_name: "Smith" }.merge options
+  User.create! user_attributes
 end
