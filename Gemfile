@@ -65,7 +65,8 @@ group :development do
 end
 
 group :test do
-  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
+  # Code coverage analysis tool
+  gem "simplecov", require: false
 end
 
 gem "webpacker"
