@@ -60,3 +60,5 @@ group :test do
 end
 
 gem "webpacker"
+
+gem 'react-rails'
