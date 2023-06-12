@@ -8,16 +8,19 @@ export const APP_NAME = "Scribble";
 export const SIDEBAR_NAV_LINKS = [
   {
     label: t("common.articles"),
+    description: t("toolTipContent.articles"),
     to: "/articles",
     icon: Articles,
   },
   {
     label: t("common.settings"),
+    description: t("toolTipContent.settings"),
     to: "/settings",
     icon: Settings,
   },
   {
     label: t("common.preview"),
+    description: t("toolTipContent.preview"),
     to: "/eui",
     icon: ExternalLink,
   },
