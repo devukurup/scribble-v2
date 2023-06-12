@@ -17,7 +17,7 @@ export const SIDEBAR_NAV_LINKS = [
   },
   {
     label: "Preview",
-    to: "/preview",
+    to: "/eui",
     icon: ExternalLink,
   },
 ];
