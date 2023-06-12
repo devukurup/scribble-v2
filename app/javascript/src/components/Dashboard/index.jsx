@@ -1,12 +1,9 @@
 import React from "react";
 
 import { Switch, Route, Redirect } from "react-router-dom";
+import routes from "src/routes";
 
-import {
-  DASHBOARD_ROUTES,
-  DASHBOARD_PATH,
-  ARTICLES_PATH,
-} from "./routeConstants";
+import { DASHBOARD_ROUTES } from "./constants";
 
 import Sidebar from "../commons/Sidebar";
 
@@ -17,7 +14,7 @@ const Dashboard = () => (
       {DASHBOARD_ROUTES.map(({ path, component }) => (
         <Route exact component={component} key={path} path={path} />
       ))}
-      <Redirect from={DASHBOARD_PATH} to={ARTICLES_PATH} />
+      <Redirect from={routes.dashboard} to={routes.articles} />
     </Switch>
   </div>
 );

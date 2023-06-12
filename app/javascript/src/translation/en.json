@@ -3,11 +3,24 @@
     "articles": "Articles",
     "settings": "Settings",
     "preview": "Preview",
-    "appLogo": "App Logo"
+    "appLogo": "App Logo",
+    "categories": "Categories"
   },
-  "toolTipContent": {
-    "articles": "Manage and list all your KB articles",
-    "settings": "Configure KB settings",
-    "preview": "Launch your KB preview"
+  "tooltips": {
+    "manageArticles": "Manage and list all your KB articles",
+    "configureSettings": "Configure KB settings",
+    "launchPreview": "Launch your KB preview"
+  },
+  "statuses": {
+    "all": "All",
+    "published": "Published",
+    "draft": "Draft"
+  },
+  "header": {
+    "articles": {
+      "title": "{{status}} articles",
+      "placeholder": "Search article titles",
+      "buttonLabel": "Add article"
+    }
   }
 }

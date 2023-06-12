@@ -5,22 +5,22 @@ const RANDOM_PROFILE_IMAGE_URL = "https://i.pravatar.cc/300";
 
 export const APP_NAME = "Scribble";
 
-export const SIDEBAR_NAV_LINKS = [
+export const NAV_LINKS = [
   {
     label: t("common.articles"),
-    description: t("toolTipContent.articles"),
+    description: t("tooltips.manageArticles"),
     to: "/articles",
     icon: Articles,
   },
   {
     label: t("common.settings"),
-    description: t("toolTipContent.settings"),
+    description: t("tooltips.configureSettings"),
     to: "/settings",
     icon: Settings,
   },
   {
     label: t("common.preview"),
-    description: t("toolTipContent.preview"),
+    description: t("tooltips.launchPreview"),
     to: "/eui",
     icon: ExternalLink,
   },

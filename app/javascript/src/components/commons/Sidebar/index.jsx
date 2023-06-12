@@ -4,7 +4,7 @@ import AppLogo from "images/AppLogo";
 import { Sidebar as NeetoUISidebar } from "neetoui/layouts";
 import { useTranslation } from "react-i18next";
 
-import { SAMPLE_USER, APP_NAME, SIDEBAR_NAV_LINKS } from "./constants";
+import { SAMPLE_USER, APP_NAME, NAV_LINKS } from "./constants";
 
 const Sidebar = () => {
   const { t } = useTranslation();
@@ -12,7 +12,7 @@ const Sidebar = () => {
   return (
     <NeetoUISidebar
       appName={APP_NAME}
-      navLinks={SIDEBAR_NAV_LINKS}
+      navLinks={NAV_LINKS}
       organizationInfo={{
         name: APP_NAME,
         logo: <img alt={t("common.appLogo")} src={AppLogo} />,
