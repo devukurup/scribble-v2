@@ -1,0 +1,12 @@
+{
+  "common": {
+    "articles": "Articles",
+    "settings": "Settings",
+    "preview": "Preview"
+  },
+  "toolTipContent": {
+    "articles": "Manage and list all your KB articles",
+    "settings": "Configure KB settings",
+    "preview": "Launch your KB preview"
+  }
+}

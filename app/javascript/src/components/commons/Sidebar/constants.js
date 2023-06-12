@@ -1,3 +1,4 @@
+import { t } from "i18next";
 import { Settings, Articles, ExternalLink } from "neetoicons";
 
 const RANDOM_PROFILE_IMAGE_URL = "https://i.pravatar.cc/300";
@@ -6,17 +7,17 @@ export const APP_NAME = "Scribble";
 
 export const SIDEBAR_NAV_LINKS = [
   {
-    label: "Articles",
+    label: t("common.articles"),
     to: "/articles",
     icon: Articles,
   },
   {
-    label: "Settings",
+    label: t("common.settings"),
     to: "/settings",
     icon: Settings,
   },
   {
-    label: "Preview",
+    label: t("common.preview"),
     to: "/eui",
     icon: ExternalLink,
   },

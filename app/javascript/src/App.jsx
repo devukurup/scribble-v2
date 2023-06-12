@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { PageLoader } from "@bigbinary/neetoui";
 import { setAuthHeaders } from "apis/axios";
+import "common/i18n";
 import { initializeLogger } from "common/logger";
 import Dashboard from "components/Dashboard";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
