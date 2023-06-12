@@ -5,16 +5,15 @@ import { Typography } from "neetoui";
 import { MenuBar as NeetoUIMenuBar } from "neetoui/layouts";
 import { useTranslation } from "react-i18next";
 
-import { STATUSES } from "./constants";
+import { STATUSES } from "../constants";
 
-const MenuBar = () => {
-  const [activeStatus, setActiveStatus] = useState(STATUSES[0].label);
-  const [isSearchCollapsed, setIsSearchCollapsed] = useState(false);
+const MenuBar = ({ activeStatus, setActiveStatus, isMenuBarOpen }) => {
+  const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
 
   const { t } = useTranslation();
 
   return (
-    <NeetoUIMenuBar showMenu title={t("common.articles")}>
+    <NeetoUIMenuBar showMenu={isMenuBarOpen} title={t("common.articles")}>
       {STATUSES.map(({ label, count }) => (
         <NeetoUIMenuBar.Block
           active={activeStatus === label}

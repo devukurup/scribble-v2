@@ -15,5 +15,10 @@
     "all": "All",
     "published": "Published",
     "draft": "Draft"
+  },
+  "header": {
+    "title": "{{status}} articles",
+    "placeholder": "Search article titles",
+    "buttonLabel": "Add article"
   }
 }
