@@ -2,17 +2,17 @@ import { t } from "i18next";
 
 export const STATUSES = [
   {
-    label: t("status.all"),
+    label: t("statuses.all"),
     active: true,
     count: 10,
   },
   {
-    label: t("status.published"),
+    label: t("statuses.published"),
     active: false,
     count: 20,
   },
   {
-    label: t("status.draft"),
+    label: t("statuses.draft"),
     active: false,
     count: 30,
   },

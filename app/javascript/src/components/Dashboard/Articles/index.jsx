@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Button } from "@bigbinary/neetoui";
+import { Button } from "neetoui";
 import { Header } from "neetoui/layouts";
 import { useTranslation } from "react-i18next";
 
@@ -23,10 +23,10 @@ const Articles = () => {
       />
       <div className="mx-4 w-full">
         <Header
-          title={t("header.title", { status: activeStatus })}
+          title={t("header.articles.title", { status: activeStatus })}
           actionBlock={
             <Button
-              label={t("header.buttonLabel")}
+              label={t("header.articles.buttonLabel")}
               size="small"
               onClick={() => {}}
             />
@@ -37,7 +37,7 @@ const Articles = () => {
           searchProps={{
             value: searchTerm,
             onChange: event => setSearchTerm(event.target.value),
-            placeholder: t("header.placeholder"),
+            placeholder: t("header.articles.placeholder"),
           }}
         />
       </div>
