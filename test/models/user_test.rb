@@ -48,7 +48,7 @@ class UserTest < ActiveSupport::TestCase
     @user.save!
     test_user = @user.dup
 
-    assert test_user.invalid?
+    assert_not test_user.valid?
     assert_includes test_user.errors.full_messages, "Email has already been taken"
   end
 
@@ -74,7 +74,7 @@ fishy+#.com]
     invalid_emails.each do |email|
       @user.email = email
 
-      assert @user.invalid?
+      assert_not @user.valid?
       assert_includes @user.errors.full_messages, "Email is invalid"
     end
   end
