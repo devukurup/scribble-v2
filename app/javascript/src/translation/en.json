@@ -2,7 +2,8 @@
   "common": {
     "articles": "Articles",
     "settings": "Settings",
-    "preview": "Preview"
+    "preview": "Preview",
+    "appLogo": "App Logo"
   },
   "toolTipContent": {
     "articles": "Manage and list all your KB articles",
