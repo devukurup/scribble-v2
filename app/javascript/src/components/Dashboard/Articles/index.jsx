@@ -1,5 +1,7 @@
 import React from "react";
 
-const Articles = () => <div>Articles</div>;
+import MenuBar from "./MenuBar";
+
+const Articles = () => <MenuBar />;
 
 export default Articles;

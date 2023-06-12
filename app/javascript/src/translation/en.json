@@ -3,11 +3,17 @@
     "articles": "Articles",
     "settings": "Settings",
     "preview": "Preview",
-    "appLogo": "App Logo"
+    "appLogo": "App Logo",
+    "categories": "Categories"
   },
   "toolTipContent": {
     "articles": "Manage and list all your KB articles",
     "settings": "Configure KB settings",
     "preview": "Launch your KB preview"
+  },
+  "status": {
+    "all": "All",
+    "published": "Published",
+    "draft": "Draft"
   }
 }
