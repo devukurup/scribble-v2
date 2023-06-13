@@ -3,4 +3,5 @@
 class ApplicationController < ActionController::Base
   include ApiResponders
   include ApiExceptions
+  include LoadUser
 end
