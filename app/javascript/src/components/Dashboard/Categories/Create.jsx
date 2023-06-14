@@ -10,9 +10,9 @@ import Form from "./Form";
 const Create = ({ isOpen, refetch, onClose }) => {
   const { t } = useTranslation();
 
-  const handleSubmit = async values => {
+  const handleSubmit = async ({ title }) => {
     try {
-      await categoriesApi.create(values);
+      await categoriesApi.create({ title: title.trim() });
       refetch();
       onClose();
     } catch (err) {

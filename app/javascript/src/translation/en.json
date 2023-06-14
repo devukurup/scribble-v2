@@ -5,7 +5,8 @@
     "preview": "Preview",
     "appLogo": "App Logo",
     "categories": "Categories",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "title": "Title"
   },
   "tooltips": {
     "manageArticles": "Manage and list all your KB articles",
@@ -31,5 +32,10 @@
     "inputLabel": "Category title",
     "addButtonLabel": "Add",
     "placeholder": "Enter category title here."
+  },
+  "validations": {
+    "required": "{{field}} is required",
+    "maximumLength": "{{field}} shouldn't exceed the maximum limit",
+    "invalidPattern": "Enter a valid {{field}}"
   }
 }

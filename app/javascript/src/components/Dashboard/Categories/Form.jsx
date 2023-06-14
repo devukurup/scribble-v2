@@ -5,18 +5,21 @@ import { Button, Modal } from "neetoui";
 import { Input } from "neetoui/formik";
 import { useTranslation } from "react-i18next";
 
-import { VALIDATION_SCHEMA } from "./constants";
+import { INITIAL_TOUCHED, VALIDATION_SCHEMA } from "./constants";
 
 const Form = ({ initialValues, onClose, handleSubmit }) => {
   const { t } = useTranslation();
 
   return (
     <Formik
+      validateOnBlur
+      validateOnChange
+      initialTouched={INITIAL_TOUCHED}
       initialValues={initialValues}
       validationSchema={VALIDATION_SCHEMA}
       onSubmit={handleSubmit}
     >
-      {({ isSubmitting }) => (
+      {({ isSubmitting, isValid, dirty }) => (
         <FormikForm noValidate>
           <Modal.Body className="space-y-2">
             <Input
@@ -28,7 +31,7 @@ const Form = ({ initialValues, onClose, handleSubmit }) => {
           </Modal.Body>
           <Modal.Footer className="space-x-2">
             <Button
-              disabled={isSubmitting}
+              disabled={isSubmitting || !isValid || !dirty}
               label={t("category.addButtonLabel")}
               type="submit"
             />
