@@ -6,7 +6,8 @@
     "appLogo": "App Logo",
     "categories": "Categories",
     "cancel": "Cancel",
-    "title": "Title"
+    "title": "Title",
+    "defaultError": "Something went wrong!"
   },
   "tooltips": {
     "manageArticles": "Manage and list all your KB articles",

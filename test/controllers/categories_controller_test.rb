@@ -25,8 +25,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     put category_path(@category.id), params: category_params, headers: headers()
 
     assert_response :success
-    @category.reload
-    assert_equal @category.title, category_params[:category][:title]
+    assert_equal @category.reload.title, category_params[:category][:title]
   end
 
   private

@@ -24,6 +24,6 @@ class CategoriesController < ApplicationController
     end
 
     def load_category!
-      @category = Category.find_by!(id: params[:id])
+      @category = Category.find(params[:id])
     end
 end
