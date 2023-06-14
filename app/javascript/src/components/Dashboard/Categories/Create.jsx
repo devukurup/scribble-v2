@@ -15,8 +15,8 @@ const Create = ({ isOpen, refetch, onClose }) => {
       await categoriesApi.create({ title: title.trim() });
       refetch();
       onClose();
-    } catch (err) {
-      logger.error(err);
+    } catch (error) {
+      logger.error(error);
     }
   };
 

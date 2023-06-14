@@ -5,6 +5,8 @@ import { Typography } from "neetoui";
 import { MenuBar as NeetoUIMenuBar } from "neetoui/layouts";
 import { useTranslation } from "react-i18next";
 
+import Categories from "./Categories";
+
 import { STATUSES } from "../constants";
 
 const MenuBar = ({
@@ -12,6 +14,9 @@ const MenuBar = ({
   setActiveStatus,
   isMenuBarOpen,
   setIsCreateModalOpen,
+  isCategoriesLoading,
+  categories,
+  fetchCategories,
 }) => {
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
 
@@ -53,6 +58,11 @@ const MenuBar = ({
       <NeetoUIMenuBar.Search
         collapse={isSearchCollapsed}
         onCollapse={() => setIsSearchCollapsed(true)}
+      />
+      <Categories
+        categories={categories}
+        fetchCategories={fetchCategories}
+        isLoading={isCategoriesLoading}
       />
     </NeetoUIMenuBar>
   );
