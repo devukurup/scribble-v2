@@ -4,7 +4,8 @@
     "settings": "Settings",
     "preview": "Preview",
     "appLogo": "App Logo",
-    "categories": "Categories"
+    "categories": "Categories",
+    "cancel": "Cancel"
   },
   "tooltips": {
     "manageArticles": "Manage and list all your KB articles",
@@ -22,5 +23,13 @@
       "placeholder": "Search article titles",
       "buttonLabel": "Add article"
     }
+  },
+  "category": {
+    "saveChanges": "Save changes",
+    "add": "New category",
+    "edit": "Edit category",
+    "inputLabel": "Category title",
+    "addButtonLabel": "Add",
+    "placeholder": "Enter category title here."
   }
 }

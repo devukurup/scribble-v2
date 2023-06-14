@@ -7,7 +7,12 @@ import { useTranslation } from "react-i18next";
 
 import { STATUSES } from "../constants";
 
-const MenuBar = ({ activeStatus, setActiveStatus, isMenuBarOpen }) => {
+const MenuBar = ({
+  activeStatus,
+  setActiveStatus,
+  isMenuBarOpen,
+  setIsCreateModalOpen,
+}) => {
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
 
   const { t } = useTranslation();
@@ -32,7 +37,7 @@ const MenuBar = ({ activeStatus, setActiveStatus, isMenuBarOpen }) => {
           },
           {
             icon: Plus,
-            onClick: () => {},
+            onClick: () => setIsCreateModalOpen(true),
           },
         ]}
       >

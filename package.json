@@ -46,7 +46,8 @@
     "react-router-nav-prompt": "0.4.1",
     "react-toastify": "9.0.1",
     "react_ujs": "^2.7.1",
-    "tailwindcss": "1.9.6"
+    "tailwindcss": "1.9.6",
+    "yup": "^1.2.0"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.22.5",

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+import CreateCategory from "Dashboard/Categories/Create";
 import { Button } from "neetoui";
 import { Header } from "neetoui/layouts";
 import { useTranslation } from "react-i18next";
@@ -11,6 +12,7 @@ const Articles = () => {
   const [activeStatus, setActiveStatus] = useState(STATUSES[0].label);
   const [isMenuBarOpen, setIsMenuBarOpen] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
   const { t } = useTranslation();
 
@@ -20,6 +22,7 @@ const Articles = () => {
         activeStatus={activeStatus}
         isMenuBarOpen={isMenuBarOpen}
         setActiveStatus={setActiveStatus}
+        setIsCreateModalOpen={setIsCreateModalOpen}
       />
       <div className="mx-4 w-full">
         <Header
@@ -41,6 +44,11 @@ const Articles = () => {
           }}
         />
       </div>
+      <CreateCategory
+        isOpen={isCreateModalOpen}
+        refetch={() => {}}
+        onClose={() => setIsCreateModalOpen(false)}
+      />
     </>
   );
 };

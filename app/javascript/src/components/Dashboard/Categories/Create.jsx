@@ -1,0 +1,37 @@
+import React from "react";
+
+import categoriesApi from "apis/categories";
+import { Typography, Modal } from "neetoui";
+import { useTranslation } from "react-i18next";
+
+import { INITIAL_VALUES } from "./constants";
+import Form from "./Form";
+
+const Create = ({ isOpen, refetch, onClose }) => {
+  const { t } = useTranslation();
+
+  const handleSubmit = async values => {
+    try {
+      await categoriesApi.create(values);
+      refetch();
+      onClose();
+    } catch (err) {
+      logger.error(err);
+    }
+  };
+
+  return (
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal.Header>
+        <Typography style="h2">{t("category.add")}</Typography>
+      </Modal.Header>
+      <Form
+        handleSubmit={handleSubmit}
+        initialValues={INITIAL_VALUES}
+        onClose={onClose}
+      />
+    </Modal>
+  );
+};
+
+export default Create;
