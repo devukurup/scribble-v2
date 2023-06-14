@@ -27,3 +27,14 @@ class ActiveSupport::TestCase
   # Run tests in parallel with specified workers
   parallelize(workers: :number_of_processors) unless ENV["COVERAGE"]
 end
+
+def headers(options = {})
+  {
+    Accept: "application/json",
+    "Content_Type" => "application/json"
+  }.merge(options)
+end
+
+def response_json
+  response.parsed_body
+end

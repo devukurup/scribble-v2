@@ -4,7 +4,9 @@
     "settings": "Settings",
     "preview": "Preview",
     "appLogo": "App Logo",
-    "categories": "Categories"
+    "categories": "Categories",
+    "cancel": "Cancel",
+    "title": "Title"
   },
   "tooltips": {
     "manageArticles": "Manage and list all your KB articles",
@@ -22,5 +24,18 @@
       "placeholder": "Search article titles",
       "buttonLabel": "Add article"
     }
+  },
+  "category": {
+    "saveChanges": "Save changes",
+    "add": "New category",
+    "edit": "Edit category",
+    "inputLabel": "Category title",
+    "addButtonLabel": "Add",
+    "placeholder": "Enter category title here."
+  },
+  "validations": {
+    "required": "{{field}} is required",
+    "maximumLength": "{{field}} shouldn't exceed the maximum limit",
+    "invalidPattern": "Enter a valid {{field}}"
   }
 }

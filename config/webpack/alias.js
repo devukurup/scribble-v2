@@ -7,6 +7,7 @@ module.exports = {
       neetoui: "@bigbinary/neetoui",
       neetoicons: "@bigbinary/neeto-icons",
       images: "src/assets/images",
+      Dashboard: "src/components/Dashboard",
     },
   },
 };

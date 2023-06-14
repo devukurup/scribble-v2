@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import categoriesApi from "apis/categories";
+import CreateCategory from "Dashboard/Categories/Create";
 import { Button } from "neetoui";
 import { Header } from "neetoui/layouts";
 import { useTranslation } from "react-i18next";
@@ -11,15 +13,36 @@ const Articles = () => {
   const [activeStatus, setActiveStatus] = useState(STATUSES[0].label);
   const [isMenuBarOpen, setIsMenuBarOpen] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [isCategoriesLoading, setIsCategoriesLoading] = useState(false);
 
   const { t } = useTranslation();
+
+  const fetchCategories = async () => {
+    try {
+      setIsCategoriesLoading(true);
+      const {
+        data: { categories },
+      } = await categoriesApi.list();
+      setCategories(categories);
+    } catch (error) {
+      logger.error(error);
+    } finally {
+      setIsCategoriesLoading(false);
+    }
+  };
 
   return (
     <>
       <MenuBar
         activeStatus={activeStatus}
+        categories={categories}
+        fetchCategories={fetchCategories}
+        isCategoriesLoading={isCategoriesLoading}
         isMenuBarOpen={isMenuBarOpen}
         setActiveStatus={setActiveStatus}
+        setIsCreateModalOpen={setIsCreateModalOpen}
       />
       <div className="mx-4 w-full">
         <Header
@@ -41,6 +64,11 @@ const Articles = () => {
           }}
         />
       </div>
+      <CreateCategory
+        isOpen={isCreateModalOpen}
+        refetch={fetchCategories}
+        onClose={() => setIsCreateModalOpen(false)}
+      />
     </>
   );
 };

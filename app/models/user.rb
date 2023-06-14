@@ -4,6 +4,8 @@ class User < ApplicationRecord
   MAX_NAME_LENGTH = 50
   VALID_EMAIL_REGEX = /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
 
+  has_many :categories
+
   validates :email, presence: true, uniqueness: true, format: { with: VALID_EMAIL_REGEX }
   validates :first_name, presence: true, length: { maximum: MAX_NAME_LENGTH }
   validates :last_name, presence: true, length: { maximum: MAX_NAME_LENGTH }
