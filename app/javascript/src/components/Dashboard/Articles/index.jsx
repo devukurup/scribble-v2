@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import categoriesApi from "apis/categories";
 import CreateCategory from "Dashboard/Categories/Create";
+import useDebounce from "hooks/useDebounce";
 import { Button } from "neetoui";
 import { Header } from "neetoui/layouts";
 import { useTranslation } from "react-i18next";
@@ -16,6 +17,8 @@ const Articles = () => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [isCategoriesLoading, setIsCategoriesLoading] = useState(false);
+  const [categorySearchTerm, setCategorySearchTerm] = useState("");
+  const debouncedCategorySearchTerm = useDebounce(categorySearchTerm);
 
   const { t } = useTranslation();
 
@@ -24,7 +27,7 @@ const Articles = () => {
       setIsCategoriesLoading(true);
       const {
         data: { categories },
-      } = await categoriesApi.list();
+      } = await categoriesApi.list({ searchTerm: categorySearchTerm.trim() });
       setCategories(categories);
     } catch (error) {
       logger.error(error);
@@ -38,11 +41,14 @@ const Articles = () => {
       <MenuBar
         activeStatus={activeStatus}
         categories={categories}
+        debouncedSearchTerm={debouncedCategorySearchTerm}
         fetchCategories={fetchCategories}
         isCategoriesLoading={isCategoriesLoading}
         isMenuBarOpen={isMenuBarOpen}
+        searchTerm={categorySearchTerm}
         setActiveStatus={setActiveStatus}
         setIsCreateModalOpen={setIsCreateModalOpen}
+        setSearchTerm={setCategorySearchTerm}
       />
       <div className="mx-4 w-full">
         <Header

@@ -6,7 +6,8 @@
     "appLogo": "App Logo",
     "categories": "Categories",
     "cancel": "Cancel",
-    "title": "Title"
+    "title": "Title",
+    "defaultError": "Something went wrong!"
   },
   "tooltips": {
     "manageArticles": "Manage and list all your KB articles",
@@ -31,7 +32,8 @@
     "edit": "Edit category",
     "inputLabel": "Category title",
     "addButtonLabel": "Add",
-    "placeholder": "Enter category title here."
+    "placeholder": "Enter category title here.",
+    "empty": "No categories found!"
   },
   "validations": {
     "required": "{{field}} is required",

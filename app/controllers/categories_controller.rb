@@ -4,7 +4,7 @@ class CategoriesController < ApplicationController
   before_action :load_category!, only: %i[update]
 
   def index
-    @categories = current_user.categories
+    @categories = current_user.categories.where("title ILIKE ?", "%#{params[:search_term]}%")
   end
 
   def create
@@ -24,6 +24,6 @@ class CategoriesController < ApplicationController
     end
 
     def load_category!
-      @category = Category.find_by!(id: params[:id])
+      @category = Category.find(params[:id])
     end
 end

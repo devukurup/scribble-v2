@@ -17,10 +17,18 @@ const MenuBar = ({
   isCategoriesLoading,
   categories,
   fetchCategories,
+  searchTerm,
+  setSearchTerm,
+  debouncedSearchTerm,
 }) => {
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
 
   const { t } = useTranslation();
+
+  const handleClose = () => {
+    setSearchTerm("");
+    setIsSearchCollapsed(true);
+  };
 
   return (
     <NeetoUIMenuBar showMenu={isMenuBarOpen} title={t("common.articles")}>
@@ -56,11 +64,15 @@ const MenuBar = ({
         </Typography>
       </NeetoUIMenuBar.SubTitle>
       <NeetoUIMenuBar.Search
+        autoFocus
         collapse={isSearchCollapsed}
-        onCollapse={() => setIsSearchCollapsed(true)}
+        value={searchTerm}
+        onChange={event => setSearchTerm(event.target.value)}
+        onCollapse={handleClose}
       />
       <Categories
         categories={categories}
+        debouncedSearchTerm={debouncedSearchTerm}
         fetchCategories={fetchCategories}
         isLoading={isCategoriesLoading}
       />

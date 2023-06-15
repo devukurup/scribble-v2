@@ -4,11 +4,12 @@ require "test_helper"
 
 class CategoriesControllerTest < ActionDispatch::IntegrationTest
   def setup
-    @category = create(:category)
+    @user = create(:user)
+    @category = create(:category, user: @user)
   end
 
   def test_should_list_all_categories
-    get categories_path, headers: headers()
+    get categories_path, headers: headers(), params: search_params
 
     assert_response :success
     assert Category.count, response_json["categories"].count
@@ -25,8 +26,15 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     put category_path(@category.id), params: category_params, headers: headers()
 
     assert_response :success
-    @category.reload
-    assert_equal @category.title, category_params[:category][:title]
+    assert_equal @category.reload.title, category_params[:category][:title]
+  end
+
+  def test_search_term_should_filter_categories
+    test_category = create(:category, user: @user)
+    get categories_path, headers: headers(), params: search_params(test_category.title)
+
+    assert_response :success
+    assert 1, response_json["categories"].count
   end
 
   private
@@ -36,6 +44,12 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
         category: {
           title: "test_title"
         }
+      }
+    end
+
+    def search_params(search_term = "")
+      {
+        search_term:
       }
     end
 end

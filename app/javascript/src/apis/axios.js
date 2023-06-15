@@ -1,9 +1,8 @@
 import axios from "axios";
+import { t } from "i18next";
 import { Toastr } from "neetoui";
 
 axios.defaults.baseURL = "/";
-
-const DEFAULT_ERROR_NOTIFICATION = "Something went wrong!";
 
 const setAuthHeaders = (setIsLoading = () => null) => {
   axios.defaults.headers = {
@@ -29,15 +28,12 @@ const handleSuccessResponse = response => {
 
 const handleErrorResponse = axiosErrorObject => {
   const error = axiosErrorObject.response.data.error;
-  Toastr.error(Error(error || DEFAULT_ERROR_NOTIFICATION));
+  Toastr.error(Error(error || t("common.defaultError")));
 
   return Promise.reject(axiosErrorObject);
 };
 
-const registerIntercepts = () => {
-  axios.interceptors.response.use(handleSuccessResponse, error =>
-    handleErrorResponse(error)
-  );
-};
+const registerIntercepts = () =>
+  axios.interceptors.response.use(handleSuccessResponse, handleErrorResponse);
 
 export { setAuthHeaders, registerIntercepts };
