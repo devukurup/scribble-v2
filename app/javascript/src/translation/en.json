@@ -7,7 +7,11 @@
     "categories": "Categories",
     "cancel": "Cancel",
     "title": "Title",
-    "defaultError": "Something went wrong!"
+    "defaultError": "Something went wrong!",
+    "general": "General",
+    "redirections": "Redirections",
+    "security": "Security",
+    "manageCategories": "Manage Categories"
   },
   "tooltips": {
     "manageArticles": "Manage and list all your KB articles",
@@ -39,5 +43,11 @@
     "required": "{{field}} is required",
     "maximumLength": "{{field}} shouldn't exceed the maximum limit",
     "invalidPattern": "Enter a valid {{field}}"
+  },
+  "settingsDescription": {
+    "general": "Configure general settings of your EUI.",
+    "redirections": "Create and configure redirection rules.",
+    "security": "Secure knowledge base.",
+    "manageCategories": "Edit and reorder KB structure."
   }
 }
