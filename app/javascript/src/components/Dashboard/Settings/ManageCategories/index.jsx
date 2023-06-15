@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 
+import Create from "Dashboard/Categories/Create";
 import { Plus } from "neetoicons";
 import { Button, Typography } from "neetoui";
 import { useTranslation } from "react-i18next";
 
 const ManageCategories = () => {
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+
   const { t } = useTranslation();
 
   return (
@@ -39,8 +42,14 @@ const ManageCategories = () => {
           label={t("category.add")}
           size="medium"
           style="link"
+          onClick={() => setIsCreateModalOpen(true)}
         />
       </div>
+      <Create
+        isOpen={isCreateModalOpen}
+        refetch={() => {}}
+        onClose={() => setIsCreateModalOpen(false)}
+      />
     </div>
   );
 };
