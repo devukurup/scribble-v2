@@ -17,6 +17,9 @@ const MenuBar = ({
   isCategoriesLoading,
   categories,
   fetchCategories,
+  searchTerm,
+  setSearchTerm,
+  debouncedSearchTerm,
 }) => {
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
 
@@ -57,10 +60,13 @@ const MenuBar = ({
       </NeetoUIMenuBar.SubTitle>
       <NeetoUIMenuBar.Search
         collapse={isSearchCollapsed}
+        value={searchTerm}
+        onChange={event => setSearchTerm(event.target.value)}
         onCollapse={() => setIsSearchCollapsed(true)}
       />
       <Categories
         categories={categories}
+        debouncedSearchTerm={debouncedSearchTerm}
         fetchCategories={fetchCategories}
         isLoading={isCategoriesLoading}
       />

@@ -5,7 +5,12 @@ import { MenuBar } from "neetoui/layouts";
 
 import { isCategoryPresent, removeCategory } from "./utils";
 
-const Categories = ({ isLoading, categories, fetchCategories }) => {
+const Categories = ({
+  isLoading,
+  categories,
+  fetchCategories,
+  debouncedSearchTerm,
+}) => {
   const [selectedCategories, setSelectedCategories] = useState([]);
 
   const handleCategoryClick = category => {
@@ -28,7 +33,7 @@ const Categories = ({ isLoading, categories, fetchCategories }) => {
 
   useEffect(() => {
     fetchCategories();
-  }, []);
+  }, [debouncedSearchTerm]);
 
   if (isLoading) {
     return <Spinner />;
