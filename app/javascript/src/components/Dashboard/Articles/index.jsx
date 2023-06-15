@@ -27,7 +27,7 @@ const Articles = () => {
       setIsCategoriesLoading(true);
       const {
         data: { categories },
-      } = await categoriesApi.list({ searchTerm: categorySearchTerm });
+      } = await categoriesApi.list({ searchTerm: categorySearchTerm.trim() });
       setCategories(categories);
     } catch (error) {
       logger.error(error);

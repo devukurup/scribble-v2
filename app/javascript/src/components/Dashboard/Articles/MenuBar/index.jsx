@@ -25,6 +25,11 @@ const MenuBar = ({
 
   const { t } = useTranslation();
 
+  const handleClose = () => {
+    setSearchTerm("");
+    setIsSearchCollapsed(true);
+  };
+
   return (
     <NeetoUIMenuBar showMenu={isMenuBarOpen} title={t("common.articles")}>
       {STATUSES.map(({ label, count }) => (
@@ -59,10 +64,11 @@ const MenuBar = ({
         </Typography>
       </NeetoUIMenuBar.SubTitle>
       <NeetoUIMenuBar.Search
+        autoFocus
         collapse={isSearchCollapsed}
         value={searchTerm}
         onChange={event => setSearchTerm(event.target.value)}
-        onCollapse={() => setIsSearchCollapsed(true)}
+        onCollapse={handleClose}
       />
       <Categories
         categories={categories}

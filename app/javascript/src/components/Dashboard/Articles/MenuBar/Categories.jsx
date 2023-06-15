@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 
-import { Spinner } from "neetoui";
+import { Spinner, Typography } from "neetoui";
 import { MenuBar } from "neetoui/layouts";
+import { useTranslation } from "react-i18next";
+import { isPresent } from "utils";
 
 import { isCategoryPresent, removeCategory } from "./utils";
 
@@ -12,6 +14,8 @@ const Categories = ({
   debouncedSearchTerm,
 }) => {
   const [selectedCategories, setSelectedCategories] = useState([]);
+
+  const { t } = useTranslation();
 
   const handleCategoryClick = category => {
     if (
@@ -36,7 +40,19 @@ const Categories = ({
   }, [debouncedSearchTerm]);
 
   if (isLoading) {
-    return <Spinner />;
+    return (
+      <div className="flex w-full justify-center">
+        <Spinner />
+      </div>
+    );
+  }
+
+  if (!isPresent(categories)) {
+    return (
+      <Typography className="flex justify-center" style="body2">
+        {t("category.empty")}
+      </Typography>
+    );
   }
 
   return (
