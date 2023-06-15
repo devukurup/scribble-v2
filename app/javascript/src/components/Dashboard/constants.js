@@ -9,7 +9,7 @@ export const DASHBOARD_ROUTES = [
     component: Articles,
   },
   {
-    path: routes.settings,
+    path: routes.settings.index,
     component: Settings,
   },
   {

@@ -12,7 +12,7 @@ const Dashboard = () => (
     <Sidebar />
     <Switch>
       {DASHBOARD_ROUTES.map(({ path, component }) => (
-        <Route exact component={component} key={path} path={path} />
+        <Route component={component} key={path} path={path} />
       ))}
       <Redirect from={routes.dashboard} to={routes.articles} />
     </Switch>
