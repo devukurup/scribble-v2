@@ -49,5 +49,12 @@
     "redirections": "Create and configure redirection rules.",
     "security": "Secure knowledge base.",
     "manageCategories": "Edit and reorder KB structure."
+  },
+  "settings": {
+    "manageCategories": {
+      "title": " Manage categories",
+      "description": "Create and configure the categories inside your scribble.",
+      "count": "{{count}} categories"
+    }
   }
 }
