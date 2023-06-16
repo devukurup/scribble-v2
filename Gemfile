@@ -77,6 +77,6 @@ group :test do
   gem "simplecov", require: false
 end
 
-gem "webpacker"
+gem "shakapacker"
 
 gem "react-rails"
