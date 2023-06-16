@@ -80,3 +80,6 @@ end
 gem "shakapacker"
 
 gem "react-rails"
+
+# For sorting and reordering objects
+gem "acts_as_list"
