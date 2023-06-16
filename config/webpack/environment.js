@@ -1,7 +1,36 @@
-const { environment } = require("@rails/webpacker");
+const { webpackConfig, merge } = require("shakapacker");
+const webpack = require("webpack");
 
-const aliasConfig = require("./alias");
+const customizeWebpackDefaultRules = require("./helpers/customize-default-rules");
+const resolve = require("./resolve");
+const rules = require("./rules");
 
-environment.config.merge(aliasConfig);
+const commonOptions = {
+  infrastructureLogging: {
+    level: "warn",
+  },
+  resolve,
+  module: {
+    rules,
+  },
+  plugins: [
+    new webpack.ProvidePlugin({
+      process: "process/browser",
+    }),
+  ],
+};
 
-module.exports = environment;
+// This rule is causing issues to react-svg-loader
+const defaultRules = {
+  "asset/resource": {
+    test: /\.(bmp|gif|jpe?g|png|tiff|ico|avif|webp|eot|otf|ttf|woff|woff2)$/,
+  },
+};
+
+const customWebpackConfig = customizeWebpackDefaultRules(
+  webpackConfig,
+  defaultRules
+);
+
+const commonWebpackConfig = () => merge({}, customWebpackConfig, commonOptions);
+module.exports = commonWebpackConfig;
