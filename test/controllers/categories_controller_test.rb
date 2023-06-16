@@ -37,6 +37,14 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert 1, response_json["categories"].count
   end
 
+  def test_should_reoder_category_positions
+    category_2 = create(:category, user: @user)
+    put category_path(category_2.id), params: position_params, headers: headers()
+
+    assert_response :success
+    assert 2, @category.reload.position
+  end
+
   private
 
     def category_params
@@ -50,6 +58,14 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     def search_params(search_term = "")
       {
         search_term:
+      }
+    end
+
+    def position_params
+      {
+        category: {
+          position: 1
+        }
       }
     end
 end
