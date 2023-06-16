@@ -11,7 +11,9 @@
     "general": "General",
     "redirections": "Redirections",
     "security": "Security",
-    "manageCategories": "Manage Categories"
+    "manageCategories": "Manage Categories",
+    "edit": "Edit",
+    "delete": "Delete"
   },
   "tooltips": {
     "manageArticles": "Manage and list all your KB articles",

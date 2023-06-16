@@ -5,6 +5,8 @@ import { Plus } from "neetoicons";
 import { Button, Typography } from "neetoui";
 import { useTranslation } from "react-i18next";
 
+import List from "./List";
+
 const ManageCategories = () => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
@@ -45,6 +47,7 @@ const ManageCategories = () => {
           onClick={() => setIsCreateModalOpen(true)}
         />
       </div>
+      <List />
       <Create
         isOpen={isCreateModalOpen}
         refetch={() => {}}
