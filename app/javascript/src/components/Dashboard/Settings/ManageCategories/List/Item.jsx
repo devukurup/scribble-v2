@@ -6,7 +6,8 @@ import { useTranslation } from "react-i18next";
 
 const { Menu, MenuItem } = Dropdown;
 
-const Item = ({ provided, title, setIsEditModalOpen }) => {
+const Item = ({ provided, category, handleEdit }) => {
+  const { title } = category;
   const { t } = useTranslation();
 
   return (
@@ -34,7 +35,7 @@ const Item = ({ provided, title, setIsEditModalOpen }) => {
       </div>
       <Dropdown buttonStyle="text" icon={MenuVertical}>
         <Menu>
-          <MenuItem.Button onClick={() => setIsEditModalOpen(true)}>
+          <MenuItem.Button onClick={() => handleEdit(category)}>
             {t("common.edit")}
           </MenuItem.Button>
           <MenuItem.Button style="danger">{t("common.delete")}</MenuItem.Button>

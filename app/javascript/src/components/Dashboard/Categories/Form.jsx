@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 
 import { INITIAL_TOUCHED, VALIDATION_SCHEMA } from "./constants";
 
-const Form = ({ initialValues, onClose, handleSubmit }) => {
+const Form = ({ initialValues, onClose, handleSubmit, isEdit = false }) => {
   const { t } = useTranslation();
 
   return (
@@ -32,8 +32,12 @@ const Form = ({ initialValues, onClose, handleSubmit }) => {
           <Modal.Footer className="space-x-2">
             <Button
               disabled={isSubmitting || !isValid || !dirty}
-              label={t("category.addButtonLabel")}
               type="submit"
+              label={
+                isEdit
+                  ? t("category.saveChanges")
+                  : t("category.addButtonLabel")
+              }
             />
             <Button
               label={t("common.cancel")}

@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 
-import Create from "Dashboard/Categories/Create";
 import { Plus } from "neetoicons";
 import { Button, Typography } from "neetoui";
 import { useTranslation } from "react-i18next";
+
+import Create from "Dashboard/Categories/Create";
+import { useFetchCategories } from "hooks/useFetchCategories";
 
 import List from "./List";
 
 const ManageCategories = () => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+
+  const { data: categories, isLoading, refetch } = useFetchCategories();
 
   const { t } = useTranslation();
 
@@ -47,10 +51,10 @@ const ManageCategories = () => {
           onClick={() => setIsCreateModalOpen(true)}
         />
       </div>
-      <List />
+      <List categories={categories} isLoading={isLoading} refetch={refetch} />
       <Create
         isOpen={isCreateModalOpen}
-        refetch={() => {}}
+        refetch={refetch}
         onClose={() => setIsCreateModalOpen(false)}
       />
     </div>

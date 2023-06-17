@@ -2,7 +2,7 @@
 
 Rails.application.routes.draw do
   constraints(lambda { |req| req.format == :json }) do
-    resources :categories, only: %i[index create update show]
+    resources :categories, only: %i[index create update]
   end
 
   root "home#index"

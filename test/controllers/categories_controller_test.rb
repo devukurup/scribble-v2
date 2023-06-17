@@ -45,13 +45,6 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert 2, @category.reload.position
   end
 
-  def test_should_show_category
-    get category_path(@category.id), headers: headers()
-
-    assert_response :success
-    assert_equal response_json["category"]["title"], @category.title
-  end
-
   private
 
     def category_params
