@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :category do
-    title { Faker::Lorem.unique.sentence(word_count: 2) }
+    title { Faker::Lorem.unique.word }
     user
   end
 end

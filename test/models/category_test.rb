@@ -27,4 +27,23 @@ class CategoryTest < ActiveSupport::TestCase
 
     assert_not @category.valid?
   end
+
+  def test_validation_should_accept_valid_titles
+    valid_titles = %w[Getting\ started security\ &\ privacy new-category new-category2]
+    valid_titles.each do |title|
+      @category.title = title
+
+      assert @category.valid?
+    end
+  end
+
+  def test_validation_should_reject_invalid_titles
+    invalid_titles = %w[1Getting\ started _security\ &\ privacy new_category new.category2]
+    invalid_titles.each do |title|
+      @category.title = title
+
+      assert_not @category.valid?
+      assert_includes @category.errors.full_messages, "Title is invalid"
+    end
+  end
 end
