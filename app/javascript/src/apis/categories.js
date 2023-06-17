@@ -7,8 +7,11 @@ const list = ({ searchTerm }) =>
 
 const create = payload => axios.post(BASE_URL, { category: payload });
 
-const update = ({ id, payload }) =>
-  axios.put(`${BASE_URL}/${id}`, { category: payload });
+const update = ({ id, payload, quiet = false }) => {
+  const path = quiet ? `${BASE_URL}/${id}?quiet` : `${BASE_URL}/${id}`;
+
+  return axios.put(path, { category: payload });
+};
 
 const categoriesApi = { list, create, update };
 

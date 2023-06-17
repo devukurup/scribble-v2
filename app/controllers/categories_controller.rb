@@ -4,7 +4,7 @@ class CategoriesController < ApplicationController
   before_action :load_category!, only: %i[update]
 
   def index
-    @categories = current_user.categories.where("title ILIKE ?", "%#{params[:search_term]}%")
+    @categories = current_user.categories.where("title ILIKE ?", "%#{params[:search_term]}%").order(:position)
   end
 
   def create
@@ -14,13 +14,13 @@ class CategoriesController < ApplicationController
 
   def update
     @category.update!(category_params)
-    render_notice(t("successfully_updated", entity: "Category"))
+    render_notice(t("successfully_updated", entity: "Category")) unless params.key?(:quiet)
   end
 
   private
 
     def category_params
-      params.require(:category).permit(:title)
+      params.require(:category).permit(:title, :position)
     end
 
     def load_category!
