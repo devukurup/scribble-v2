@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CategoriesController < ApplicationController
-  before_action :load_category!, only: %i[update]
+  before_action :load_category!, only: %i[update show]
 
   def index
     @categories = current_user.categories.where("title ILIKE ?", "%#{params[:search_term]}%").order(:position)
@@ -10,6 +10,10 @@ class CategoriesController < ApplicationController
   def create
     current_user.categories.create!(category_params)
     render_notice(t("successfully_created", entity: "Category"))
+  end
+
+  def show
+    render
   end
 
   def update
