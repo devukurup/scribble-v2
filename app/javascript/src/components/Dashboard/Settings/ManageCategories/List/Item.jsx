@@ -1,12 +1,13 @@
 import React from "react";
 
+import classNames from "classnames";
 import { MenuVertical, Reorder } from "neetoicons";
 import { Typography, Dropdown } from "neetoui";
 import { useTranslation } from "react-i18next";
 
 const { Menu, MenuItem } = Dropdown;
 
-const Item = ({ provided, category, handleEdit }) => {
+const Item = ({ provided, category, handleEdit, isDragging }) => {
   const { title } = category;
   const { t } = useTranslation();
 
@@ -15,10 +16,22 @@ const Item = ({ provided, category, handleEdit }) => {
       ref={provided.innerRef}
       {...provided.draggableProps}
       {...provided.dragHandleProps}
-      className="group m-5 flex justify-between"
+      className={classNames(
+        "hover:neeto-ui-bg-gray-100 group my-4 flex justify-between py-2 px-1",
+        {
+          "neeto-ui-bg-gray-100": isDragging,
+        }
+      )}
     >
-      <div className="flex items-center">
-        <Reorder className="neeto-ui-text-gray-600 opacity-0 group-hover:opacity-100" />
+      <div className="relative flex items-center">
+        <Reorder
+          className={classNames(
+            "neeto-ui-text-gray-600 absolute -left-8 opacity-0 group-hover:opacity-100",
+            {
+              "opacity-100": isDragging,
+            }
+          )}
+        />
         <div className="flex flex-col space-y-1">
           <Typography lineHeight="none" style="h4" weight="normal">
             {title}
@@ -33,7 +46,10 @@ const Item = ({ provided, category, handleEdit }) => {
           </Typography>
         </div>
       </div>
-      <Dropdown buttonStyle="text" icon={MenuVertical}>
+      <Dropdown
+        buttonStyle="text"
+        icon={() => <MenuVertical className="neeto-ui-text-gray-600" />}
+      >
         <Menu>
           <MenuItem.Button onClick={() => handleEdit(category)}>
             {t("common.edit")}

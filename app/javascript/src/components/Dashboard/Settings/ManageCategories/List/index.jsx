@@ -55,10 +55,11 @@ const List = ({ categories, isLoading, refetch }) => {
 
                 return (
                   <Draggable draggableId={id} index={index} key={id}>
-                    {provided => (
+                    {(provided, snapshot) => (
                       <Item
                         category={category}
                         handleEdit={handleEdit}
+                        isDragging={snapshot.isDragging}
                         provided={provided}
                       />
                     )}

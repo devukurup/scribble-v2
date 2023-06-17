@@ -17,7 +17,7 @@ const ManageCategories = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="m-32 flex w-full flex-col border-2 p-5">
+    <div className="m-32 flex w-full flex-col p-5">
       <Typography
         className="neeto-ui-text-gray-700"
         lineHeight="loose"
