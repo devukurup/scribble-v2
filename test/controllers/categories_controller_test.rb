@@ -50,7 +50,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     def category_params
       {
         category: {
-          title: "test_title"
+          title: "test title"
         }
       }
     end
