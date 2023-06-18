@@ -7,6 +7,7 @@ class Category < ApplicationRecord
   acts_as_list scope: :user
 
   belongs_to :user
+  has_many :articles
 
   validates :title, presence: true, uniqueness: { case_sensitive: false }, length: { maximum: MAX_TITLE_LENGTH },
     format: { with: VALID_TITLE_REGEX }
