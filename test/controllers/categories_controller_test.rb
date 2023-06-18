@@ -26,7 +26,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     put category_path(@category.id), params: category_params, headers: headers()
 
     assert_response :success
-    assert_equal @category.reload.title, category_params[:category][:title]
+    assert_equal category_params[:category][:title], @category.reload.title
   end
 
   def test_search_term_should_filter_categories

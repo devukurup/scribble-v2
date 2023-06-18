@@ -13,6 +13,10 @@ class User < ApplicationRecord
 
   before_validation :email_to_lowercase!
 
+  def name
+    [first_name, last_name].join(" ").strip
+  end
+
   private
 
     def email_to_lowercase!

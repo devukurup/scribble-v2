@@ -24,6 +24,6 @@ class CategoriesController < ApplicationController
     end
 
     def load_category!
-      @category = Category.find(params[:id])
+      @category = current_user.categories.find(params[:id])
     end
 end
