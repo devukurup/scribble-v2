@@ -4,7 +4,9 @@ module.exports = {
     // removeDeprecatedGapUtilities: true,
     // purgeLayersByDefault: true,
   },
-  purge: [],
+  purge: {
+    content: ["./node_modules/@bigbinary/neeto-commons-frontend/**/*.js"],
+  },
   theme: {
     extend: {},
   },

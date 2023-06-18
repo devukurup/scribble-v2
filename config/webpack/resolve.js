@@ -18,6 +18,10 @@ module.exports = {
     images: absolutePath("src/assets/images"),
     Dashboard: absolutePath("src/components/Dashboard"),
   },
+  fallback: {
+    crypto: require.resolve("crypto-browserify"),
+    stream: require.resolve("stream-browserify"),
+  },
   extensions: [
     ".ts",
     ".mjs",
