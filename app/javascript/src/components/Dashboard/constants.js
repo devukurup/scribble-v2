@@ -1,11 +1,22 @@
-import Articles from "components/Dashboard/Articles";
-import Preview from "components/Dashboard/Preview";
-import Settings from "components/Dashboard/Settings";
 import routes from "src/routes";
+
+import Articles from "Dashboard/Articles";
+import CreateArticle from "Dashboard/Articles/Create";
+import EditArticle from "Dashboard/Articles/Edit";
+import Preview from "Dashboard/Preview";
+import Settings from "Dashboard/Settings";
 
 export const DASHBOARD_ROUTES = [
   {
-    path: routes.articles,
+    path: routes.articles.edit,
+    component: EditArticle,
+  },
+  {
+    path: routes.articles.new,
+    component: CreateArticle,
+  },
+  {
+    path: routes.articles.index,
     component: Articles,
   },
   {

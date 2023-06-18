@@ -1,7 +1,11 @@
 const routes = {
   dashboard: "/",
-  articles: "/articles",
   preview: "/eui",
+  articles: {
+    index: "/articles",
+    new: "/articles/new",
+    edit: "/articles/:articleId/edit",
+  },
   settings: {
     index: "/settings",
     general: "/settings/general",

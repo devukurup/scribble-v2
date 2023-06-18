@@ -14,7 +14,7 @@ const Dashboard = () => (
       {DASHBOARD_ROUTES.map(({ path, component }) => (
         <Route component={component} key={path} path={path} />
       ))}
-      <Redirect from={routes.dashboard} to={routes.articles} />
+      <Redirect from={routes.dashboard} to={routes.articles.index} />
     </Switch>
   </div>
 );
