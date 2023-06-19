@@ -61,3 +61,31 @@ export const STATUS = {
   Publish: "published",
   "Save as draft": "draft",
 };
+
+export const COLUMN_DATA = [
+  {
+    title: "Title",
+    dataIndex: "title",
+    key: "title",
+  },
+  {
+    title: "Category",
+    dataIndex: "category",
+    key: "category",
+  },
+  {
+    title: "Author",
+    dataIndex: "author",
+    key: "author",
+  },
+  {
+    title: "Last published at",
+    dataIndex: "last_published_at",
+    key: "last_published_at",
+  },
+  {
+    title: "Status",
+    dataIndex: "status",
+    key: "status",
+  },
+];

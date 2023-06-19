@@ -12,6 +12,7 @@ import useDebounce from "hooks/useDebounce";
 
 import { STATUSES } from "./constants";
 import MenuBar from "./MenuBar";
+import Table from "./Table";
 
 const Articles = () => {
   const [activeStatus, setActiveStatus] = useState(STATUSES[0].label);
@@ -74,6 +75,7 @@ const Articles = () => {
             placeholder: t("header.articles.placeholder"),
           }}
         />
+        <Table />
       </div>
       <CreateCategory
         isOpen={isCreateModalOpen}
