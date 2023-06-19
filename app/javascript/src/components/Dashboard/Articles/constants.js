@@ -56,3 +56,8 @@ export const INITIAL_VALUES = {
   title: "",
   category: "",
 };
+
+export const STATUS = {
+  Publish: "published",
+  "Save as draft": "draft",
+};

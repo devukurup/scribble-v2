@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { FormikEditor } from "@bigbinary/neeto-editor";
 import { ActionDropdown } from "@bigbinary/neetoui";
@@ -14,9 +14,8 @@ import { formatCategories } from "./utils";
 
 const { Menu, MenuItem } = ActionDropdown;
 
-const Form = ({ handleSubmit, initialValues }) => {
+const Form = ({ handleSubmit, initialValues, onClose, status, setStatus }) => {
   const { data: categories, isLoading } = useFetchCategories();
-  const [status, setStatus] = useState("Publish");
 
   const { t } = useTranslation();
 
@@ -49,27 +48,30 @@ const Form = ({ handleSubmit, initialValues }) => {
                 />
               </div>
               <div className="flex space-x-3">
-                <Button label={t("common.cancel")} style="text" type="reset" />
-                <div>
-                  <ActionDropdown
-                    disabled={isSubmitting || !isValid || !dirty}
-                    label={status}
-                    type="submit"
-                  >
-                    <Menu>
-                      <MenuItem.Button
-                        onClick={() => setStatus(t("articles.publish"))}
-                      >
-                        {t("articles.publish")}
-                      </MenuItem.Button>
-                      <MenuItem.Button
-                        onClick={() => setStatus(t("articles.saveDraft"))}
-                      >
-                        {t("articles.saveDraft")}
-                      </MenuItem.Button>
-                    </Menu>
-                  </ActionDropdown>
-                </div>
+                <Button
+                  label={t("common.cancel")}
+                  style="text"
+                  type="reset"
+                  onClick={onClose}
+                />
+                <ActionDropdown
+                  buttonProps={{ type: "submit" }}
+                  disabled={isSubmitting || !isValid || !dirty}
+                  label={status}
+                >
+                  <Menu>
+                    <MenuItem.Button
+                      onClick={() => setStatus(t("articles.publish"))}
+                    >
+                      {t("articles.publish")}
+                    </MenuItem.Button>
+                    <MenuItem.Button
+                      onClick={() => setStatus(t("articles.saveDraft"))}
+                    >
+                      {t("articles.saveDraft")}
+                    </MenuItem.Button>
+                  </Menu>
+                </ActionDropdown>
               </div>
             </div>
             <FormikEditor
