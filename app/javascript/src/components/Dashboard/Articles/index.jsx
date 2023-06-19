@@ -9,8 +9,10 @@ import routes from "src/routes";
 import categoriesApi from "apis/categories";
 import CreateCategory from "Dashboard/Categories/Create";
 import useDebounce from "hooks/useDebounce";
+import { useFetchArticles } from "hooks/useFetchArticles";
 
 import { STATUSES } from "./constants";
+import ArticleDeleteAlert from "./DeleteAlert";
 import MenuBar from "./MenuBar";
 import Table from "./Table";
 
@@ -23,6 +25,14 @@ const Articles = () => {
   const [isCategoriesLoading, setIsCategoriesLoading] = useState(false);
   const [categorySearchTerm, setCategorySearchTerm] = useState("");
   const debouncedCategorySearchTerm = useDebounce(categorySearchTerm);
+  const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
+  const [rowToBeDeleted, setRowToBeDeleted] = useState({});
+
+  const {
+    data: { articles },
+    isLoading: isTableLoading,
+    refetch: refetchArticles,
+  } = useFetchArticles();
 
   const history = useHistory();
 
@@ -75,12 +85,25 @@ const Articles = () => {
             placeholder: t("header.articles.placeholder"),
           }}
         />
-        <Table />
+        <Table
+          articles={articles}
+          isLoading={isTableLoading}
+          refetch={refetchArticles}
+          setIsDeleteAlertOpen={setIsDeleteAlertOpen}
+          setRowToBeDeleted={setRowToBeDeleted}
+        />
       </div>
       <CreateCategory
         isOpen={isCreateModalOpen}
         refetch={fetchCategories}
         onClose={() => setIsCreateModalOpen(false)}
+      />
+      <ArticleDeleteAlert
+        isOpen={isDeleteAlertOpen}
+        refetch={refetchArticles}
+        rowToBeDeleted={rowToBeDeleted}
+        setIsOpen={setIsDeleteAlertOpen}
+        setRowToBeDeleted={setRowToBeDeleted}
       />
     </>
   );

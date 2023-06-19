@@ -2,21 +2,36 @@ import React from "react";
 
 import { Table as NeetoUITable } from "neetoui";
 
-import { useFetchArticles } from "hooks/useFetchArticles";
+import { useUpdateArticles } from "hooks/useUpdateArticles";
 
-import { COLUMN_DATA } from "./constants";
+import { columnData } from "./utils";
 
-const Table = () => {
-  const {
-    data: { articles },
-    isLoading,
-  } = useFetchArticles();
+const Table = ({
+  setRowToBeDeleted,
+  setIsDeleteAlertOpen,
+  articles,
+  isLoading,
+  refetch,
+}) => {
+  const { update } = useUpdateArticles();
+
+  const handleDelete = row => {
+    setIsDeleteAlertOpen(true);
+    setRowToBeDeleted(row);
+  };
+
+  const handleUpdate = ({ id, publishStatus }) => {
+    const payload = {
+      status: publishStatus === "Publish" ? "published" : "draft",
+    };
+    update({ id, payload, onSuccess: refetch });
+  };
 
   return (
     <NeetoUITable
       fixedHeight
       rowSelection
-      columnData={COLUMN_DATA}
+      columnData={columnData({ handleDelete, handleUpdate })}
       loading={isLoading}
       rowData={articles}
     />

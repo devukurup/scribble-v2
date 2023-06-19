@@ -11,6 +11,8 @@ const show = id => axios.get(`${BASE_URL}/${id}`);
 const update = ({ id, payload }) =>
   axios.put(`${BASE_URL}/${id}`, { article: payload });
 
-const articlesApi = { list, create, update, show };
+const destroy = id => axios.delete(`${BASE_URL}/${id}`);
+
+const articlesApi = { list, create, update, show, destroy };
 
 export default articlesApi;

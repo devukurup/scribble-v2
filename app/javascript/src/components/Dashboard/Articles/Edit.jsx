@@ -5,8 +5,8 @@ import { useTranslation } from "react-i18next";
 import { useParams, useHistory } from "react-router-dom";
 import routes from "src/routes";
 
-import articlesApi from "apis/articles";
 import { useShowArticle } from "hooks/useShowArticle";
+import { useUpdateArticles } from "hooks/useUpdateArticles";
 
 import { STATUS } from "./constants";
 import Form from "./Form";
@@ -18,25 +18,24 @@ const Edit = () => {
 
   const history = useHistory();
 
+  const { update } = useUpdateArticles();
+
   const {
     data: { article },
     isLoading,
   } = useShowArticle(articleId);
 
-  const handleSubmit = async values => {
+  const handleSubmit = values => {
     const payload = {
       category_id: values.category.value,
       title: values.title,
       body: values.body,
       status: STATUS[values.status],
     };
-    try {
-      await articlesApi.update({ id: articleId, payload });
-      history.push(routes.articles.index);
-    } catch (error) {
-      logger.error(error);
-    }
+    update({ id: articleId, payload });
+    history.push(routes.articles.index);
   };
+
   if (isLoading) {
     return (
       <div className="h-screen">

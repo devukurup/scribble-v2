@@ -1,10 +1,5 @@
-import React from "react";
-
 import { isEditorEmpty } from "@bigbinary/neeto-editor";
 import { t } from "i18next";
-import { Button, Typography } from "neetoui";
-import { TITLE_TRUNCATE_LENGTH } from "src/constants";
-import { formattedDate, truncate } from "src/utils";
 import * as yup from "yup";
 
 export const STATUSES = [
@@ -66,56 +61,3 @@ export const STATUS = {
   Publish: "published",
   "Save as draft": "draft",
 };
-
-export const COLUMN_DATA = [
-  {
-    title: "Title",
-    dataIndex: "title",
-    key: "title",
-    width: 350,
-    render: (title, { id }) => (
-      <Button
-        label={truncate(title)}
-        style="link"
-        to={`/articles/${id}/edit`}
-        tooltipProps={
-          title.length > TITLE_TRUNCATE_LENGTH && { content: title }
-        }
-      />
-    ),
-  },
-  {
-    title: "Category",
-    dataIndex: "category",
-    key: "category",
-    width: 200,
-  },
-  {
-    title: "Author",
-    dataIndex: "author",
-    key: "author",
-    width: 125,
-  },
-  {
-    title: "Last published at",
-    dataIndex: "last_published_at",
-    key: "last_published_at",
-    width: 150,
-    render: last_published_at => (
-      <Typography style="body2">
-        {last_published_at ? formattedDate(last_published_at) : "-"}
-      </Typography>
-    ),
-  },
-  {
-    title: "Status",
-    dataIndex: "status",
-    key: "status",
-    width: 100,
-    render: status => (
-      <Typography style="body2" textTransform="capitalize">
-        {status}
-      </Typography>
-    ),
-  },
-];
