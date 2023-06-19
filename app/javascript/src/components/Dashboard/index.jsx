@@ -8,7 +8,7 @@ import { DASHBOARD_ROUTES } from "./constants";
 import Sidebar from "../commons/Sidebar";
 
 const Dashboard = () => (
-  <div className="flex h-screen w-full">
+  <div className="flex h-screen w-screen">
     <Sidebar />
     <Switch>
       {DASHBOARD_ROUTES.map(({ path, component }) => (

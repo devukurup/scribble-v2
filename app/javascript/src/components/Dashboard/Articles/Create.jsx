@@ -1,5 +1,10 @@
 import React from "react";
 
-const Create = () => <div>Create</div>;
+import { INITIAL_VALUES } from "./constants";
+import Form from "./Form";
+
+const Create = () => (
+  <Form handleSubmit={() => {}} initialValues={INITIAL_VALUES} />
+);
 
 export default Create;
