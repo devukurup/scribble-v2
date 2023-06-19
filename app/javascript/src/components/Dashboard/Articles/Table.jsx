@@ -19,8 +19,6 @@ const Table = () => {
       columnData={COLUMN_DATA}
       loading={isLoading}
       rowData={articles}
-      scroll={{ x: "100%" }}
-      shouldDynamicallyRenderRowSize={false}
     />
   );
 };
