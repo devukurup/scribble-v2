@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { FormikEditor } from "@bigbinary/neeto-editor";
 import { ActionDropdown } from "@bigbinary/neetoui";
@@ -14,7 +14,9 @@ import { formatCategories } from "./utils";
 
 const { Menu, MenuItem } = ActionDropdown;
 
-const Form = ({ handleSubmit, initialValues, onClose, status, setStatus }) => {
+const Form = ({ handleSubmit, initialValues, onClose, initialStatus }) => {
+  const [status, setStatus] = useState(initialStatus);
+
   const { data: categories, isLoading } = useFetchCategories();
 
   const { t } = useTranslation();
@@ -34,7 +36,7 @@ const Form = ({ handleSubmit, initialValues, onClose, status, setStatus }) => {
         validateOnChange
         initialValues={initialValues}
         validationSchema={VALIDATION_SCHEMA}
-        onSubmit={handleSubmit}
+        onSubmit={values => handleSubmit({ ...values, status })}
       >
         {({ errors, setFieldValue, isValid, dirty, isSubmitting }) => (
           <FormikForm>

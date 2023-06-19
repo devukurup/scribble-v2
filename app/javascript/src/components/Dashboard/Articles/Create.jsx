@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 
+import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import routes from "src/routes";
 
@@ -9,16 +10,16 @@ import { INITIAL_VALUES, STATUS } from "./constants";
 import Form from "./Form";
 
 const Create = () => {
-  const [status, setStatus] = useState("Publish");
-
   const history = useHistory();
+
+  const { t } = useTranslation();
 
   const handleSubmit = async values => {
     const payload = {
       category_id: values.category.value,
       title: values.title,
       body: values.body,
-      status: STATUS[status],
+      status: STATUS[values.status],
     };
     try {
       await articlesApi.create(payload);
@@ -31,9 +32,8 @@ const Create = () => {
   return (
     <Form
       handleSubmit={handleSubmit}
+      initialStatus={t("articles.publish")}
       initialValues={INITIAL_VALUES}
-      setStatus={setStatus}
-      status={status}
       onClose={() => history.push(routes.articles.index)}
     />
   );
