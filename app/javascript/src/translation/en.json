@@ -13,7 +13,9 @@
     "security": "Security",
     "manageCategories": "Manage Categories",
     "edit": "Edit",
-    "delete": "Delete"
+    "delete": "Delete",
+    "description": "Description",
+    "category": "Category"
   },
   "tooltips": {
     "manageArticles": "Manage and list all your KB articles",
@@ -57,6 +59,15 @@
       "title": " Manage categories",
       "description": "Create and configure the categories inside your scribble.",
       "count": "{{count}} categories"
+    }
+  },
+  "articles": {
+    "selectCategory": "Select category",
+    "publish": "Publish",
+    "saveDraft": "Save as draft",
+    "placeholders": {
+      "body": "Add description here.",
+      "title": "Add title here."
     }
   }
 }

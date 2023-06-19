@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 
-import categoriesApi from "apis/categories";
-import CreateCategory from "Dashboard/Categories/Create";
-import useDebounce from "hooks/useDebounce";
 import { Button } from "neetoui";
 import { Header } from "neetoui/layouts";
 import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router-dom";
+import routes from "src/routes";
+
+import categoriesApi from "apis/categories";
+import CreateCategory from "Dashboard/Categories/Create";
+import useDebounce from "hooks/useDebounce";
 
 import { STATUSES } from "./constants";
 import MenuBar from "./MenuBar";
@@ -19,6 +22,8 @@ const Articles = () => {
   const [isCategoriesLoading, setIsCategoriesLoading] = useState(false);
   const [categorySearchTerm, setCategorySearchTerm] = useState("");
   const debouncedCategorySearchTerm = useDebounce(categorySearchTerm);
+
+  const history = useHistory();
 
   const { t } = useTranslation();
 
@@ -57,7 +62,7 @@ const Articles = () => {
             <Button
               label={t("header.articles.buttonLabel")}
               size="small"
-              onClick={() => {}}
+              onClick={() => history.push(routes.articles.new)}
             />
           }
           menuBarToggle={() =>
