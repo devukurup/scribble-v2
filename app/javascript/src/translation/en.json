@@ -15,7 +15,8 @@
     "edit": "Edit",
     "delete": "Delete",
     "description": "Description",
-    "category": "Category"
+    "category": "Category",
+    "saveChanges": "Save changes"
   },
   "tooltips": {
     "manageArticles": "Manage and list all your KB articles",
@@ -35,7 +36,6 @@
     }
   },
   "category": {
-    "saveChanges": "Save changes",
     "add": "New category",
     "edit": "Edit category",
     "inputLabel": "Category title",
@@ -56,9 +56,16 @@
   },
   "settings": {
     "manageCategories": {
-      "title": " Manage categories",
+      "title": "Manage categories",
       "description": "Create and configure the categories inside your scribble.",
       "count": "{{count}} categories"
+    },
+    "generalSettings": {
+      "title": "General Settings",
+      "description": "Configure general attributes of knowledge base",
+      "inputLabel": "Site title",
+      "placeholder": "Enter site title",
+      "inputDescription": "Customize the site name which is used to show the site name in  Open Graph Tags."
     }
   },
   "articles": {
