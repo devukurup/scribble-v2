@@ -34,9 +34,7 @@ const Form = ({ initialValues, onClose, handleSubmit, isEdit = false }) => {
               disabled={isSubmitting || !isValid || !dirty}
               type="submit"
               label={
-                isEdit
-                  ? t("category.saveChanges")
-                  : t("category.addButtonLabel")
+                isEdit ? t("common.saveChanges") : t("category.addButtonLabel")
               }
             />
             <Button
