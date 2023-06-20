@@ -5,6 +5,7 @@ class ArticlesController < ApplicationController
 
   def index
     @articles = current_user.articles.includes(:category, :user).order("updated_at DESC")
+    @articles_total_count = current_user.articles.count
   end
 
   def show
@@ -34,5 +35,9 @@ class ArticlesController < ApplicationController
 
     def load_article!
       @article = current_user.articles.find(params[:id])
+    end
+
+    def filter_params
+      params.permit(:status, :search_term, :page, :limit, category_ids: [])
     end
 end

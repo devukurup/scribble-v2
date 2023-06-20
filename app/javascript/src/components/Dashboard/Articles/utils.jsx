@@ -65,6 +65,7 @@ export const columnData = ({ handleDelete, handleUpdate }) => [
   {
     dataIndex: "action",
     key: "action",
+    width: 25,
     render: (_, row) => {
       const { status, id } = row;
       const publishStatus = status === "draft" ? "Publish" : "Unpublish";

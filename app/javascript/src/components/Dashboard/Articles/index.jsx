@@ -29,7 +29,7 @@ const Articles = () => {
   const [rowToBeDeleted, setRowToBeDeleted] = useState({});
 
   const {
-    data: { articles },
+    data: { articles, articles_total_count: totalCount },
     isLoading: isTableLoading,
     refetch: refetchArticles,
   } = useFetchArticles();
@@ -91,6 +91,7 @@ const Articles = () => {
           refetch={refetchArticles}
           setIsDeleteAlertOpen={setIsDeleteAlertOpen}
           setRowToBeDeleted={setRowToBeDeleted}
+          totalCount={totalCount}
         />
       </div>
       <CreateCategory

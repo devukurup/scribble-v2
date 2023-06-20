@@ -61,3 +61,6 @@ export const STATUS = {
   Publish: "published",
   "Save as draft": "draft",
 };
+
+export const DEFAULT_PAGE_NUMBER = 1;
+export const PAGINATION_LIMIT = 10;
