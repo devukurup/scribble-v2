@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 import { Spinner, Typography } from "neetoui";
 import { MenuBar } from "neetoui/layouts";
 import { useTranslation } from "react-i18next";
+
 import { isPresent } from "utils";
 
 import { isCategoryPresent, removeCategory } from "./utils";
@@ -12,9 +13,9 @@ const Categories = ({
   categories,
   fetchCategories,
   debouncedSearchTerm,
+  selectedCategories,
+  setSelectedCategories,
 }) => {
-  const [selectedCategories, setSelectedCategories] = useState([]);
-
   const { t } = useTranslation();
 
   const handleCategoryClick = category => {

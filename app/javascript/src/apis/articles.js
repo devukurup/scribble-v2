@@ -8,6 +8,7 @@ const list = ({
   limit = PAGINATION_LIMIT,
   search = "",
   status = "",
+  selectedCategoryIds = [],
 }) =>
   axios.get(BASE_URL, {
     params: {
@@ -15,6 +16,7 @@ const list = ({
       limit,
       search_term: search,
       status,
+      category_ids: selectedCategoryIds,
     },
   });
 

@@ -28,6 +28,7 @@ const Articles = () => {
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
   const [rowToBeDeleted, setRowToBeDeleted] = useState({});
   const debouncedArticleSearchTerm = useDebounce(searchTerm);
+  const [selectedCategories, setSelectedCategories] = useState([]);
 
   const {
     data: { articles, filtered_articles_count: totalCount },
@@ -63,9 +64,11 @@ const Articles = () => {
         isCategoriesLoading={isCategoriesLoading}
         isMenuBarOpen={isMenuBarOpen}
         searchTerm={categorySearchTerm}
+        selectedCategories={selectedCategories}
         setActiveStatus={setActiveStatus}
         setIsCreateModalOpen={setIsCreateModalOpen}
         setSearchTerm={setCategorySearchTerm}
+        setSelectedCategories={setSelectedCategories}
       />
       <div className="mx-4 w-full">
         <Header
@@ -92,6 +95,7 @@ const Articles = () => {
           debouncedSearchTerm={debouncedArticleSearchTerm}
           isLoading={isTableLoading}
           refetch={refetchArticles}
+          selectedCategories={selectedCategories}
           setActiveStatus={setActiveStatus}
           setIsDeleteAlertOpen={setIsDeleteAlertOpen}
           setRowToBeDeleted={setRowToBeDeleted}
