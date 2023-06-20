@@ -27,9 +27,10 @@ const Articles = () => {
   const debouncedCategorySearchTerm = useDebounce(categorySearchTerm);
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
   const [rowToBeDeleted, setRowToBeDeleted] = useState({});
+  const debouncedArticleSearchTerm = useDebounce(searchTerm);
 
   const {
-    data: { articles, articles_total_count: totalCount },
+    data: { articles, filtered_articles_count: totalCount },
     isLoading: isTableLoading,
     refetch: refetchArticles,
   } = useFetchArticles();
@@ -87,6 +88,7 @@ const Articles = () => {
         />
         <Table
           articles={articles}
+          debouncedSearchTerm={debouncedArticleSearchTerm}
           isLoading={isTableLoading}
           refetch={refetchArticles}
           setIsDeleteAlertOpen={setIsDeleteAlertOpen}

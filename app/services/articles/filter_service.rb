@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Articles::FilterService
-  attr_reader :user, :filters
+  attr_reader :user, :filters, :filtered_articles_count, :articles
 
   def initialize(user, filters)
     @user = user
@@ -14,6 +14,8 @@ class Articles::FilterService
     filter_by_search_term
     filter_by_categories
     filter_by_status
+
+    set_filtered_articles_count
 
     paginate
   end
@@ -36,6 +38,10 @@ class Articles::FilterService
 
     def filter_by_status
       @articles = @articles.where(status: filters[:status]) if filters[:status].present?
+    end
+
+    def set_filtered_articles_count
+      @filtered_articles_count = @articles.count
     end
 
     def paginate

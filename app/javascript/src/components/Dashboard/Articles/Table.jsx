@@ -17,6 +17,7 @@ const Table = ({
   isLoading,
   refetch,
   totalCount,
+  debouncedSearchTerm,
 }) => {
   const { update } = useUpdateArticles();
   const [selectedRowIds, setSelectedRowIds] = useState([]);
@@ -41,6 +42,7 @@ const Table = ({
     const currentUrlParams = new URLSearchParams(window.location.search);
     currentUrlParams.set("page", page);
     currentUrlParams.set("limit", size);
+    currentUrlParams.set("search", debouncedSearchTerm);
     history.push({ search: `?${currentUrlParams.toString()}` });
   };
 
@@ -50,6 +52,12 @@ const Table = ({
     );
     refetch();
   }, [window.location.search]);
+
+  useEffect(() => {
+    handlePagination(DEFAULT_PAGE_NUMBER, PAGINATION_LIMIT);
+    setCurrentPageNumber(DEFAULT_PAGE_NUMBER);
+    refetch();
+  }, [debouncedSearchTerm]);
 
   return (
     <NeetoUITable

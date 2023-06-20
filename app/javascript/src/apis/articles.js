@@ -3,11 +3,16 @@ import { DEFAULT_PAGE_NUMBER, PAGINATION_LIMIT } from "src/constants";
 
 const BASE_URL = "/articles";
 
-const list = ({ page = DEFAULT_PAGE_NUMBER, limit = PAGINATION_LIMIT }) =>
+const list = ({
+  page = DEFAULT_PAGE_NUMBER,
+  limit = PAGINATION_LIMIT,
+  search = "",
+}) =>
   axios.get(BASE_URL, {
     params: {
       page,
       limit,
+      search_term: search,
     },
   });
 

@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
-json.articles @articles do |article|
+json.articles @service.articles do |article|
   json.extract! article, :id, :title, :body, :status, :last_published_at
   json.author article.user.name
   json.category article.category.title
 end
 
-json.articles_total_count @articles_total_count
-json.articles_count @articles.count
+json.filtered_articles_count @service.filtered_articles_count

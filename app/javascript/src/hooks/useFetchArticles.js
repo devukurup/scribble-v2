@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import articlesApi from "apis/articles";
 
@@ -11,15 +11,12 @@ export const useFetchArticles = () => {
   const searchParams = new URLSearchParams(window.location.search);
   const page = searchParams.get("page") || DEFAULT_PAGE_NUMBER;
   const limit = searchParams.get("limit") || PAGINATION_LIMIT;
-
-  useEffect(() => {
-    refetch();
-  }, []);
+  const search = searchParams.get("search") || "";
 
   const refetch = async () => {
     try {
       setIsLoading(true);
-      const { data } = await articlesApi.list({ page, limit });
+      const { data } = await articlesApi.list({ page, limit, search });
       setData(data);
       setIsError(false);
     } catch (error) {
