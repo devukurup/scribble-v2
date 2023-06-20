@@ -12,11 +12,17 @@ export const useFetchArticles = () => {
   const page = searchParams.get("page") || DEFAULT_PAGE_NUMBER;
   const limit = searchParams.get("limit") || PAGINATION_LIMIT;
   const search = searchParams.get("search") || "";
+  const status = searchParams.get("status") || "";
 
   const refetch = async () => {
     try {
       setIsLoading(true);
-      const { data } = await articlesApi.list({ page, limit, search });
+      const { data } = await articlesApi.list({
+        page,
+        limit,
+        search,
+        status: status.toLowerCase(),
+      });
       setData(data);
       setIsError(false);
     } catch (error) {

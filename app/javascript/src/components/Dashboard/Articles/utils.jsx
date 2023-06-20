@@ -3,6 +3,7 @@ import React from "react";
 import { t } from "i18next";
 import { MenuHorizontal } from "neetoicons";
 import { Button, Typography, Dropdown } from "neetoui";
+import { isEmpty } from "ramda";
 import { TITLE_TRUNCATE_LENGTH } from "src/constants";
 import { formattedDate, truncate } from "src/utils";
 
@@ -87,3 +88,18 @@ export const columnData = ({ handleDelete, handleUpdate }) => [
     },
   },
 ];
+
+export const setUrlParams = ({ page, limit, search, status }) => {
+  const currentUrlParams = new URLSearchParams(window.location.search);
+  currentUrlParams.set("page", page);
+  currentUrlParams.set("limit", limit);
+  !isEmpty(search.trim())
+    ? currentUrlParams.set("search", search)
+    : currentUrlParams.delete("search");
+
+  status !== "All"
+    ? currentUrlParams.set("status", status)
+    : currentUrlParams.delete("status");
+
+  return currentUrlParams;
+};

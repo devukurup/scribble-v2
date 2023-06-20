@@ -87,12 +87,15 @@ const Articles = () => {
           }}
         />
         <Table
+          activeStatus={activeStatus}
           articles={articles}
           debouncedSearchTerm={debouncedArticleSearchTerm}
           isLoading={isTableLoading}
           refetch={refetchArticles}
+          setActiveStatus={setActiveStatus}
           setIsDeleteAlertOpen={setIsDeleteAlertOpen}
           setRowToBeDeleted={setRowToBeDeleted}
+          setSearchTerm={setSearchTerm}
           totalCount={totalCount}
         />
       </div>

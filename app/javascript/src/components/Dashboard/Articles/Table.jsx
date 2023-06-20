@@ -8,7 +8,8 @@ import { isEven } from "src/utils";
 
 import { useUpdateArticles } from "hooks/useUpdateArticles";
 
-import { columnData } from "./utils";
+import { STATUSES } from "./constants";
+import { columnData, setUrlParams } from "./utils";
 
 const Table = ({
   setRowToBeDeleted,
@@ -18,6 +19,9 @@ const Table = ({
   refetch,
   totalCount,
   debouncedSearchTerm,
+  activeStatus,
+  setActiveStatus,
+  setSearchTerm,
 }) => {
   const { update } = useUpdateArticles();
   const [selectedRowIds, setSelectedRowIds] = useState([]);
@@ -38,15 +42,21 @@ const Table = ({
     update({ id, payload, onSuccess: refetch });
   };
 
-  const handlePagination = (page, size) => {
-    const currentUrlParams = new URLSearchParams(window.location.search);
-    currentUrlParams.set("page", page);
-    currentUrlParams.set("limit", size);
-    currentUrlParams.set("search", debouncedSearchTerm);
+  const handlePagination = (page, limit) => {
+    const currentUrlParams = setUrlParams({
+      page,
+      limit,
+      search: debouncedSearchTerm,
+      status: activeStatus,
+    });
     history.push({ search: `?${currentUrlParams.toString()}` });
   };
 
   useEffect(() => {
+    const urlStatus = searchParams.get("status");
+    const urlSearchTerm = searchParams.get("search");
+    urlStatus ? setActiveStatus(urlStatus) : setActiveStatus(STATUSES[0].label);
+    urlSearchTerm ? setSearchTerm(urlSearchTerm) : setSearchTerm("");
     setCurrentPageNumber(
       parseInt(searchParams.get("page") || DEFAULT_PAGE_NUMBER)
     );
@@ -54,10 +64,14 @@ const Table = ({
   }, [window.location.search]);
 
   useEffect(() => {
-    handlePagination(DEFAULT_PAGE_NUMBER, PAGINATION_LIMIT);
-    setCurrentPageNumber(DEFAULT_PAGE_NUMBER);
-    refetch();
-  }, [debouncedSearchTerm]);
+    const currentUrlParams = setUrlParams({
+      page: DEFAULT_PAGE_NUMBER,
+      limit: PAGINATION_LIMIT,
+      search: debouncedSearchTerm,
+      status: activeStatus,
+    });
+    history.push({ search: `?${currentUrlParams.toString()}` });
+  }, [debouncedSearchTerm, activeStatus]);
 
   return (
     <NeetoUITable

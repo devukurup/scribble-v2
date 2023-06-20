@@ -7,12 +7,14 @@ const list = ({
   page = DEFAULT_PAGE_NUMBER,
   limit = PAGINATION_LIMIT,
   search = "",
+  status = "",
 }) =>
   axios.get(BASE_URL, {
     params: {
       page,
       limit,
       search_term: search,
+      status,
     },
   });
 
