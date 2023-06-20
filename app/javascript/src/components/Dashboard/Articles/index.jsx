@@ -11,7 +11,7 @@ import CreateCategory from "Dashboard/Categories/Create";
 import useDebounce from "hooks/useDebounce";
 import { useFetchArticles } from "hooks/useFetchArticles";
 
-import { STATUSES } from "./constants";
+import { COLUMNS, STATUSES } from "./constants";
 import ArticleDeleteAlert from "./DeleteAlert";
 import MenuBar from "./MenuBar";
 import SubHeader from "./SubHeader";
@@ -30,6 +30,7 @@ const Articles = () => {
   const [rowToBeDeleted, setRowToBeDeleted] = useState({});
   const debouncedArticleSearchTerm = useDebounce(searchTerm);
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedColumns, setSelectedColumns] = useState(COLUMNS);
 
   const {
     data: { articles, filtered_articles_count: totalCount },
@@ -93,7 +94,9 @@ const Articles = () => {
         <SubHeader
           searchTerm={searchTerm}
           selectedCategories={selectedCategories}
+          selectedColumns={selectedColumns}
           setSelectedCategories={setSelectedCategories}
+          setSelectedColumns={setSelectedColumns}
           totalCount={totalCount}
         />
         <Table
@@ -103,6 +106,7 @@ const Articles = () => {
           isLoading={isTableLoading}
           refetch={refetchArticles}
           selectedCategories={selectedCategories}
+          selectedColumns={selectedColumns}
           setActiveStatus={setActiveStatus}
           setIsDeleteAlertOpen={setIsDeleteAlertOpen}
           setRowToBeDeleted={setRowToBeDeleted}

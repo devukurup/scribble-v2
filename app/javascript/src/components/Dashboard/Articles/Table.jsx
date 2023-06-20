@@ -23,6 +23,7 @@ const Table = ({
   setActiveStatus,
   setSearchTerm,
   selectedCategories,
+  selectedColumns,
 }) => {
   const { update } = useUpdateArticles();
   const [selectedRowIds, setSelectedRowIds] = useState([]);
@@ -78,11 +79,21 @@ const Table = ({
     refetch({ selectedCategories });
   }, [selectedCategories]);
 
+  const filterColumns = () => {
+    const availableColumnKeys = selectedColumns
+      .filter(({ checked }) => checked)
+      .map(column => column.key);
+
+    return columnData({ handleDelete, handleUpdate }).filter(
+      ({ key }) => key === "action" || availableColumnKeys.includes(key)
+    );
+  };
+
   return (
     <NeetoUITable
       fixedHeight
       rowSelection
-      columnData={columnData({ handleDelete, handleUpdate })}
+      columnData={filterColumns()}
       currentPageNumber={currentPageNumber}
       defaultPageSize={PAGINATION_LIMIT}
       handlePageChange={handlePagination}

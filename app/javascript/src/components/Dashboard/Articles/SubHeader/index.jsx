@@ -10,15 +10,22 @@ const SubHeader = ({
   totalCount,
   selectedCategories,
   setSelectedCategories,
+  selectedColumns,
+  setSelectedColumns,
 }) => (
   <NeetoUISubHeader
-    rightActionBlock={<Right />}
     leftActionBlock={
       <Left
         searchTerm={searchTerm}
         selectedCategories={selectedCategories}
         setSelectedCategories={setSelectedCategories}
         totalCount={totalCount}
+      />
+    }
+    rightActionBlock={
+      <Right
+        selectedColumns={selectedColumns}
+        setSelectedColumns={setSelectedColumns}
       />
     }
   />
