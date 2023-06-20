@@ -20,6 +20,8 @@ const MenuBar = ({
   searchTerm,
   setSearchTerm,
   debouncedSearchTerm,
+  selectedCategories,
+  setSelectedCategories,
 }) => {
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
 
@@ -75,6 +77,8 @@ const MenuBar = ({
         debouncedSearchTerm={debouncedSearchTerm}
         fetchCategories={fetchCategories}
         isLoading={isCategoriesLoading}
+        selectedCategories={selectedCategories}
+        setSelectedCategories={setSelectedCategories}
       />
     </NeetoUIMenuBar>
   );

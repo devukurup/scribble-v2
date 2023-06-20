@@ -4,7 +4,8 @@ class ArticlesController < ApplicationController
   before_action :load_article!, only: %i[show update destroy]
 
   def index
-    @articles = current_user.articles.includes(:category, :user).order("updated_at DESC")
+    @service = Articles::FilterService.new(current_user, filter_params)
+    @service.process
   end
 
   def show
@@ -34,5 +35,9 @@ class ArticlesController < ApplicationController
 
     def load_article!
       @article = current_user.articles.find(params[:id])
+    end
+
+    def filter_params
+      params.permit(:status, :search_term, :page, :limit, category_ids: [])
     end
 end

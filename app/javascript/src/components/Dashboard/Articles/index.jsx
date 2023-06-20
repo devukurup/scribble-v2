@@ -9,9 +9,13 @@ import routes from "src/routes";
 import categoriesApi from "apis/categories";
 import CreateCategory from "Dashboard/Categories/Create";
 import useDebounce from "hooks/useDebounce";
+import { useFetchArticles } from "hooks/useFetchArticles";
 
-import { STATUSES } from "./constants";
+import { COLUMNS, STATUSES } from "./constants";
+import ArticleDeleteAlert from "./DeleteAlert";
 import MenuBar from "./MenuBar";
+import SubHeader from "./SubHeader";
+import Table from "./Table";
 
 const Articles = () => {
   const [activeStatus, setActiveStatus] = useState(STATUSES[0].label);
@@ -22,6 +26,17 @@ const Articles = () => {
   const [isCategoriesLoading, setIsCategoriesLoading] = useState(false);
   const [categorySearchTerm, setCategorySearchTerm] = useState("");
   const debouncedCategorySearchTerm = useDebounce(categorySearchTerm);
+  const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
+  const [rowToBeDeleted, setRowToBeDeleted] = useState({});
+  const debouncedArticleSearchTerm = useDebounce(searchTerm);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedColumns, setSelectedColumns] = useState(COLUMNS);
+
+  const {
+    data: { articles, filtered_articles_count: totalCount },
+    isLoading: isTableLoading,
+    refetch: refetchArticles,
+  } = useFetchArticles();
 
   const history = useHistory();
 
@@ -51,9 +66,11 @@ const Articles = () => {
         isCategoriesLoading={isCategoriesLoading}
         isMenuBarOpen={isMenuBarOpen}
         searchTerm={categorySearchTerm}
+        selectedCategories={selectedCategories}
         setActiveStatus={setActiveStatus}
         setIsCreateModalOpen={setIsCreateModalOpen}
         setSearchTerm={setCategorySearchTerm}
+        setSelectedCategories={setSelectedCategories}
       />
       <div className="mx-4 w-full">
         <Header
@@ -74,11 +91,40 @@ const Articles = () => {
             placeholder: t("header.articles.placeholder"),
           }}
         />
+        <SubHeader
+          searchTerm={searchTerm}
+          selectedCategories={selectedCategories}
+          selectedColumns={selectedColumns}
+          setSelectedCategories={setSelectedCategories}
+          setSelectedColumns={setSelectedColumns}
+          totalCount={totalCount}
+        />
+        <Table
+          activeStatus={activeStatus}
+          articles={articles}
+          debouncedSearchTerm={debouncedArticleSearchTerm}
+          isLoading={isTableLoading}
+          refetch={refetchArticles}
+          selectedCategories={selectedCategories}
+          selectedColumns={selectedColumns}
+          setActiveStatus={setActiveStatus}
+          setIsDeleteAlertOpen={setIsDeleteAlertOpen}
+          setRowToBeDeleted={setRowToBeDeleted}
+          setSearchTerm={setSearchTerm}
+          totalCount={totalCount}
+        />
       </div>
       <CreateCategory
         isOpen={isCreateModalOpen}
         refetch={fetchCategories}
         onClose={() => setIsCreateModalOpen(false)}
+      />
+      <ArticleDeleteAlert
+        isOpen={isDeleteAlertOpen}
+        refetch={refetchArticles}
+        rowToBeDeleted={rowToBeDeleted}
+        setIsOpen={setIsDeleteAlertOpen}
+        setRowToBeDeleted={setRowToBeDeleted}
       />
     </>
   );

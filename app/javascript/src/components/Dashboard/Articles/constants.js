@@ -61,3 +61,36 @@ export const STATUS = {
   Publish: "published",
   "Save as draft": "draft",
 };
+
+export const COLUMNS = [
+  {
+    label: "Title",
+    key: "title",
+    checked: true,
+    disabled: true,
+  },
+  {
+    label: "Category",
+    key: "category",
+    checked: true,
+    disabled: false,
+  },
+  {
+    label: "Author",
+    key: "author",
+    checked: true,
+    disabled: false,
+  },
+  {
+    label: "Last published at",
+    key: "last_published_at",
+    checked: true,
+    disabled: false,
+  },
+  {
+    label: "Status",
+    key: "status",
+    checked: true,
+    disabled: false,
+  },
+];
