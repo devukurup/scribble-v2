@@ -83,3 +83,6 @@ gem "react-rails"
 
 # For sorting and reordering objects
 gem "acts_as_list"
+
+# For paginating responses
+gem "kaminari"

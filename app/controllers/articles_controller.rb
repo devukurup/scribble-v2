@@ -4,7 +4,7 @@ class ArticlesController < ApplicationController
   before_action :load_article!, only: %i[show update destroy]
 
   def index
-    @articles = current_user.articles.includes(:category, :user).order("updated_at DESC")
+    @articles = Articles::FilterService.new(current_user, filter_params).process
     @articles_total_count = current_user.articles.count
   end
 

@@ -5,3 +5,6 @@ json.articles @articles do |article|
   json.author article.user.name
   json.category article.category.title
 end
+
+json.articles_total_count @articles_total_count
+json.articles_count @articles.count

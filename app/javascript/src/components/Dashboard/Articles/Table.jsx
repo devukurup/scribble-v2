@@ -3,11 +3,11 @@ import React, { useEffect, useState } from "react";
 import classnames from "classnames";
 import { Table as NeetoUITable } from "neetoui";
 import { useHistory } from "react-router-dom";
+import { DEFAULT_PAGE_NUMBER, PAGINATION_LIMIT } from "src/constants";
 import { isEven } from "src/utils";
 
 import { useUpdateArticles } from "hooks/useUpdateArticles";
 
-import { DEFAULT_PAGE_NUMBER, PAGINATION_LIMIT } from "./constants";
 import { columnData } from "./utils";
 
 const Table = ({
@@ -48,6 +48,7 @@ const Table = ({
     setCurrentPageNumber(
       parseInt(searchParams.get("page") || DEFAULT_PAGE_NUMBER)
     );
+    refetch();
   }, [window.location.search]);
 
   return (

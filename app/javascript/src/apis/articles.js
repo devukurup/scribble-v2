@@ -1,8 +1,15 @@
 import axios from "axios";
+import { DEFAULT_PAGE_NUMBER, PAGINATION_LIMIT } from "src/constants";
 
 const BASE_URL = "/articles";
 
-const list = () => axios.get(BASE_URL);
+const list = ({ page = DEFAULT_PAGE_NUMBER, limit = PAGINATION_LIMIT }) =>
+  axios.get(BASE_URL, {
+    params: {
+      page,
+      limit,
+    },
+  });
 
 const create = payload => axios.post(BASE_URL, { article: payload });
 
