@@ -14,6 +14,7 @@ import { useFetchArticles } from "hooks/useFetchArticles";
 import { STATUSES } from "./constants";
 import ArticleDeleteAlert from "./DeleteAlert";
 import MenuBar from "./MenuBar";
+import SubHeader from "./SubHeader";
 import Table from "./Table";
 
 const Articles = () => {
@@ -88,6 +89,12 @@ const Articles = () => {
             onChange: event => setSearchTerm(event.target.value),
             placeholder: t("header.articles.placeholder"),
           }}
+        />
+        <SubHeader
+          searchTerm={searchTerm}
+          selectedCategories={selectedCategories}
+          setSelectedCategories={setSelectedCategories}
+          totalCount={totalCount}
         />
         <Table
           activeStatus={activeStatus}

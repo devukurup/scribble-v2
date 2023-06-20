@@ -79,6 +79,10 @@
     "delete": {
       "title": "Delete article",
       "message": "You are permanently deleting {{title}}. This action cannot be undone. Are you sure you wish to continue?"
+    },
+    "subHeader": {
+      "searchCount": "{{count}} results for '{{search}}'",
+      "totalCount": "{{count}} articles"
     }
   }
 }
