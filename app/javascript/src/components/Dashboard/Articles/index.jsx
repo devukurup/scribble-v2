@@ -31,6 +31,7 @@ const Articles = () => {
   const debouncedArticleSearchTerm = useDebounce(searchTerm);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedColumns, setSelectedColumns] = useState(COLUMNS);
+  const [selectedArticleRowIds, setSelectedArticleRowIds] = useState([]);
 
   const {
     data: { articles, filtered_articles_count: totalCount },
@@ -93,6 +94,7 @@ const Articles = () => {
         />
         <SubHeader
           searchTerm={searchTerm}
+          selectedArticleRowIds={selectedArticleRowIds}
           selectedCategories={selectedCategories}
           selectedColumns={selectedColumns}
           setSelectedCategories={setSelectedCategories}
@@ -107,10 +109,12 @@ const Articles = () => {
           refetch={refetchArticles}
           selectedCategories={selectedCategories}
           selectedColumns={selectedColumns}
+          selectedRowIds={selectedArticleRowIds}
           setActiveStatus={setActiveStatus}
           setIsDeleteAlertOpen={setIsDeleteAlertOpen}
           setRowToBeDeleted={setRowToBeDeleted}
           setSearchTerm={setSearchTerm}
+          setSelectedRowIds={setSelectedArticleRowIds}
           totalCount={totalCount}
         />
       </div>

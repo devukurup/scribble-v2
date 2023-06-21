@@ -24,9 +24,10 @@ const Table = ({
   setSearchTerm,
   selectedCategories,
   selectedColumns,
+  selectedRowIds,
+  setSelectedRowIds,
 }) => {
   const { update } = useUpdateArticles();
-  const [selectedRowIds, setSelectedRowIds] = useState([]);
   const history = useHistory();
   const [currentPageNumber, setCurrentPageNumber] =
     useState(DEFAULT_PAGE_NUMBER);

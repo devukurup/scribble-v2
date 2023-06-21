@@ -16,7 +16,10 @@
     "delete": "Delete",
     "description": "Description",
     "category": "Category",
-    "saveChanges": "Save changes"
+    "saveChanges": "Save changes",
+    "changeCategory": "Change category",
+    "searchCategory": "Search category",
+    "changeStatus": "Change status"
   },
   "tooltips": {
     "manageArticles": "Manage and list all your KB articles",
@@ -71,6 +74,7 @@
   "articles": {
     "selectCategory": "Select category",
     "publish": "Publish",
+    "draft": "Draft",
     "saveDraft": "Save as draft",
     "placeholders": {
       "body": "Add description here.",
@@ -82,7 +86,8 @@
     },
     "subHeader": {
       "searchCount": "{{count}} results for '{{search}}'",
-      "totalCount": "{{count}} articles"
+      "totalCount": "{{count}} articles",
+      "selectedCount": "{{count}} articles selected of {{totalCount}}"
     }
   }
 }
