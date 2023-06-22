@@ -1,28 +1,61 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-import { Typography } from "@bigbinary/neetoui";
 import { Formik, Form as FormikForm } from "formik";
-import { Button } from "neetoui";
+import { Button, Typography, Spinner } from "neetoui";
 import { Input } from "neetoui/formik";
 import { useTranslation } from "react-i18next";
 
-import {
-  INITIAL_TOUCHED,
-  INITIAL_VALUES,
-  VALIDATION_SCHEMA,
-} from "./constants";
+import siteApi from "apis/site";
+
+import { INITIAL_TOUCHED, VALIDATION_SCHEMA } from "./constants";
 
 const Form = () => {
+  const [title, setTitle] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
   const { t } = useTranslation();
 
-  const handleSubmit = () => {};
+  const fetchSite = async () => {
+    try {
+      setIsLoading(true);
+      const {
+        data: { site },
+      } = await siteApi.show();
+      setTitle(site.title);
+    } catch (error) {
+      logger.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchSite();
+  }, []);
+
+  const handleSubmit = async values => {
+    try {
+      await siteApi.update(values);
+      fetchSite();
+    } catch (error) {
+      logger.error(error);
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div className="flex w-full justify-center">
+        <Spinner />
+      </div>
+    );
+  }
 
   return (
     <Formik
       validateOnBlur
       validateOnChange
       initialTouched={INITIAL_TOUCHED}
-      initialValues={INITIAL_VALUES}
+      initialValues={{ title }}
       validationSchema={VALIDATION_SCHEMA}
       onSubmit={handleSubmit}
     >

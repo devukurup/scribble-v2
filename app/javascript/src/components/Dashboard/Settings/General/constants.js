@@ -2,11 +2,7 @@ import { t } from "i18next";
 import * as yup from "yup";
 
 const MAX_TITLE_LENGTH = 50;
-const VALID_TITLE_REGEX = /^[a-zA-Z0-9 ]+$/;
-
-export const INITIAL_VALUES = {
-  title: "Spinkart",
-};
+const VALID_TITLE_REGEX = /^[a-zA-Z][a-zA-Z0-9& -]*$/;
 
 export const VALIDATION_SCHEMA = yup.object().shape({
   title: yup

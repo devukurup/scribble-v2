@@ -9,7 +9,7 @@ Rails.application.routes.draw do
         delete :bulk_destroy
       end
     end
-    resource :organization, only: %i[show update]
+    resource :site, only: %i[show update]
   end
 
   root "home#index"

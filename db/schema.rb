@@ -40,12 +40,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_22_183348) do
     t.index ["user_id"], name: "index_categories_on_user_id"
   end
 
-  create_table "organizations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "name", null: false
+  create_table "sites", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "title", null: false
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_organizations_on_name", unique: true
+    t.index ["title"], name: "index_sites_on_title", unique: true
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -54,13 +54,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_22_183348) do
     t.string "last_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "organization_id", null: false
+    t.uuid "site_id", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["organization_id"], name: "index_users_on_organization_id"
+    t.index ["site_id"], name: "index_users_on_site_id"
   end
 
   add_foreign_key "articles", "categories"
   add_foreign_key "articles", "users"
   add_foreign_key "categories", "users"
-  add_foreign_key "users", "organizations"
+  add_foreign_key "users", "sites"
 end

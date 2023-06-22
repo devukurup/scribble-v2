@@ -4,5 +4,5 @@ class ApplicationController < ActionController::Base
   include ApiResponders
   include ApiExceptions
   include LoadUser
-  include LoadOrganization
+  include LoadSite
 end
