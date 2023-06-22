@@ -43,7 +43,12 @@ const Form = () => {
                 label={t("common.saveChanges")}
                 type="submit"
               />
-              <Button label={t("common.cancel")} style="text" type="reset" />
+              <Button
+                disabled={!dirty}
+                label={t("common.cancel")}
+                style="text"
+                type="reset"
+              />
             </div>
           </div>
         </FormikForm>

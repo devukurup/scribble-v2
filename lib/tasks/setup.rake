@@ -16,10 +16,16 @@ end
 
 def create_sample_data!
   puts "Seeding with sample data..."
+  create_organization!
   create_user! email: "oliver@example.com"
 end
 
+def create_organization!
+  organization_attributes = { name: "Spinkart" }
+  Organization.create! organization_attributes
+end
+
 def create_user!(options = {})
-  user_attributes = { first_name: "Oliver", last_name: "Smith" }.merge options
+  user_attributes = { first_name: "Oliver", last_name: "Smith", organization_id: Organization.first.id }.merge options
   User.create! user_attributes
 end
