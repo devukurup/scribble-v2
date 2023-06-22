@@ -8,6 +8,7 @@ const { Menu, MenuItem } = Dropdown;
 
 const List = ({ isLoading, categories, handleUpdate }) => {
   const { t } = useTranslation();
+
   if (isLoading) {
     <div className="flex justify-center p-4">
       <Spinner />

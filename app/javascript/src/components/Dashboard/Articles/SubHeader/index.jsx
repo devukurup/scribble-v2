@@ -13,13 +13,21 @@ const SubHeader = ({
   selectedColumns,
   setSelectedColumns,
   selectedArticleRowIds,
+  setSelectedArticleRowIds,
+  setIsDeleteAlertOpen,
+  setIsBulkDelete,
+  refetchArticles,
 }) => (
   <NeetoUISubHeader
     leftActionBlock={
       <Left
+        refetchArticles={refetchArticles}
         searchTerm={searchTerm}
         selectedArticleRowIds={selectedArticleRowIds}
         selectedCategories={selectedCategories}
+        setIsBulkDelete={setIsBulkDelete}
+        setIsDeleteAlertOpen={setIsDeleteAlertOpen}
+        setSelectedArticleRowIds={setSelectedArticleRowIds}
         setSelectedCategories={setSelectedCategories}
         totalCount={totalCount}
       />

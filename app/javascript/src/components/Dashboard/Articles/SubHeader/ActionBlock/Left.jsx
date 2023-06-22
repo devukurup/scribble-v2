@@ -7,6 +7,8 @@ import { isEmpty } from "ramda";
 import { useTranslation } from "react-i18next";
 import { isPresent } from "src/utils";
 
+import articlesApi from "apis/articles";
+
 import Categories from "./Dropdown/Categories";
 import Statuses from "./Dropdown/Statuses";
 
@@ -16,6 +18,10 @@ const Left = ({
   selectedCategories,
   setSelectedCategories,
   selectedArticleRowIds,
+  setSelectedArticleRowIds,
+  setIsDeleteAlertOpen,
+  setIsBulkDelete,
+  refetchArticles,
 }) => {
   const { t } = useTranslation();
 
@@ -24,11 +30,31 @@ const Left = ({
       categories.filter(category => category.id !== id)
     );
 
-  const handleUpdateCategory = () => {};
+  const bulkUpdateArticles = async param => {
+    try {
+      await articlesApi.bulkUpdateArticles({
+        article_ids: selectedArticleRowIds,
+        ...param,
+      });
+      setSelectedArticleRowIds([]);
+      refetchArticles();
+    } catch (error) {
+      logger.error(error);
+    }
+  };
 
-  const handleUpdateStatus = () => {};
+  const handleUpdateCategory = categoryId => {
+    bulkUpdateArticles({ category_id: categoryId });
+  };
 
-  const handleDelete = () => {};
+  const handleUpdateStatus = status => {
+    bulkUpdateArticles({ status });
+  };
+
+  const handleDelete = () => {
+    setIsDeleteAlertOpen(true);
+    setIsBulkDelete(true);
+  };
 
   return (
     <div className="flex items-center justify-center space-x-3">

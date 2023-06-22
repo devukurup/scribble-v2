@@ -32,9 +32,10 @@ const Articles = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedColumns, setSelectedColumns] = useState(COLUMNS);
   const [selectedArticleRowIds, setSelectedArticleRowIds] = useState([]);
+  const [isBulkDelete, setIsBulkDelete] = useState(false);
 
   const {
-    data: { articles, filtered_articles_count: totalCount },
+    data,
     isLoading: isTableLoading,
     refetch: refetchArticles,
   } = useFetchArticles();
@@ -48,7 +49,7 @@ const Articles = () => {
       setIsCategoriesLoading(true);
       const {
         data: { categories },
-      } = await categoriesApi.list({ searchTerm: categorySearchTerm.trim() });
+      } = await categoriesApi.list(categorySearchTerm.trim());
       setCategories(categories);
     } catch (error) {
       logger.error(error);
@@ -93,17 +94,21 @@ const Articles = () => {
           }}
         />
         <SubHeader
+          refetchArticles={refetchArticles}
           searchTerm={searchTerm}
           selectedArticleRowIds={selectedArticleRowIds}
           selectedCategories={selectedCategories}
           selectedColumns={selectedColumns}
+          setIsBulkDelete={setIsBulkDelete}
+          setIsDeleteAlertOpen={setIsDeleteAlertOpen}
+          setSelectedArticleRowIds={setSelectedArticleRowIds}
           setSelectedCategories={setSelectedCategories}
           setSelectedColumns={setSelectedColumns}
-          totalCount={totalCount}
+          totalCount={data?.filtered_articles_count}
         />
         <Table
           activeStatus={activeStatus}
-          articles={articles}
+          articles={data?.articles}
           debouncedSearchTerm={debouncedArticleSearchTerm}
           isLoading={isTableLoading}
           refetch={refetchArticles}
@@ -115,7 +120,7 @@ const Articles = () => {
           setRowToBeDeleted={setRowToBeDeleted}
           setSearchTerm={setSearchTerm}
           setSelectedRowIds={setSelectedArticleRowIds}
-          totalCount={totalCount}
+          totalCount={data?.filtered_articles_count}
         />
       </div>
       <CreateCategory
@@ -124,11 +129,15 @@ const Articles = () => {
         onClose={() => setIsCreateModalOpen(false)}
       />
       <ArticleDeleteAlert
+        isBulkDelete={isBulkDelete}
         isOpen={isDeleteAlertOpen}
         refetch={refetchArticles}
         rowToBeDeleted={rowToBeDeleted}
+        selectedArticleRowIds={selectedArticleRowIds}
+        setIsBulkDelete={setIsBulkDelete}
         setIsOpen={setIsDeleteAlertOpen}
         setRowToBeDeleted={setRowToBeDeleted}
+        setSelectedArticleRowIds={setSelectedArticleRowIds}
       />
     </>
   );

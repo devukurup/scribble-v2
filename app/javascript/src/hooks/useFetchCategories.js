@@ -14,9 +14,7 @@ export const useFetchCategories = () => {
   const refetch = async (searchTerm = "") => {
     try {
       setIsLoading(true);
-      const { data } = await categoriesApi.list({
-        searchTerm: searchTerm.trim(),
-      });
+      const { data } = await categoriesApi.list(searchTerm.trim());
       setData(data.categories);
       setIsError(false);
     } catch (error) {
