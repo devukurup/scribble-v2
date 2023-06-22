@@ -2,8 +2,8 @@ import React from "react";
 
 import { SubHeader as NeetoUISubHeader } from "neetoui/layouts";
 
-import Left from "./Block/Left";
-import Right from "./Block/Right";
+import Left from "./ActionBlock/Left";
+import Right from "./ActionBlock/Right";
 
 const SubHeader = ({
   searchTerm,
@@ -12,18 +12,29 @@ const SubHeader = ({
   setSelectedCategories,
   selectedColumns,
   setSelectedColumns,
+  selectedArticleRowIds,
+  setSelectedArticleRowIds,
+  setIsDeleteAlertOpen,
+  setIsBulkDelete,
+  refetchArticles,
 }) => (
   <NeetoUISubHeader
     leftActionBlock={
       <Left
+        refetchArticles={refetchArticles}
         searchTerm={searchTerm}
+        selectedArticleRowIds={selectedArticleRowIds}
         selectedCategories={selectedCategories}
+        setIsBulkDelete={setIsBulkDelete}
+        setIsDeleteAlertOpen={setIsDeleteAlertOpen}
+        setSelectedArticleRowIds={setSelectedArticleRowIds}
         setSelectedCategories={setSelectedCategories}
         totalCount={totalCount}
       />
     }
     rightActionBlock={
       <Right
+        selectedArticleRowIds={selectedArticleRowIds}
         selectedColumns={selectedColumns}
         setSelectedColumns={setSelectedColumns}
       />

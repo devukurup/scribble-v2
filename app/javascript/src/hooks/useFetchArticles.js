@@ -14,7 +14,7 @@ export const useFetchArticles = () => {
   const search = searchParams.get("search") || "";
   const status = searchParams.get("status") || "";
 
-  const refetch = async ({ selectedCategories = [] }) => {
+  const refetch = async (selectedCategories = []) => {
     const selectedCategoryIds = selectedCategories?.map(({ id }) => id);
     try {
       setIsLoading(true);

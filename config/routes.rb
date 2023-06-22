@@ -3,7 +3,12 @@
 Rails.application.routes.draw do
   constraints(lambda { |req| req.format == :json }) do
     resources :categories, only: %i[index create update]
-    resources :articles, except: %i[new edit]
+    resources :articles, except: %i[new edit] do
+      collection do
+        patch :bulk_update
+        delete :bulk_destroy
+      end
+    end
   end
 
   root "home#index"

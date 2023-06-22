@@ -29,6 +29,20 @@ const update = ({ id, payload }) =>
 
 const destroy = id => axios.delete(`${BASE_URL}/${id}`);
 
-const articlesApi = { list, create, update, show, destroy };
+const bulkUpdateArticles = payload =>
+  axios.patch(`${BASE_URL}/bulk_update`, payload);
+
+const bulkDeleteArticles = payload =>
+  axios.delete(`${BASE_URL}/bulk_destroy`, { data: payload });
+
+const articlesApi = {
+  list,
+  create,
+  update,
+  show,
+  destroy,
+  bulkUpdateArticles,
+  bulkDeleteArticles,
+};
 
 export default articlesApi;

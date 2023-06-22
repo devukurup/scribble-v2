@@ -24,9 +24,10 @@ const Table = ({
   setSearchTerm,
   selectedCategories,
   selectedColumns,
+  selectedRowIds,
+  setSelectedRowIds,
 }) => {
   const { update } = useUpdateArticles();
-  const [selectedRowIds, setSelectedRowIds] = useState([]);
   const history = useHistory();
   const [currentPageNumber, setCurrentPageNumber] =
     useState(DEFAULT_PAGE_NUMBER);
@@ -62,7 +63,7 @@ const Table = ({
     setCurrentPageNumber(
       parseInt(searchParams.get("page") || DEFAULT_PAGE_NUMBER)
     );
-    refetch({ selectedCategories });
+    refetch(selectedCategories);
   }, [window.location.search]);
 
   useEffect(() => {
@@ -76,7 +77,7 @@ const Table = ({
   }, [debouncedSearchTerm, activeStatus]);
 
   useEffect(() => {
-    refetch({ selectedCategories });
+    refetch(selectedCategories);
   }, [selectedCategories]);
 
   const filterColumns = () => {

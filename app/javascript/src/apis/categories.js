@@ -2,7 +2,7 @@ import axios from "axios";
 
 const BASE_URL = "/categories";
 
-const list = ({ searchTerm }) =>
+const list = searchTerm =>
   axios.get(BASE_URL, { params: { search_term: searchTerm } });
 
 const create = payload => axios.post(BASE_URL, { category: payload });
