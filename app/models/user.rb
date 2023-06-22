@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   has_many :categories, -> { order(position: :asc) }
   has_many :articles
+  belongs_to :organization
 
   validates :email, presence: true, uniqueness: true, format: { with: VALID_EMAIL_REGEX }
   validates :first_name, presence: true, length: { maximum: MAX_NAME_LENGTH }
