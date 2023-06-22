@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_17_180812) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_22_183348) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -40,16 +40,27 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_17_180812) do
     t.index ["user_id"], name: "index_categories_on_user_id"
   end
 
+  create_table "sites", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "title", null: false
+    t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["title"], name: "index_sites_on_title", unique: true
+  end
+
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", null: false
     t.string "first_name", null: false
     t.string "last_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "site_id", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["site_id"], name: "index_users_on_site_id"
   end
 
   add_foreign_key "articles", "categories"
   add_foreign_key "articles", "users"
   add_foreign_key "categories", "users"
+  add_foreign_key "users", "sites"
 end
