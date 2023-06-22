@@ -86,3 +86,6 @@ gem "acts_as_list"
 
 # For paginating responses
 gem "kaminari"
+
+# For securing password
+gem "bcrypt", "~> 3.1.13"
