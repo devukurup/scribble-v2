@@ -27,6 +27,18 @@ class ArticlesController < ApplicationController
     render_notice(t("successfully_deleted", entity: "Article"))
   end
 
+  def bulk_destroy
+    Articles::BulkDeleteService.new(current_user, bulk_params).process
+
+    render_notice(t("successfully_deleted", entity: "Articles"))
+  end
+
+  def bulk_update
+    Articles::BulkUpdateService.new(current_user, bulk_params).process
+
+    render_notice(t("successfully_updated", entity: "Articles"))
+  end
+
   private
 
     def article_params
@@ -39,5 +51,9 @@ class ArticlesController < ApplicationController
 
     def filter_params
       params.permit(:status, :search_term, :page, :limit, category_ids: [])
+    end
+
+    def bulk_params
+      params.permit(:status, :category_id, article_ids: [])
     end
 end
