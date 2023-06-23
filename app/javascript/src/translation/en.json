@@ -19,7 +19,10 @@
     "saveChanges": "Save changes",
     "changeCategory": "Change category",
     "searchCategory": "Search category",
-    "changeStatus": "Change status"
+    "changeStatus": "Change status",
+    "password": "Password",
+    "changePassword": "Change password",
+    "enterPassword": "Enter password"
   },
   "tooltips": {
     "manageArticles": "Manage and list all your KB articles",
@@ -49,7 +52,9 @@
   "validations": {
     "required": "{{field}} is required",
     "maximumLength": "{{field}} shouldn't exceed the maximum limit",
-    "invalidPattern": "Enter a valid {{field}}"
+    "invalidPattern": "Enter a valid {{field}}",
+    "invalidPassword": "Include at least {{letterCount}} letter and {{digitCount}} number",
+    "minPasswordCharacters": "Have at least {{count}} characters"
   },
   "settingsDescription": {
     "general": "Configure general settings of your EUI.",
@@ -69,6 +74,16 @@
       "inputLabel": "Site title",
       "placeholder": "Enter site title",
       "inputDescription": "Customize the site name which is used to show the site name in  Open Graph Tags."
+    },
+    "redirections": {
+      "title": "Redirections",
+      "description": "Create and configure redirection rules to send users from old links to new links. All redirections are performed with 301 status codes to be SEO friendly",
+      "from": "From",
+      "to": "To"
+    },
+    "security": {
+      "description": "Configure security related settings for your site.",
+      "switchLabel": "Password protect your site"
     }
   },
   "articles": {
