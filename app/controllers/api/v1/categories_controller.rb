@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CategoriesController < ApplicationController
+class Api::V1::CategoriesController < ApplicationController
   before_action :load_category!, only: %i[update]
 
   def index

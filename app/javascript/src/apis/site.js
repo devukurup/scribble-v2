@@ -1,6 +1,7 @@
 import axios from "axios";
+import { API_V1_BASE_URL } from "src/constants";
 
-const BASE_URL = "/site";
+const BASE_URL = `${API_V1_BASE_URL}/site`;
 
 const show = () => axios.get(BASE_URL);
 

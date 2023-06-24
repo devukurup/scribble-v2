@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class SitesController < ApplicationController
+class Api::V1::SitesController < ApplicationController
   before_action :load_site, only: %i[show update]
 
   def show

@@ -1,7 +1,11 @@
 import axios from "axios";
-import { DEFAULT_PAGE_NUMBER, PAGINATION_LIMIT } from "src/constants";
+import {
+  API_V1_BASE_URL,
+  DEFAULT_PAGE_NUMBER,
+  PAGINATION_LIMIT,
+} from "src/constants";
 
-const BASE_URL = "/articles";
+const BASE_URL = `${API_V1_BASE_URL}/articles`;
 
 const list = ({
   page = DEFAULT_PAGE_NUMBER,
