@@ -21,7 +21,8 @@ export const NAV_LINKS = [
   {
     label: t("common.preview"),
     description: t("tooltips.launchPreview"),
-    to: "/eui",
+    to: "/public/articles",
+    target: "_blank",
     icon: ExternalLink,
   },
 ];

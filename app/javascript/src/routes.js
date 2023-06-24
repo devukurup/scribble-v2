@@ -1,6 +1,5 @@
 const routes = {
   dashboard: "/",
-  preview: "/eui",
   articles: {
     index: "/articles",
     new: "/articles/new",
@@ -12,6 +11,9 @@ const routes = {
     redirections: "/settings/redirections",
     security: "/settings/security",
     manageCategories: "/settings/manage-categories",
+  },
+  public: {
+    articles: "/public/articles",
   },
 };
 
