@@ -2,13 +2,13 @@
 
 require "test_helper"
 
-class SitesControllerTest < ActionDispatch::IntegrationTest
+class Api::V1::SitesControllerTest < ActionDispatch::IntegrationTest
   def setup
     @site = create(:site)
   end
 
   def test_should_show_site
-    get site_path, headers: headers()
+    get(api_v1_site_path, headers:)
 
     assert_response :success
     assert_equal @site.title, response_json["site"]["title"]
@@ -16,7 +16,7 @@ class SitesControllerTest < ActionDispatch::IntegrationTest
 
   def test_should_update_site
     new_title = "Updated title"
-    put site_path, params: { site: { title: new_title } }, headers: headers()
+    put(api_v1_site_path, params: { site: { title: new_title } }, headers:)
 
     assert_response :success
     assert_equal new_title, @site.reload.title
