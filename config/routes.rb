@@ -12,6 +12,12 @@ Rails.application.routes.draw do
           end
         end
         resource :site, only: %i[show update]
+
+        namespace :public do
+          resources :sessions, only: :create
+          resources :categories, only: :index
+          resources :articles, only: %i[index show], param: :slug
+        end
       end
     end
   end
