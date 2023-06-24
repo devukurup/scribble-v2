@@ -9,9 +9,11 @@ class Site < ApplicationRecord
   has_one :user
 
   has_secure_password validations: false
+  has_secure_token :authentication_token
 
   validates :title, presence: true, uniqueness: true, length: { maximum: MAX_TITLE_LENGTH },
     format: { with: VALID_TITLE_REGEX }
+  validates :authentication_token, uniqueness: true
   validates :password, length: { minimum: MINIMUM_PASSWORD_LENGTH }, format: { with: VALID_PASSWORD_REGEX }, if: -> {
  password.present? }
 end
