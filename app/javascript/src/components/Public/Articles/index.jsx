@@ -3,6 +3,7 @@ import Sidebar from "./Sidebar";
 import { PageLoader } from "neetoui";
 import categoriesApi from "apis/public/categories";
 import { useParams, useHistory } from "react-router-dom";
+import Content from "./Content";
 
 const Articles = () => {
   const [categories, setCategories] = useState([]);
@@ -42,8 +43,9 @@ const Articles = () => {
   }
 
   return (
-    <div>
+    <div className="flex">
       <Sidebar categories={categories} />
+      <Content />
     </div>
   );
 };
