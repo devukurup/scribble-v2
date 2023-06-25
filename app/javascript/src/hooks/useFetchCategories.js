@@ -15,7 +15,7 @@ export const useFetchCategories = () => {
     try {
       setIsLoading(true);
       const { data } = await categoriesApi.list(searchTerm.trim());
-      setData(data.categories);
+      setData(data);
       setIsError(false);
     } catch (error) {
       logger.error(error);

@@ -12,7 +12,7 @@ import List from "./List";
 const ManageCategories = () => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
-  const { data: categories, isLoading, refetch } = useFetchCategories();
+  const { data, isLoading, refetch } = useFetchCategories();
 
   const { t } = useTranslation();
 
@@ -40,7 +40,9 @@ const ManageCategories = () => {
           style="body2"
           weight="normal"
         >
-          {t("settings.manageCategories.count", { count: 7 })}
+          {t("settings.manageCategories.count", {
+            count: data?.categories_count,
+          })}
         </Typography>
         <Button
           icon={Plus}
@@ -51,7 +53,11 @@ const ManageCategories = () => {
           onClick={() => setIsCreateModalOpen(true)}
         />
       </div>
-      <List categories={categories} isLoading={isLoading} refetch={refetch} />
+      <List
+        categories={data?.categories}
+        isLoading={isLoading}
+        refetch={refetch}
+      />
       <Create
         isOpen={isCreateModalOpen}
         refetch={refetch}

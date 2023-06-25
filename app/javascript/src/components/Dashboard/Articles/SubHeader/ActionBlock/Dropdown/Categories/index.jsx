@@ -11,7 +11,7 @@ import List from "./List";
 
 const Categories = ({ handleUpdate }) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const { data: categories, isLoading, refetch } = useFetchCategories();
+  const { data, isLoading, refetch } = useFetchCategories();
   const debouncedSearchTerm = useDebounce(searchTerm);
 
   const { t } = useTranslation();
@@ -34,7 +34,7 @@ const Categories = ({ handleUpdate }) => {
           onChange={event => setSearchTerm(event.target.value)}
         />
         <List
-          categories={categories}
+          categories={data?.categories}
           handleUpdate={handleUpdate}
           isLoading={isLoading}
         />

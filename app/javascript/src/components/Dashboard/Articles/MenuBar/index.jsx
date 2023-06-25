@@ -6,8 +6,7 @@ import { MenuBar as NeetoUIMenuBar } from "neetoui/layouts";
 import { useTranslation } from "react-i18next";
 
 import Categories from "./Categories";
-
-import { STATUSES } from "../constants";
+import { statuses } from "./utils";
 
 const MenuBar = ({
   activeStatus,
@@ -22,6 +21,7 @@ const MenuBar = ({
   debouncedSearchTerm,
   selectedCategories,
   setSelectedCategories,
+  articles,
 }) => {
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
 
@@ -34,7 +34,7 @@ const MenuBar = ({
 
   return (
     <NeetoUIMenuBar showMenu={isMenuBarOpen} title={t("common.articles")}>
-      {STATUSES.map(({ label, count }) => (
+      {statuses(articles).map(({ label, count }) => (
         <NeetoUIMenuBar.Block
           active={activeStatus === label}
           count={count}
