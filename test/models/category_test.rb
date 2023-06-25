@@ -46,4 +46,12 @@ class CategoryTest < ActiveSupport::TestCase
       assert_includes @category.errors.full_messages, "Title is invalid"
     end
   end
+
+  def test_article_count_increments_by_one_on_associating_a_category
+    @category.save!
+    assert_nil @category.articles_count
+
+    test_article = create(:article, category: @category)
+    assert_equal @category.articles.count, @category.articles_count
+  end
 end
