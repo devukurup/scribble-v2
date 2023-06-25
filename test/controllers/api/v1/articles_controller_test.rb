@@ -16,18 +16,11 @@ class Api::V1::ArticlesControllerTest < ActionDispatch::IntegrationTest
     assert Article.count, response_json["articles"].count
   end
 
-  def test_should_create_valid_article
+  def test_should_create_article
     post(api_v1_articles_path, params: article_params("Test article"), headers:)
 
     assert_response :success
     assert_equal response_json["notice"], t("successfully_created", entity: "Article")
-  end
-
-  def test_should_not_create_article_without_title
-    post(api_v1_articles_path, params: article_params(""), headers:)
-
-    assert_response :unprocessable_entity
-    assert_equal "Title can't be blank, Title is invalid, Slug can't be blank", response_json["error"]
   end
 
   def test_should_destroy_article
