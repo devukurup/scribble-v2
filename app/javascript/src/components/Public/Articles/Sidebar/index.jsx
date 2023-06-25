@@ -1,30 +1,15 @@
-import React, { useEffect, useState } from "react";
-import categoriesApi from "apis/public/categories";
-import { Spinner, Typography } from "neetoui";
+import React, { useState } from "react";
+import { Typography } from "neetoui";
 import Item from "./Item";
 import { DEFAULT_ACTIVE_INDEX } from "./constants";
 import { Down, Right } from "neetoicons";
 import { isCategoryActive } from "./utils";
 import { useParams } from "react-router-dom";
 
-const Sidebar = () => {
-  const [categories, setCategories] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+const Sidebar = ({ categories }) => {
   const [activeIndexes, setActiveIndexes] = useState([DEFAULT_ACTIVE_INDEX]);
 
   const { slug } = useParams();
-
-  const fetchCategories = async () => {
-    try {
-      setIsLoading(true);
-      const { data } = await categoriesApi.list();
-      setCategories(data?.categories);
-    } catch (error) {
-      logger.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const handleActiveIndexes = index => {
     activeIndexes.includes(index)
@@ -33,18 +18,6 @@ const Sidebar = () => {
         )
       : setActiveIndexes(activeIndexes => [...activeIndexes, index]);
   };
-
-  useEffect(() => {
-    fetchCategories();
-  }, []);
-
-  if (isLoading) {
-    return (
-      <div className="flex w-full justify-center">
-        <Spinner />
-      </div>
-    );
-  }
 
   return (
     <div className="scribble-sidebar flex flex-shrink-0 flex-col overflow-y-auto overflow-x-hidden p-2">
