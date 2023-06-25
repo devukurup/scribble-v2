@@ -2,20 +2,7 @@ import { isEditorEmpty } from "@bigbinary/neeto-editor";
 import { t } from "i18next";
 import * as yup from "yup";
 
-export const STATUSES = [
-  {
-    label: t("statuses.all"),
-    count: 10,
-  },
-  {
-    label: t("statuses.published"),
-    count: 20,
-  },
-  {
-    label: t("statuses.draft"),
-    count: 30,
-  },
-];
+export const DEFAULT_ACTIVE_STATUS = t("statuses.all");
 
 export const EDITOR_ADDONS = [
   "highlight",

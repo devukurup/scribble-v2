@@ -7,3 +7,6 @@ json.articles @service.articles do |article|
 end
 
 json.filtered_articles_count @service.filtered_articles_count
+json.all_articles_count Article.count
+json.published_articles_count Article.published.count
+json.draft_articles_count Article.draft.count

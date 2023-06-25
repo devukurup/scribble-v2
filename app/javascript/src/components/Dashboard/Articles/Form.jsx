@@ -17,7 +17,7 @@ const { Menu, MenuItem } = ActionDropdown;
 const Form = ({ handleSubmit, initialValues, onClose, initialStatus }) => {
   const [status, setStatus] = useState(initialStatus);
 
-  const { data: categories, isLoading } = useFetchCategories();
+  const { data, isLoading } = useFetchCategories();
 
   const { t } = useTranslation();
 
@@ -45,7 +45,7 @@ const Form = ({ handleSubmit, initialValues, onClose, initialStatus }) => {
                 <Select
                   isSearchable
                   name="category"
-                  options={formatCategories(categories)}
+                  options={formatCategories(data?.categories)}
                   placeholder={t("articles.selectCategory")}
                 />
               </div>

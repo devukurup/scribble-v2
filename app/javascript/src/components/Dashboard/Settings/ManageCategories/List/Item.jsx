@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 const { Menu, MenuItem } = Dropdown;
 
 const Item = ({ provided, category, handleEdit, isDragging }) => {
-  const { title } = category;
+  const { title, articles_count: articlesCount } = category;
   const { t } = useTranslation();
 
   return (
@@ -42,7 +42,7 @@ const Item = ({ provided, category, handleEdit, isDragging }) => {
             style="body2"
             weight="normal"
           >
-            6 articles
+            {articlesCount} articles
           </Typography>
         </div>
       </div>

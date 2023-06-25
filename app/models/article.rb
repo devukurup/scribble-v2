@@ -7,7 +7,7 @@ class Article < ApplicationRecord
   enum :status, { draft: "draft", published: "published" }, default: :draft
 
   belongs_to :user
-  belongs_to :category
+  belongs_to :category, counter_cache: true
 
   validates :title, presence: true, length: { maximum: MAX_TITLE_LENGTH }, format: { with: VALID_TITLE_REGEX }
   validates_presence_of :body, :status

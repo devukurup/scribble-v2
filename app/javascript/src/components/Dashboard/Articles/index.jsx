@@ -11,14 +11,14 @@ import CreateCategory from "Dashboard/Categories/Create";
 import useDebounce from "hooks/useDebounce";
 import { useFetchArticles } from "hooks/useFetchArticles";
 
-import { COLUMNS, STATUSES } from "./constants";
+import { COLUMNS, DEFAULT_ACTIVE_STATUS } from "./constants";
 import ArticleDeleteAlert from "./DeleteAlert";
 import MenuBar from "./MenuBar";
 import SubHeader from "./SubHeader";
 import Table from "./Table";
 
 const Articles = () => {
-  const [activeStatus, setActiveStatus] = useState(STATUSES[0].label);
+  const [activeStatus, setActiveStatus] = useState(DEFAULT_ACTIVE_STATUS);
   const [isMenuBarOpen, setIsMenuBarOpen] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -62,6 +62,7 @@ const Articles = () => {
     <>
       <MenuBar
         activeStatus={activeStatus}
+        articles={data}
         categories={categories}
         debouncedSearchTerm={debouncedCategorySearchTerm}
         fetchCategories={fetchCategories}

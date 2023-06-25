@@ -8,7 +8,7 @@ import { isEven } from "src/utils";
 
 import { useUpdateArticles } from "hooks/useUpdateArticles";
 
-import { STATUSES } from "./constants";
+import { DEFAULT_ACTIVE_STATUS } from "./constants";
 import { columnData, setUrlParams } from "./utils";
 
 const Table = ({
@@ -58,7 +58,9 @@ const Table = ({
   useEffect(() => {
     const urlStatus = searchParams.get("status");
     const urlSearchTerm = searchParams.get("search");
-    urlStatus ? setActiveStatus(urlStatus) : setActiveStatus(STATUSES[0].label);
+    urlStatus
+      ? setActiveStatus(urlStatus)
+      : setActiveStatus(DEFAULT_ACTIVE_STATUS);
     urlSearchTerm ? setSearchTerm(urlSearchTerm) : setSearchTerm("");
     setCurrentPageNumber(
       parseInt(searchParams.get("page") || DEFAULT_PAGE_NUMBER)
