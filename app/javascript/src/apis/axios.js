@@ -2,7 +2,11 @@ import axios from "axios";
 import { t } from "i18next";
 import { Toastr } from "neetoui";
 
+import { getFromSessionStorage } from "helpers/session";
+
 axios.defaults.baseURL = "/";
+
+const authToken = getFromSessionStorage("authToken");
 
 const setAuthHeaders = (setIsLoading = () => null) => {
   axios.defaults.headers = {
@@ -12,6 +16,9 @@ const setAuthHeaders = (setIsLoading = () => null) => {
       .querySelector('[name="csrf-token"]')
       .getAttribute("content"),
   };
+
+  authToken && (axios.defaults.headers["X-Auth-Token"] = authToken);
+
   setIsLoading(false);
 };
 

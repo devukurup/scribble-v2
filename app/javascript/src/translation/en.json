@@ -104,5 +104,13 @@
       "totalCount": "{{count}} articles",
       "selectedCount": "{{count}} articles selected of {{totalCount}}"
     }
+  },
+  "public": {
+    "login": {
+      "title": "{{title}} is password protected!",
+      "description": "Enter the password to gain access to {{title}}.",
+      "placeholder": "Enter password here.",
+      "continue": "Continue"
+    }
   }
 }

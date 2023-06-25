@@ -5,7 +5,7 @@ module LoadSite
 
   private
 
-    def load_site
+    def load_site!
       @site = Site.first!
     end
 end

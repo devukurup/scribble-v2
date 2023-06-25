@@ -4,3 +4,6 @@ en:
   successfully_deleted: "%{entity} was successfully deleted!"
   not_found: "Couldn't find %{entity}"
   generic_error: "Something went wrong. Please try again later."
+  session:
+    could_not_auth: "Could not authenticate with the provided credentials."
+    incorrect_password: "Incorrect password, try again."

@@ -5,4 +5,5 @@ class ApplicationController < ActionController::Base
   include ApiExceptions
   include LoadUser
   include LoadSite
+  include Authenticatable
 end

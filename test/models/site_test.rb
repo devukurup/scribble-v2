@@ -72,4 +72,10 @@ class SiteTest < ActiveSupport::TestCase
       assert_includes @site.errors.full_messages, "Password is invalid"
     end
   end
+
+  def test_site_should_have_unique_auth_token
+    test_site = create(:site)
+
+    assert_not_same @site.authentication_token, test_site.authentication_token
+  end
 end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ArticlesController < ApplicationController
+class Api::V1::ArticlesController < ApplicationController
   before_action :load_article!, only: %i[show update destroy]
 
   def index
