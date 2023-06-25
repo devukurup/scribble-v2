@@ -45,7 +45,7 @@ const Articles = () => {
   return (
     <div className="flex">
       <Sidebar categories={categories} />
-      <Content />
+      {slug && <Content />}
     </div>
   );
 };
