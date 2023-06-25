@@ -79,7 +79,11 @@
       "title": "Redirections",
       "description": "Create and configure redirection rules to send users from old links to new links. All redirections are performed with 301 status codes to be SEO friendly",
       "from": "From",
-      "to": "To"
+      "to": "To",
+      "delete": {
+        "title": "Delete redirection",
+        "message": "You are permanently deleting redirection from {{from}} to {{to}}. This action cannot be undone. Are you sure you wish to continue?"
+      }
     },
     "security": {
       "description": "Configure security related settings for your site.",
