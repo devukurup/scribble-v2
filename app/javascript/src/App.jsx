@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 
 import { PageLoader } from "@bigbinary/neetoui";
+import { QueryClientProvider, QueryClient } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
@@ -20,6 +22,8 @@ const App = () => {
     setAuthHeaders(setIsLoading);
   }, []);
 
+  const queryClient = new QueryClient();
+
   if (isLoading) {
     return (
       <div className="h-screen">
@@ -29,14 +33,17 @@ const App = () => {
   }
 
   return (
-    <Router>
-      <ToastContainer />
-      <Switch>
-        <Route exact component={Login} path="/login" />
-        <Route component={Public} path="/public/articles" />
-        <Route component={Dashboard} path="/" />
-      </Switch>
-    </Router>
+    <QueryClientProvider client={queryClient}>
+      <Router>
+        <ToastContainer />
+        <Switch>
+          <Route exact component={Login} path="/login" />
+          <Route component={Public} path="/public/articles" />
+          <Route component={Dashboard} path="/" />
+        </Switch>
+      </Router>
+      <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+    </QueryClientProvider>
   );
 };
 
