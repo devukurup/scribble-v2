@@ -12,6 +12,7 @@ Rails.application.routes.draw do
           end
         end
         resource :site, only: %i[show update]
+        resources :redirections, except: %i[new edit show]
 
         namespace :public do
           resources :sessions, only: :create
