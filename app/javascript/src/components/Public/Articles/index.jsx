@@ -1,7 +1,12 @@
 import React from "react";
+import Sidebar from "./Sidebar";
 
 const Articles = () => {
-  return <div>Articles</div>;
+  return (
+    <div>
+      <Sidebar />
+    </div>
+  );
 };
 
 export default Articles;
