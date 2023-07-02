@@ -7,6 +7,7 @@ import { Button, PageLoader } from "neetoui";
 import { Textarea, Select } from "neetoui/formik";
 import { useTranslation } from "react-i18next";
 
+import categoriesApi from "apis/categories";
 import { useFetchCategories } from "hooks/useFetchCategories";
 
 import { VALIDATION_SCHEMA, EDITOR_ADDONS } from "./constants";
@@ -16,10 +17,26 @@ const { Menu, MenuItem } = ActionDropdown;
 
 const Form = ({ handleSubmit, initialValues, onClose, initialStatus }) => {
   const [status, setStatus] = useState(initialStatus);
+  const [input, setInput] = useState(initialValues);
 
-  const { data, isLoading } = useFetchCategories();
+  const { data, isLoading, refetch } = useFetchCategories();
 
   const { t } = useTranslation();
+
+  const handleCreate = async ({ title, values }) => {
+    try {
+      const {
+        data: { category },
+      } = await categoriesApi.create({ title: title.trim() });
+      refetch();
+      setInput({
+        ...values,
+        category: { label: category?.title, value: category?.id },
+      });
+    } catch (error) {
+      logger.error(error);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -32,21 +49,24 @@ const Form = ({ handleSubmit, initialValues, onClose, initialStatus }) => {
   return (
     <div className="my-4 w-full">
       <Formik
+        enableReinitialize
         validateOnBlur
         validateOnChange
-        initialValues={initialValues}
+        initialValues={input}
         validationSchema={VALIDATION_SCHEMA}
         onSubmit={values => handleSubmit({ ...values, status })}
       >
-        {({ errors, setFieldValue, isValid, dirty, isSubmitting }) => (
+        {({ errors, setFieldValue, isValid, dirty, isSubmitting, values }) => (
           <FormikForm>
             <div className="mx-4 flex items-center justify-between">
               <div className="w-96">
                 <Select
+                  isCreateable
                   isSearchable
                   name="category"
                   options={formatCategories(data?.categories)}
                   placeholder={t("articles.selectCategory")}
+                  onCreateOption={title => handleCreate({ title, values })}
                 />
               </div>
               <div className="flex space-x-3">

@@ -8,8 +8,7 @@ class Api::V1::CategoriesController < ApplicationController
   end
 
   def create
-    current_user.categories.create!(category_params)
-    render_notice(t("successfully_created", entity: "Category"))
+    @category = current_user.categories.create!(category_params)
   end
 
   def update
