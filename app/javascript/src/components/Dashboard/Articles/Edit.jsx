@@ -13,6 +13,8 @@ import DeleteAlert from "./DeleteAlert";
 import Form from "./Form";
 import { formattedDateTime } from "./utils";
 
+import SidebarWrapper from "../SidebarWrapper";
+
 const Edit = () => {
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
 
@@ -57,7 +59,7 @@ const Edit = () => {
   }
 
   return (
-    <>
+    <SidebarWrapper>
       <Form
         isEdit
         handleDelete={handleDelete}
@@ -84,7 +86,7 @@ const Edit = () => {
         rowToBeDeleted={article}
         onClose={() => setIsDeleteAlertOpen(false)}
       />
-    </>
+    </SidebarWrapper>
   );
 };
 

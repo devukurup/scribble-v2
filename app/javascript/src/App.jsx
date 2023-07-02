@@ -3,16 +3,24 @@ import React, { useEffect, useState } from "react";
 import { PageLoader } from "@bigbinary/neetoui";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
-import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
+import {
+  Switch,
+  Route,
+  BrowserRouter as Router,
+  Redirect,
+} from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import routes from "src/routes";
 
 import { setAuthHeaders, registerIntercepts } from "apis/axios";
 import "common/i18n";
 import { initializeLogger } from "common/logger";
 import ErrorBoundary from "components/commons/ErrorBoundary";
-import Dashboard from "components/Dashboard";
 import Public from "components/Public";
 import Login from "components/Public/Login";
+
+import { DASHBOARD_ROUTES } from "./components/Dashboard/constants";
+import PageNotFound from "./PageNotFound";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -40,8 +48,21 @@ const App = () => {
         <ErrorBoundary>
           <Switch>
             <Route exact component={Login} path="/login" />
-            <Route component={Public} path="/public/articles" />
-            <Route component={Dashboard} path="/" />
+            <Route component={Public} path="/public/" />
+            {DASHBOARD_ROUTES.map(({ path, component, isExact }) => (
+              <Route
+                component={component}
+                exact={isExact}
+                key={path}
+                path={path}
+              />
+            ))}
+            <Redirect
+              exact
+              from={routes.dashboard}
+              to={routes.articles.index}
+            />
+            <Route path="*" render={() => <PageNotFound route="/" />} />
           </Switch>
         </ErrorBoundary>
       </Router>

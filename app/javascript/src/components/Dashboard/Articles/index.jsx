@@ -17,6 +17,8 @@ import MenuBar from "./MenuBar";
 import SubHeader from "./SubHeader";
 import Table from "./Table";
 
+import SidebarWrapper from "../SidebarWrapper";
+
 const Articles = () => {
   const [activeStatus, setActiveStatus] = useState(DEFAULT_ACTIVE_STATUS);
   const [isMenuBarOpen, setIsMenuBarOpen] = useState(true);
@@ -69,7 +71,7 @@ const Articles = () => {
   };
 
   return (
-    <>
+    <SidebarWrapper>
       <MenuBar
         activeStatus={activeStatus}
         articles={data}
@@ -148,7 +150,7 @@ const Articles = () => {
         selectedArticleRowIds={selectedArticleRowIds}
         onClose={handleClose}
       />
-    </>
+    </SidebarWrapper>
   );
 };
 

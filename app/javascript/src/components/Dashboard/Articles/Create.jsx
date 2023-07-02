@@ -9,6 +9,8 @@ import articlesApi from "apis/articles";
 import { INITIAL_VALUES, STATUS } from "./constants";
 import Form from "./Form";
 
+import SidebarWrapper from "../SidebarWrapper";
+
 const Create = () => {
   const history = useHistory();
 
@@ -30,12 +32,14 @@ const Create = () => {
   };
 
   return (
-    <Form
-      handleSubmit={handleSubmit}
-      initialStatus={t("articles.publish")}
-      initialValues={INITIAL_VALUES}
-      onClose={() => history.push(routes.articles.index)}
-    />
+    <SidebarWrapper>
+      <Form
+        handleSubmit={handleSubmit}
+        initialStatus={t("articles.publish")}
+        initialValues={INITIAL_VALUES}
+        onClose={() => history.push(routes.articles.index)}
+      />
+    </SidebarWrapper>
   );
 };
 
