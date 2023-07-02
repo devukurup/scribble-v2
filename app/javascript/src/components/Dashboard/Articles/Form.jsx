@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { FormikEditor } from "@bigbinary/neeto-editor";
 import { ActionDropdown } from "@bigbinary/neetoui";
 import { Formik, Form as FormikForm } from "formik";
-import { Button, PageLoader } from "neetoui";
+import { Button } from "neetoui";
 import { Textarea, Select } from "neetoui/formik";
 import { useTranslation } from "react-i18next";
 
@@ -13,38 +13,47 @@ import { useFetchCategories } from "hooks/useFetchCategories";
 import { VALIDATION_SCHEMA, EDITOR_ADDONS } from "./constants";
 import { formatCategories } from "./utils";
 
+import { CATEGORY_VALIDATION_SCHEMA } from "../Categories/constants";
+
 const { Menu, MenuItem } = ActionDropdown;
 
 const Form = ({ handleSubmit, initialValues, onClose, initialStatus }) => {
   const [status, setStatus] = useState(initialStatus);
-  const [input, setInput] = useState(initialValues);
 
   const { data, isLoading, refetch } = useFetchCategories();
 
   const { t } = useTranslation();
 
-  const handleCreate = async ({ title, values }) => {
+  const validateCategoryTitle = async title => {
     try {
-      const {
-        data: { category },
-      } = await categoriesApi.create({ title: title.trim() });
-      refetch();
-      setInput({
-        ...values,
-        category: { label: category?.title, value: category?.id },
-      });
+      await CATEGORY_VALIDATION_SCHEMA.validate(title);
+
+      return undefined;
+    } catch (error) {
+      return error.message;
+    }
+  };
+
+  const handleCreate = async ({ title, setFieldValue, setErrors, errors }) => {
+    try {
+      const validationError = await validateCategoryTitle(title);
+      if (!validationError) {
+        const {
+          data: { category },
+        } = await categoriesApi.create({ title: title.trim() });
+        refetch();
+
+        setFieldValue("category", {
+          label: category?.title,
+          value: category?.id,
+        });
+      } else {
+        setErrors({ ...errors, category: validationError });
+      }
     } catch (error) {
       logger.error(error);
     }
   };
-
-  if (isLoading) {
-    return (
-      <div className="h-screen">
-        <PageLoader />
-      </div>
-    );
-  }
 
   return (
     <div className="my-4 w-full">
@@ -52,21 +61,36 @@ const Form = ({ handleSubmit, initialValues, onClose, initialStatus }) => {
         enableReinitialize
         validateOnBlur
         validateOnChange
-        initialValues={input}
+        initialValues={initialValues}
         validationSchema={VALIDATION_SCHEMA}
         onSubmit={values => handleSubmit({ ...values, status })}
       >
-        {({ errors, setFieldValue, isValid, dirty, isSubmitting, values }) => (
+        {({
+          errors,
+          setFieldValue,
+          isValid,
+          dirty,
+          isSubmitting,
+          setErrors,
+        }) => (
           <FormikForm>
             <div className="mx-4 flex items-center justify-between">
               <div className="w-96">
                 <Select
                   isCreateable
                   isSearchable
+                  isLoading={isLoading}
                   name="category"
                   options={formatCategories(data?.categories)}
                   placeholder={t("articles.selectCategory")}
-                  onCreateOption={title => handleCreate({ title, values })}
+                  onCreateOption={title =>
+                    handleCreate({
+                      title,
+                      setErrors,
+                      errors,
+                      setFieldValue,
+                    })
+                  }
                 />
               </div>
               <div className="flex space-x-3">

@@ -41,7 +41,7 @@ export const VALIDATION_SCHEMA = yup.object().shape({
 export const INITIAL_VALUES = {
   body: "<p></p>",
   title: "",
-  category: { label: "", value: "" },
+  category: "",
 };
 
 export const STATUS = {
