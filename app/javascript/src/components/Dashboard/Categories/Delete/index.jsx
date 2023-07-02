@@ -56,7 +56,7 @@ const Delete = ({
             <Typography style="body1">
               {t("category.delete.description", { title })}
             </Typography>
-            {!isNil(articles_count) && (
+            {articles_count > 0 && (
               <Callout icon={Warning} style="danger">
                 <Typography style="body1" weight="semibold">
                   {t("category.delete.newCategoryAlert", {
