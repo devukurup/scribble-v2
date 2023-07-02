@@ -119,7 +119,7 @@ const Articles = () => {
         />
         <Table
           activeStatus={activeStatus}
-          articles={data?.articles}
+          data={data}
           debouncedSearchTerm={debouncedArticleSearchTerm}
           isLoading={isTableLoading}
           refetch={refetchArticles}
@@ -130,6 +130,7 @@ const Articles = () => {
           setIsDeleteAlertOpen={setIsDeleteAlertOpen}
           setRowToBeDeleted={setRowToBeDeleted}
           setSearchTerm={setSearchTerm}
+          setSelectedCategories={setSelectedCategories}
           setSelectedRowIds={setSelectedArticleRowIds}
           totalCount={data?.filtered_articles_count}
         />

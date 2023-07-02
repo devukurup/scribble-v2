@@ -8,6 +8,8 @@ import { isEmpty } from "ramda";
 import { TITLE_TRUNCATE_LENGTH } from "src/constants";
 import { formattedDate, truncate } from "src/utils";
 
+import { DEFAULT_ACTIVE_STATUS } from "./constants";
+
 const { Menu, MenuItem } = Dropdown;
 
 export const formatCategories = categories =>
@@ -107,3 +109,48 @@ export const setUrlParams = ({ page, limit, search, status }) => {
 
 export const formattedDateTime = dateTime =>
   dayjs(dateTime).format("h:mm A, D MMM YYYY");
+
+export const getEmptyArticleProps = ({
+  activeStatus,
+  search,
+  selectedCategories,
+  setActiveStatus,
+  setSearch,
+  setSelectedCategories,
+  totalCount,
+  redirectToNewArticle,
+}) => {
+  if (totalCount === 0) {
+    return {
+      title: t("articles.empty.noArticle.title"),
+      description: t("articles.empty.noArticle.description"),
+      label: t("articles.empty.noArticle.label"),
+      onClick: () => redirectToNewArticle(),
+    };
+  } else if (!isEmpty(search)) {
+    return {
+      title: t("articles.empty.search.title", { search }),
+      description: t("articles.empty.search.description"),
+      label: t("articles.empty.search.label"),
+      onClick: () => setSearch(""),
+    };
+  } else if (!isEmpty(selectedCategories)) {
+    return {
+      title: t("articles.empty.selectedCategories.title"),
+      description: t("articles.empty.selectedCategories.description"),
+      label: t("articles.empty.selectedCategories.label"),
+      onClick: () => setSelectedCategories([]),
+    };
+  } else if (activeStatus !== DEFAULT_ACTIVE_STATUS) {
+    return {
+      title: t("articles.empty.status.title"),
+      description: t("articles.empty.status.description"),
+      label: t("articles.empty.status.label"),
+      onClick: () => setActiveStatus(DEFAULT_ACTIVE_STATUS),
+    };
+  }
+
+  return {
+    title: t("articles.empty.title"),
+  };
+};

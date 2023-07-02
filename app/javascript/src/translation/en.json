@@ -117,6 +117,29 @@
       "searchCount": "{{count}} results for '{{search}}'",
       "totalCount": "{{count}} articles",
       "selectedCount": "{{count}} articles selected of {{totalCount}}"
+    },
+    "empty": {
+      "title": "No articles found!",
+      "noArticle": {
+        "title": "There are no articles.",
+        "description": "You have not yet created an article. Create an article using the CTA given below.",
+        "label": "Add article"
+      },
+      "search": {
+        "title": "No results for '{{search}}'",
+        "description": "We could not find any articles based on your search term. Try a different keyword or add a new article.",
+        "label": "Clear search"
+      },
+      "selectedCategories": {
+        "title": "No results for the selected category filters",
+        "description": "We could not find any articles based on selected category filters. Try a different filter or add a new article.",
+        "label": "Clear category filters"
+      },
+      "status": {
+        "title": "No results for the selected article status",
+        "description": "We could not find any articles based on selected article status. Try a different filter or add a new article.",
+        "label": "Show all articles"
+      }
     }
   },
   "public": {
