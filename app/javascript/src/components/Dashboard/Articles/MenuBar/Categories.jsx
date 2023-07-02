@@ -15,6 +15,7 @@ const Categories = ({
   debouncedSearchTerm,
   selectedCategories,
   setSelectedCategories,
+  isSearchCollapsed,
 }) => {
   const { t } = useTranslation();
 
@@ -48,7 +49,7 @@ const Categories = ({
     );
   }
 
-  if (!isPresent(categories)) {
+  if (!isPresent(categories) && !isSearchCollapsed) {
     return (
       <Typography className="flex justify-center" style="body2">
         {t("category.empty")}

@@ -32,6 +32,12 @@ const MenuBar = ({
     setIsSearchCollapsed(true);
   };
 
+  const handleKeyDown = event => {
+    if (event.key === "Escape") {
+      handleClose();
+    }
+  };
+
   return (
     <NeetoUIMenuBar showMenu={isMenuBarOpen} title={t("common.articles")}>
       {statuses(articles).map(({ label, count }) => (
@@ -71,12 +77,14 @@ const MenuBar = ({
         value={searchTerm}
         onChange={event => setSearchTerm(event.target.value)}
         onCollapse={handleClose}
+        onKeyDown={handleKeyDown}
       />
       <Categories
         categories={categories}
         debouncedSearchTerm={debouncedSearchTerm}
         fetchCategories={fetchCategories}
         isLoading={isCategoriesLoading}
+        isSearchCollapsed={isSearchCollapsed}
         selectedCategories={selectedCategories}
         setSelectedCategories={setSelectedCategories}
       />
