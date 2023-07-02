@@ -3,18 +3,26 @@ import React, { useState } from "react";
 import { Spinner } from "neetoui";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
+import DeleteCategory from "Dashboard/Categories/Delete";
 import EditCategory from "Dashboard/Categories/Edit";
 import { useUpdateCategories } from "hooks/useUpdateCategories";
 
 import Item from "./Item";
 
-const List = ({ categories, isLoading, refetch }) => {
+const List = ({ categories, isLoading, refetch, isSingleCategoryPresent }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [categoryToUpdate, setCategoryToUpdate] = useState({});
+  const [categoryToBeDeleted, setCategoryToBeDeleted] = useState({});
 
   const handleEdit = category => {
     setIsEditModalOpen(true);
     setCategoryToUpdate(category);
+  };
+
+  const handleDelete = category => {
+    setIsDeleteModalOpen(true);
+    setCategoryToBeDeleted(category);
   };
 
   const { update: updateCategory, isLoading: isUpdating } =
@@ -58,8 +66,10 @@ const List = ({ categories, isLoading, refetch }) => {
                     {(provided, snapshot) => (
                       <Item
                         category={category}
+                        handleDelete={handleDelete}
                         handleEdit={handleEdit}
                         isDragging={snapshot.isDragging}
+                        isSingleCategoryPresent={isSingleCategoryPresent}
                         provided={provided}
                       />
                     )}
@@ -76,6 +86,13 @@ const List = ({ categories, isLoading, refetch }) => {
         isOpen={isEditModalOpen}
         refetch={refetch}
         onClose={() => setIsEditModalOpen(false)}
+      />
+      <DeleteCategory
+        categoryToBeDeleted={categoryToBeDeleted}
+        isOpen={isDeleteModalOpen}
+        isSingleCategoryPresent={isSingleCategoryPresent}
+        refetch={refetch}
+        onClose={() => setIsDeleteModalOpen(false)}
       />
     </>
   );

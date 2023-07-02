@@ -22,7 +22,8 @@
     "changeStatus": "Change status",
     "password": "Password",
     "changePassword": "Change password",
-    "enterPassword": "Enter password"
+    "enterPassword": "Enter password",
+    "proceed": "Proceed"
   },
   "tooltips": {
     "manageArticles": "Manage and list all your KB articles",
@@ -47,7 +48,14 @@
     "inputLabel": "Category title",
     "addButtonLabel": "Add",
     "placeholder": "Enter category title here.",
-    "empty": "No categories found!"
+    "empty": "No categories found!",
+    "delete": {
+      "title": "Delete category",
+      "description": "You are permanently deleting the {{title}} category. This action cannot be undone. Are you sure you wish to continue?",
+      "alert": "Category {{title}} has {{count}} articles. Before this category can be deleted, these articles needs to be moved to another category.",
+      "newCategoryAlert": "Category {{title}} has {{count}} articles. These articles will be moved to a 'General' category",
+      "selectLabel": "Select a category to move these articles into"
+    }
   },
   "validations": {
     "required": "{{field}} is required",

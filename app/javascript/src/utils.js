@@ -1,5 +1,14 @@
 import dayjs from "dayjs";
-import { complement, concat, either, isEmpty, isNil, slice } from "ramda";
+import {
+  complement,
+  concat,
+  either,
+  isEmpty,
+  isNil,
+  propEq,
+  reject,
+  slice,
+} from "ramda";
 
 import { DATE_TIME_FORMAT, TITLE_TRUNCATE_LENGTH } from "./constants";
 
@@ -14,3 +23,5 @@ export const truncate = string =>
     : string;
 
 export const isEven = number => number % 2 === 0;
+
+export const deleteObjectById = ({ id, arr }) => reject(propEq("id", id), arr);

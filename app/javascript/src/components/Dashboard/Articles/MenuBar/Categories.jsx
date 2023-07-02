@@ -60,7 +60,7 @@ const Categories = ({
     <>
       {categories.map(category => (
         <MenuBar.Block
-          count={category.articles_count}
+          count={category.articles_count || 0}
           key={category.id}
           label={category.title}
           active={isCategoryPresent({
