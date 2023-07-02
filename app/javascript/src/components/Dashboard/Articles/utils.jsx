@@ -1,5 +1,6 @@
 import React from "react";
 
+import dayjs from "dayjs";
 import { t } from "i18next";
 import { MenuHorizontal } from "neetoicons";
 import { Button, Typography, Dropdown } from "neetoui";
@@ -103,3 +104,6 @@ export const setUrlParams = ({ page, limit, search, status }) => {
 
   return currentUrlParams;
 };
+
+export const formattedDateTime = dateTime =>
+  dayjs(dateTime).format("h:mm A, D MMM YYYY");

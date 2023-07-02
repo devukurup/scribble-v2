@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
 import { FormikEditor } from "@bigbinary/neeto-editor";
-import { ActionDropdown } from "@bigbinary/neetoui";
 import { Formik, Form as FormikForm } from "formik";
-import { Button } from "neetoui";
+import { MenuHorizontal } from "neetoicons";
+import { ActionDropdown, Dropdown, Typography, Button } from "neetoui";
 import { Textarea, Select } from "neetoui/formik";
 import { useTranslation } from "react-i18next";
 
@@ -17,7 +17,15 @@ import { CATEGORY_VALIDATION_SCHEMA } from "../Categories/constants";
 
 const { Menu, MenuItem } = ActionDropdown;
 
-const Form = ({ handleSubmit, initialValues, onClose, initialStatus }) => {
+const Form = ({
+  handleSubmit,
+  initialValues,
+  onClose,
+  initialStatus,
+  isEdit = false,
+  handleDelete = () => {},
+  dateString = "",
+}) => {
   const [status, setStatus] = useState(initialStatus);
 
   const { data, isLoading, refetch } = useFetchCategories();
@@ -93,7 +101,14 @@ const Form = ({ handleSubmit, initialValues, onClose, initialStatus }) => {
                   }
                 />
               </div>
-              <div className="flex space-x-3">
+              <div className="flex items-center space-x-3">
+                {isEdit && (
+                  <Typography>
+                    {initialStatus === t("articles.publish")
+                      ? t("articles.lastPublishedAt", { date: dateString })
+                      : t("articles.draftSavedAt", { date: dateString })}
+                  </Typography>
+                )}
                 <Button
                   label={t("common.cancel")}
                   style="text"
@@ -118,6 +133,18 @@ const Form = ({ handleSubmit, initialValues, onClose, initialStatus }) => {
                     </MenuItem.Button>
                   </Menu>
                 </ActionDropdown>
+                {isEdit && (
+                  <Dropdown buttonStyle="text" icon={MenuHorizontal}>
+                    <Dropdown.Menu>
+                      <Dropdown.MenuItem.Button
+                        style="danger"
+                        onClick={handleDelete}
+                      >
+                        {t("common.delete")}
+                      </Dropdown.MenuItem.Button>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                )}
               </div>
             </div>
             <FormikEditor

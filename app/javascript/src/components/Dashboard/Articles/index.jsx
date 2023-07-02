@@ -58,6 +58,16 @@ const Articles = () => {
     }
   };
 
+  const handleClose = () => {
+    setIsDeleteAlertOpen(false);
+    if (isBulkDelete) {
+      setIsBulkDelete(false);
+      setSelectedArticleRowIds([]);
+    } else {
+      setRowToBeDeleted({});
+    }
+  };
+
   return (
     <>
       <MenuBar
@@ -135,10 +145,7 @@ const Articles = () => {
         refetch={refetchArticles}
         rowToBeDeleted={rowToBeDeleted}
         selectedArticleRowIds={selectedArticleRowIds}
-        setIsBulkDelete={setIsBulkDelete}
-        setIsOpen={setIsDeleteAlertOpen}
-        setRowToBeDeleted={setRowToBeDeleted}
-        setSelectedArticleRowIds={setSelectedArticleRowIds}
+        onClose={handleClose}
       />
     </>
   );

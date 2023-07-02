@@ -103,6 +103,8 @@
     "publish": "Publish",
     "draft": "Draft",
     "saveDraft": "Save as draft",
+    "draftSavedAt": "Draft saved at {{date}}",
+    "lastPublishedAt": "Last published at {{date}}",
     "placeholders": {
       "body": "Add description here.",
       "title": "Add title here."
