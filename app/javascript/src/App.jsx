@@ -9,6 +9,7 @@ import { ToastContainer } from "react-toastify";
 import { setAuthHeaders, registerIntercepts } from "apis/axios";
 import "common/i18n";
 import { initializeLogger } from "common/logger";
+import ErrorBoundary from "components/commons/ErrorBoundary";
 import Dashboard from "components/Dashboard";
 import Public from "components/Public";
 import Login from "components/Public/Login";
@@ -36,11 +37,13 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <Router>
         <ToastContainer />
-        <Switch>
-          <Route exact component={Login} path="/login" />
-          <Route component={Public} path="/public/articles" />
-          <Route component={Dashboard} path="/" />
-        </Switch>
+        <ErrorBoundary>
+          <Switch>
+            <Route exact component={Login} path="/login" />
+            <Route component={Public} path="/public/articles" />
+            <Route component={Dashboard} path="/" />
+          </Switch>
+        </ErrorBoundary>
       </Router>
       <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
     </QueryClientProvider>

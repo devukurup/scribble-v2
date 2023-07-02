@@ -23,7 +23,9 @@
     "password": "Password",
     "changePassword": "Change password",
     "enterPassword": "Enter password",
-    "proceed": "Proceed"
+    "proceed": "Proceed",
+    "redirectToHome": "Go to home page",
+    "errorImage": "Error Image"
   },
   "tooltips": {
     "manageArticles": "Manage and list all your KB articles",
