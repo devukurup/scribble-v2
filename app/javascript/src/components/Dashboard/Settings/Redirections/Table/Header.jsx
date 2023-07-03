@@ -31,7 +31,7 @@ const Header = () => {
           {t("settings.redirections.to").toUpperCase()}
         </Typography>
       </Cell>
-      <Cell className="w-16" />
+      <Cell className="w-20" />
     </Row>
   );
 };

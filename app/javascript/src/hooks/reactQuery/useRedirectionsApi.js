@@ -38,7 +38,8 @@ export const useDeleteRedirection = (options = {}) => {
 
   return useMutation(id => redirectionsApi.destroy(id), {
     ...options,
-    onSuccess: () => {
+    onSuccess: data => {
+      options.onSuccess?.(data);
       queryClient.invalidateQueries(LOAD_REDIRECTIONS_KEY);
     },
   });

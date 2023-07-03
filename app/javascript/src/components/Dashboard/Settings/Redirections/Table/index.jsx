@@ -9,14 +9,17 @@ import {
   useCreateRedirection,
   useDeleteRedirection,
   useFetchRedirections,
-  useUpdateRedirection,
 } from "src/hooks/reactQuery/useRedirectionsApi";
 
 import Form from "./Form";
 import Header from "./Header";
 import Redirection from "./Redirection";
 
-import { FORM_INITIAL_VALUES, NEW_REDIRECTION } from "../constants";
+import {
+  DEFAULT_SELECTED_REDIRECTION,
+  FORM_INITIAL_VALUES,
+  NEW_REDIRECTION,
+} from "../constants";
 
 const Table = () => {
   const [selectedRedirection, setSelectedRedirection] = useState({});
@@ -29,28 +32,25 @@ const Table = () => {
     setSelectedRedirection(redirection);
   };
 
-  const { mutate: createRedirection, isLoading: isCreating } =
-    useCreateRedirection();
+  const resetSelectedRedirection = () =>
+    setSelectedRedirection(DEFAULT_SELECTED_REDIRECTION);
 
-  const { mutate: updateRedirection, isLoading: isUpdating } =
-    useUpdateRedirection({
-      options: { onSuccess: () => setSelectedRedirection({}) },
-    });
+  const { mutate: createRedirection, isLoading: isCreating } =
+    useCreateRedirection({ onSuccess: resetSelectedRedirection });
 
   const { mutate: deleteRedirection, isLoading: isDeleting } =
     useDeleteRedirection({
-      options: {
-        onSuccess: () => {
-          setIsDeleteAlertOpen(false);
-          setSelectedRedirection({});
-        },
+      onSuccess: () => {
+        handleClose();
       },
     });
 
-  const handleUpdate = payload =>
-    updateRedirection({ id: selectedRedirection.id, payload });
+  const handleClose = () => {
+    setIsDeleteAlertOpen(false);
+    resetSelectedRedirection();
+  };
 
-  if (isLoading || isUpdating || isCreating) {
+  if (isLoading || isCreating) {
     return (
       <div className="flex justify-center">
         <Spinner />
@@ -72,13 +72,12 @@ const Table = () => {
             redirection={redirection}
             setSelectedRedirection={setSelectedRedirection}
             onDeleteClick={handleDeleteClick}
-            onUpdateSubmit={handleUpdate}
           />
         ))}
         {isEmpty(selectedRedirection?.id) && (
           <Form
             initialValues={FORM_INITIAL_VALUES}
-            onClose={() => setSelectedRedirection({})}
+            onClose={resetSelectedRedirection}
             onSubmit={createRedirection}
           />
         )}
@@ -96,12 +95,12 @@ const Table = () => {
       <Alert
         isOpen={isDeleteAlertOpen}
         isSubmitting={isDeleting}
-        title={t("redirection.delete.title")}
-        message={t("redirection.delete.message", {
+        title={t("settings.redirections.delete.title")}
+        message={t("settings.redirections.delete.message", {
           from: selectedRedirection.from,
           to: selectedRedirection.to,
         })}
-        onClose={() => setIsDeleteAlertOpen(false)}
+        onClose={handleClose}
         onSubmit={() => deleteRedirection(selectedRedirection.id)}
       />
     </div>

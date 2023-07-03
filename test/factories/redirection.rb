@@ -2,8 +2,8 @@
 
 FactoryBot.define do
   factory :redirection do
-    from { Faker::Lorem.unique.word }
-    to { Faker::Internet.url }
+    from { "/#{Faker::Lorem.unique.word}" }
+    to { "/#{Faker::Lorem.unique.word}" }
     site
   end
 end

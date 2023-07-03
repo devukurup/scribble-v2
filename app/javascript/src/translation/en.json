@@ -64,7 +64,9 @@
     "maximumLength": "{{field}} shouldn't exceed the maximum limit",
     "invalidPattern": "Enter a valid {{field}}",
     "invalidPassword": "Include at least {{letterCount}} letter and {{digitCount}} number",
-    "minPasswordCharacters": "Have at least {{count}} characters"
+    "minPasswordCharacters": "Have at least {{count}} characters",
+    "invalidFromPath": "From path must be valid",
+    "invalidToPath": "To path must be a valid URL or a path"
   },
   "settingsDescription": {
     "general": "Configure general settings of your EUI.",

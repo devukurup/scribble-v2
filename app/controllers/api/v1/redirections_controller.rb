@@ -11,7 +11,7 @@ class Api::V1::RedirectionsController < ApplicationController
   end
 
   def index
-    @redirections = @site.redirections
+    @redirections = @site.redirections.order(:created_at)
   end
 
   def update
