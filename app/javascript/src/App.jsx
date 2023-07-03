@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 
+import { useDisplayErrorPage } from "@bigbinary/neeto-commons-frontend/react-utils";
 import { PageLoader } from "@bigbinary/neetoui";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
@@ -32,6 +33,11 @@ const App = () => {
   }, []);
 
   const queryClient = new QueryClient();
+
+  const displayErrorPage = useDisplayErrorPage();
+  if (displayErrorPage) {
+    return <PageNotFound route="/" />;
+  }
 
   if (isLoading) {
     return (
