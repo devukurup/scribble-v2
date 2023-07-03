@@ -15,7 +15,7 @@ Rails.application.routes.draw do
         resources :redirections, except: %i[new edit show]
 
         namespace :public do
-          resources :sessions, only: :create
+          resource :session, only: :create
           resources :categories, only: :index
           resources :articles, only: :show, param: :slug
         end

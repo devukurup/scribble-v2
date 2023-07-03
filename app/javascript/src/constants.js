@@ -15,3 +15,5 @@ export const LOAD_REDIRECTIONS_KEY = "load-redirections";
 export const LOAD_SITE_KEY = "load-site";
 
 export const LOAD_PUBLIC_CATEGORIES_KEY = "load-public-categories";
+
+export const LOAD_SESSION_KEY = "load-session";
