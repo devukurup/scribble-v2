@@ -7,8 +7,17 @@ import { useTranslation } from "react-i18next";
 
 const { Menu, MenuItem } = Dropdown;
 
-const Item = ({ provided, category, handleEdit, isDragging }) => {
+const Item = ({
+  provided,
+  category,
+  handleEdit,
+  isDragging,
+  handleDelete,
+  isSingleCategoryPresent,
+}) => {
   const { title, articles_count: articlesCount } = category;
+  const isLastGeneralCategory =
+    isSingleCategoryPresent && title.toLowerCase() === "general";
   const { t } = useTranslation();
 
   return (
@@ -42,7 +51,7 @@ const Item = ({ provided, category, handleEdit, isDragging }) => {
             style="body2"
             weight="normal"
           >
-            {articlesCount} articles
+            {articlesCount || 0} articles
           </Typography>
         </div>
       </div>
@@ -54,7 +63,14 @@ const Item = ({ provided, category, handleEdit, isDragging }) => {
           <MenuItem.Button onClick={() => handleEdit(category)}>
             {t("common.edit")}
           </MenuItem.Button>
-          <MenuItem.Button style="danger">{t("common.delete")}</MenuItem.Button>
+          {!(isLastGeneralCategory && articlesCount !== 0) && (
+            <MenuItem.Button
+              style="danger"
+              onClick={() => handleDelete(category)}
+            >
+              {t("common.delete")}
+            </MenuItem.Button>
+          )}
         </Menu>
       </Dropdown>
     </div>

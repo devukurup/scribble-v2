@@ -9,14 +9,14 @@ export const removeCategory = ({ categoryId, categories }) =>
 export const statuses = articles => [
   {
     label: t("statuses.all"),
-    count: articles.all_articles_count,
+    count: articles.all_articles_count || 0,
   },
   {
     label: t("statuses.published"),
-    count: articles.published_articles_count,
+    count: articles.published_articles_count || 0,
   },
   {
     label: t("statuses.draft"),
-    count: articles.draft_articles_count,
+    count: articles.draft_articles_count || 0,
   },
 ];

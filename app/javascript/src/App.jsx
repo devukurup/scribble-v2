@@ -1,17 +1,27 @@
 import React, { useEffect, useState } from "react";
 
+import { useDisplayErrorPage } from "@bigbinary/neeto-commons-frontend/react-utils";
 import { PageLoader } from "@bigbinary/neetoui";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
-import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
+import {
+  Switch,
+  Route,
+  BrowserRouter as Router,
+  Redirect,
+} from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import routes from "src/routes";
 
 import { setAuthHeaders, registerIntercepts } from "apis/axios";
 import "common/i18n";
 import { initializeLogger } from "common/logger";
-import Dashboard from "components/Dashboard";
+import ErrorBoundary from "components/commons/ErrorBoundary";
 import Public from "components/Public";
 import Login from "components/Public/Login";
+
+import { DASHBOARD_ROUTES } from "./components/Dashboard/constants";
+import PageNotFound from "./PageNotFound";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -23,6 +33,11 @@ const App = () => {
   }, []);
 
   const queryClient = new QueryClient();
+
+  const displayErrorPage = useDisplayErrorPage();
+  if (displayErrorPage) {
+    return <PageNotFound route="/" />;
+  }
 
   if (isLoading) {
     return (
@@ -36,11 +51,26 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <Router>
         <ToastContainer />
-        <Switch>
-          <Route exact component={Login} path="/login" />
-          <Route component={Public} path="/public/articles" />
-          <Route component={Dashboard} path="/" />
-        </Switch>
+        <ErrorBoundary>
+          <Switch>
+            <Route exact component={Login} path="/login" />
+            <Route component={Public} path="/public/" />
+            {DASHBOARD_ROUTES.map(({ path, component, isExact }) => (
+              <Route
+                component={component}
+                exact={isExact}
+                key={path}
+                path={path}
+              />
+            ))}
+            <Redirect
+              exact
+              from={routes.dashboard}
+              to={routes.articles.index}
+            />
+            <Route path="*" render={() => <PageNotFound route="/" />} />
+          </Switch>
+        </ErrorBoundary>
       </Router>
       <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
     </QueryClientProvider>
