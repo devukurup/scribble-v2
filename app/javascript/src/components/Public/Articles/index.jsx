@@ -4,6 +4,8 @@ import { PageLoader } from "neetoui";
 import categoriesApi from "apis/public/categories";
 import { useParams, useHistory } from "react-router-dom";
 import Content from "./Content";
+import { isEmpty } from "ramda";
+import Empty from "./Empty";
 
 const Articles = () => {
   const [categories, setCategories] = useState([]);
@@ -40,6 +42,10 @@ const Articles = () => {
         <PageLoader />
       </div>
     );
+  }
+
+  if (isEmpty(categories)) {
+    return <Empty />;
   }
 
   return (

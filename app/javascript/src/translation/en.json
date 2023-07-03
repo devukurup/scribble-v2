@@ -122,6 +122,9 @@
     },
     "empty": {
       "title": "No articles found!",
+      "public": {
+        "title": "No published articles found!"
+      },
       "noArticle": {
         "title": "There are no articles.",
         "description": "You have not yet created an article. Create an article using the CTA given below.",
