@@ -1,29 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { EditorContent } from "@bigbinary/neeto-editor";
 import { Typography, PageLoader } from "neetoui";
 import { useParams } from "react-router-dom";
-import articlesApi from "apis/public/articles";
+import { useShowArticle } from "hooks/reactQuery/public/useArticlesApi";
 
 const Content = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [article, setArticle] = useState({});
   const { slug } = useParams();
-
-  const fetchArticle = async () => {
-    try {
-      setIsLoading(true);
-      const { data } = await articlesApi.show(slug);
-      setArticle(data?.article);
-    } catch (error) {
-      logger.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchArticle();
-  }, [slug]);
+  const { data, isLoading } = useShowArticle({ slug });
 
   if (isLoading) {
     return (
@@ -32,6 +15,8 @@ const Content = () => {
       </div>
     );
   }
+
+  const article = data.data.article;
 
   return (
     <div className="m-5 flex flex-col space-y-4 p-5">

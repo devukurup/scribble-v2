@@ -17,3 +17,5 @@ export const LOAD_SITE_KEY = "load-site";
 export const LOAD_PUBLIC_CATEGORIES_KEY = "load-public-categories";
 
 export const LOAD_SESSION_KEY = "load-session";
+
+export const LOAD_PUBLIC_ARTICLES_KEY = "load-public-articles";
