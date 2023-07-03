@@ -3,7 +3,11 @@
 module LoadUser
   extend ActiveSupport::Concern
 
-  def current_user
-    @_current_user ||= User.first!
+  included do
+    before_action :load_current_user
+  end
+
+  def load_current_user
+    @current_user = User.first!
   end
 end

@@ -4,11 +4,11 @@ class Api::V1::CategoriesController < ApplicationController
   before_action :load_category!, only: %i[update destroy]
 
   def index
-    @categories = current_user.categories.where("title ILIKE ?", "%#{params[:search_term]}%").order(:position)
+    @categories = @current_user.categories.where("title ILIKE ?", "%#{params[:search_term]}%").order(:position)
   end
 
   def create
-    @category = current_user.categories.create!(category_params)
+    @category = @current_user.categories.create!(category_params)
   end
 
   def update
@@ -17,7 +17,7 @@ class Api::V1::CategoriesController < ApplicationController
   end
 
   def destroy
-    service = Categories::DeleteService.new(current_user, @category, params[:target_category_id])
+    service = Categories::DeleteService.new(@current_user, @category, params[:target_category_id])
     service.process
 
     if service.success?
@@ -34,6 +34,6 @@ class Api::V1::CategoriesController < ApplicationController
     end
 
     def load_category!
-      @category = current_user.categories.find(params[:id])
+      @category = @current_user.categories.find(params[:id])
     end
 end

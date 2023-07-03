@@ -4,7 +4,7 @@ class Api::V1::ArticlesController < ApplicationController
   before_action :load_article!, only: %i[show update destroy]
 
   def index
-    @service = Articles::FilterService.new(current_user, filter_params)
+    @service = Articles::FilterService.new(@current_user, filter_params)
     @service.process
   end
 
@@ -18,7 +18,7 @@ class Api::V1::ArticlesController < ApplicationController
   end
 
   def create
-    current_user.articles.create!(article_params)
+    @current_user.articles.create!(article_params)
     render_notice(t("successfully_created", entity: "Article"))
   end
 
@@ -28,13 +28,13 @@ class Api::V1::ArticlesController < ApplicationController
   end
 
   def bulk_destroy
-    Articles::BulkDeleteService.new(current_user, bulk_params).process
+    Articles::BulkDeleteService.new(@current_user, bulk_params).process
 
     render_notice(t("successfully_deleted", entity: "Articles"))
   end
 
   def bulk_update
-    Articles::BulkUpdateService.new(current_user, bulk_params).process
+    Articles::BulkUpdateService.new(@current_user, bulk_params).process
 
     render_notice(t("successfully_updated", entity: "Articles"))
   end
@@ -46,7 +46,7 @@ class Api::V1::ArticlesController < ApplicationController
     end
 
     def load_article!
-      @article = current_user.articles.find(params[:id])
+      @article = @current_user.articles.find(params[:id])
     end
 
     def filter_params
