@@ -9,7 +9,9 @@
 // layout file, like app/views/layouts/application.html.erb
 
 import "stylesheets/application";
+import initializeGlobalProps from "../src/helpers/globalProps";
 
+initializeGlobalProps();
 // Support component names relative to this directory:
 var componentRequireContext = require.context("src", true);
 var ReactRailsUJS = require("react_ujs");

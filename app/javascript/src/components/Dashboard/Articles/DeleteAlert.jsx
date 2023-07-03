@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+import { noop } from "@bigbinary/neeto-commons-frontend/pure";
 import { Alert } from "neetoui";
 import { useTranslation } from "react-i18next";
 
@@ -7,29 +8,16 @@ import articlesApi from "apis/articles";
 
 const DeleteAlert = ({
   isOpen,
-  setIsOpen,
   rowToBeDeleted,
-  setRowToBeDeleted,
-  refetch,
-  isBulkDelete,
-  setIsBulkDelete,
-  setSelectedArticleRowIds,
-  selectedArticleRowIds,
+  refetch = noop,
+  isBulkDelete = false,
+  selectedArticleRowIds = [],
+  onClose,
 }) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const { title, id } = rowToBeDeleted;
 
   const { t } = useTranslation();
-
-  const handleClose = () => {
-    setIsOpen(false);
-    if (isBulkDelete) {
-      setIsBulkDelete(false);
-      setSelectedArticleRowIds([]);
-    } else {
-      setRowToBeDeleted({});
-    }
-  };
 
   const handleDelete = async () => {
     try {
@@ -39,7 +27,7 @@ const DeleteAlert = ({
             article_ids: selectedArticleRowIds,
           })
         : await articlesApi.destroy(id);
-      handleClose();
+      onClose();
       refetch();
     } catch (error) {
       logger.error(error);
@@ -54,7 +42,7 @@ const DeleteAlert = ({
       isSubmitting={isDeleting}
       message={t("articles.delete.message", { title })}
       title={t("articles.delete.title")}
-      onClose={handleClose}
+      onClose={onClose}
       onSubmit={handleDelete}
     />
   );

@@ -12,6 +12,6 @@ class Api::V1::Public::ArticlesController < ApplicationController
     private
 
       def load_article!
-        @article = @site.user.articles.find_by!(slug: params[:slug])
+        @article = @site.user.articles.published.find_by!(slug: params[:slug])
       end
   end

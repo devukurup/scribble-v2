@@ -56,6 +56,7 @@ const ManageCategories = () => {
       <List
         categories={data?.categories}
         isLoading={isLoading}
+        isSingleCategoryPresent={data?.categories_count === 1}
         refetch={refetch}
       />
       <Create

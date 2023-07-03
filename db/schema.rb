@@ -41,6 +41,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_25_202446) do
     t.index ["user_id"], name: "index_categories_on_user_id"
   end
 
+  create_table "redirections", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.text "from", null: false
+    t.text "to", null: false
+    t.uuid "site_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["from"], name: "index_redirections_on_from", unique: true
+    t.index ["site_id"], name: "index_redirections_on_site_id"
+  end
+
   create_table "sites", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title", null: false
     t.string "password_digest"
@@ -65,5 +75,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_25_202446) do
   add_foreign_key "articles", "categories"
   add_foreign_key "articles", "users"
   add_foreign_key "categories", "users"
+  add_foreign_key "redirections", "sites"
   add_foreign_key "users", "sites"
 end

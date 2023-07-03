@@ -7,3 +7,10 @@ en:
   session:
     could_not_auth: "Could not authenticate with the provided credentials."
     incorrect_password: "Incorrect password, try again."
+  errors:
+    redirection:
+      non_unique: "and to values are identical"
+      cyclic: "forms a cycle, Try with different values"
+    category:
+      last_general_category: "Last category cannot be deleted"
+      missing_target_category: "Target category id is missing"

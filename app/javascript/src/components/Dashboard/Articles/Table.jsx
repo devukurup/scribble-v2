@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import classnames from "classnames";
-import { Table as NeetoUITable } from "neetoui";
+import { Table as NeetoUITable, PageLoader } from "neetoui";
 import { useHistory } from "react-router-dom";
 import { DEFAULT_PAGE_NUMBER, PAGINATION_LIMIT } from "src/constants";
 import { isEven } from "src/utils";
@@ -9,12 +9,13 @@ import { isEven } from "src/utils";
 import { useUpdateArticles } from "hooks/useUpdateArticles";
 
 import { DEFAULT_ACTIVE_STATUS } from "./constants";
+import Empty from "./Empty";
 import { columnData, setUrlParams } from "./utils";
 
 const Table = ({
   setRowToBeDeleted,
   setIsDeleteAlertOpen,
-  articles,
+  data,
   isLoading,
   refetch,
   totalCount,
@@ -23,6 +24,7 @@ const Table = ({
   setActiveStatus,
   setSearchTerm,
   selectedCategories,
+  setSelectedCategories,
   selectedColumns,
   selectedRowIds,
   setSelectedRowIds,
@@ -92,6 +94,28 @@ const Table = ({
     );
   };
 
+  if (isLoading) {
+    return (
+      <div className="h-screen">
+        <PageLoader />
+      </div>
+    );
+  }
+
+  if (data?.filtered_articles_count === 0) {
+    return (
+      <Empty
+        activeStatus={activeStatus}
+        search={debouncedSearchTerm}
+        selectedCategories={selectedCategories}
+        setActiveStatus={setActiveStatus}
+        setSearch={setSearchTerm}
+        setSelectedCategories={setSelectedCategories}
+        totalCount={data?.all_articles_count}
+      />
+    );
+  }
+
   return (
     <NeetoUITable
       fixedHeight
@@ -101,7 +125,7 @@ const Table = ({
       defaultPageSize={PAGINATION_LIMIT}
       handlePageChange={handlePagination}
       loading={isLoading}
-      rowData={articles}
+      rowData={data?.articles}
       selectedRowKeys={selectedRowIds}
       totalCount={totalCount}
       rowClassName={(_, index) =>

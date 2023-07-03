@@ -7,6 +7,7 @@ class Site < ApplicationRecord
   VALID_PASSWORD_REGEX = /\A(?=.*\d)(?=.*?[A-Za-z]).+\z/
 
   has_one :user
+  has_many :redirections
 
   has_secure_password validations: false
   has_secure_token :authentication_token

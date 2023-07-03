@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       constraints(lambda { |req| req.format == :json }) do
-        resources :categories, only: %i[index create update]
+        resources :categories, only: %i[index create update destroy]
         resources :articles, except: %i[new edit] do
           collection do
             patch :bulk_update
@@ -12,6 +12,7 @@ Rails.application.routes.draw do
           end
         end
         resource :site, only: %i[show update]
+        resources :redirections, except: %i[new edit show]
 
         namespace :public do
           resources :sessions, only: :create

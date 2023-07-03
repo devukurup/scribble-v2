@@ -1,8 +1,9 @@
 import React from "react";
 
-import categoriesApi from "apis/categories";
 import { Typography, Modal } from "neetoui";
 import { useTranslation } from "react-i18next";
+
+import categoriesApi from "apis/categories";
 
 import { INITIAL_VALUES } from "./constants";
 import Form from "./Form";

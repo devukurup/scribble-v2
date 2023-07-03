@@ -1,3 +1,4 @@
+import { useErrorDisplayStore } from "@bigbinary/neeto-commons-frontend/react-utils";
 import axios from "axios";
 import { t } from "i18next";
 import { Toastr } from "neetoui";
@@ -35,7 +36,11 @@ const handleSuccessResponse = response => {
 
 const handleErrorResponse = axiosErrorObject => {
   const error = axiosErrorObject.response.data.error;
-  Toastr.error(Error(error || t("common.defaultError")));
+  if (axiosErrorObject.response.status === 404) {
+    useErrorDisplayStore.setState({ showErrorPage: true, statusCode: 404 });
+  } else {
+    Toastr.error(Error(error || t("common.defaultError")));
+  }
 
   return Promise.reject(axiosErrorObject);
 };

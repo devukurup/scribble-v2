@@ -14,6 +14,11 @@ const update = ({ id, payload, quiet = false }) => {
   return axios.put(path, { category: payload });
 };
 
-const categoriesApi = { list, create, update };
+const destroy = ({ id, targetCategoryId }) =>
+  axios.delete(`${BASE_URL}/${id}`, {
+    params: { target_category_id: targetCategoryId },
+  });
+
+const categoriesApi = { list, create, update, destroy };
 
 export default categoriesApi;

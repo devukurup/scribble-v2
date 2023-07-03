@@ -22,7 +22,10 @@
     "changeStatus": "Change status",
     "password": "Password",
     "changePassword": "Change password",
-    "enterPassword": "Enter password"
+    "enterPassword": "Enter password",
+    "proceed": "Proceed",
+    "redirectToHome": "Go to home page",
+    "errorImage": "Error Image"
   },
   "tooltips": {
     "manageArticles": "Manage and list all your KB articles",
@@ -47,14 +50,23 @@
     "inputLabel": "Category title",
     "addButtonLabel": "Add",
     "placeholder": "Enter category title here.",
-    "empty": "No categories found!"
+    "empty": "No categories found!",
+    "delete": {
+      "title": "Delete category",
+      "description": "You are permanently deleting the {{title}} category. This action cannot be undone. Are you sure you wish to continue?",
+      "alert": "Category {{title}} has {{count}} articles. Before this category can be deleted, these articles needs to be moved to another category.",
+      "newCategoryAlert": "Category {{title}} has {{count}} articles. These articles will be moved to a 'General' category",
+      "selectLabel": "Select a category to move these articles into"
+    }
   },
   "validations": {
     "required": "{{field}} is required",
     "maximumLength": "{{field}} shouldn't exceed the maximum limit",
     "invalidPattern": "Enter a valid {{field}}",
     "invalidPassword": "Include at least {{letterCount}} letter and {{digitCount}} number",
-    "minPasswordCharacters": "Have at least {{count}} characters"
+    "minPasswordCharacters": "Have at least {{count}} characters",
+    "invalidFromPath": "From path must be valid",
+    "invalidToPath": "To path must be a valid URL or a path"
   },
   "settingsDescription": {
     "general": "Configure general settings of your EUI.",
@@ -79,7 +91,11 @@
       "title": "Redirections",
       "description": "Create and configure redirection rules to send users from old links to new links. All redirections are performed with 301 status codes to be SEO friendly",
       "from": "From",
-      "to": "To"
+      "to": "To",
+      "delete": {
+        "title": "Delete redirection",
+        "message": "You are permanently deleting redirection from {{from}} to {{to}}. This action cannot be undone. Are you sure you wish to continue?"
+      }
     },
     "security": {
       "description": "Configure security related settings for your site.",
@@ -91,6 +107,8 @@
     "publish": "Publish",
     "draft": "Draft",
     "saveDraft": "Save as draft",
+    "draftSavedAt": "Draft saved at {{date}}",
+    "lastPublishedAt": "Last published at {{date}}",
     "placeholders": {
       "body": "Add description here.",
       "title": "Add title here."
@@ -103,6 +121,32 @@
       "searchCount": "{{count}} results for '{{search}}'",
       "totalCount": "{{count}} articles",
       "selectedCount": "{{count}} articles selected of {{totalCount}}"
+    },
+    "empty": {
+      "title": "No articles found!",
+      "public": {
+        "title": "No published articles found!"
+      },
+      "noArticle": {
+        "title": "There are no articles.",
+        "description": "You have not yet created an article. Create an article using the CTA given below.",
+        "label": "Add article"
+      },
+      "search": {
+        "title": "No results for '{{search}}'",
+        "description": "We could not find any articles based on your search term. Try a different keyword or add a new article.",
+        "label": "Clear search"
+      },
+      "selectedCategories": {
+        "title": "No results for the selected category filters",
+        "description": "We could not find any articles based on selected category filters. Try a different filter or add a new article.",
+        "label": "Clear category filters"
+      },
+      "status": {
+        "title": "No results for the selected article status",
+        "description": "We could not find any articles based on selected article status. Try a different filter or add a new article.",
+        "label": "Show all articles"
+      }
     }
   },
   "public": {

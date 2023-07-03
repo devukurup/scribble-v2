@@ -17,6 +17,8 @@ import MenuBar from "./MenuBar";
 import SubHeader from "./SubHeader";
 import Table from "./Table";
 
+import SidebarWrapper from "../SidebarWrapper";
+
 const Articles = () => {
   const [activeStatus, setActiveStatus] = useState(DEFAULT_ACTIVE_STATUS);
   const [isMenuBarOpen, setIsMenuBarOpen] = useState(true);
@@ -58,8 +60,18 @@ const Articles = () => {
     }
   };
 
+  const handleClose = () => {
+    setIsDeleteAlertOpen(false);
+    if (isBulkDelete) {
+      setIsBulkDelete(false);
+      setSelectedArticleRowIds([]);
+    } else {
+      setRowToBeDeleted({});
+    }
+  };
+
   return (
-    <>
+    <SidebarWrapper>
       <MenuBar
         activeStatus={activeStatus}
         articles={data}
@@ -109,7 +121,7 @@ const Articles = () => {
         />
         <Table
           activeStatus={activeStatus}
-          articles={data?.articles}
+          data={data}
           debouncedSearchTerm={debouncedArticleSearchTerm}
           isLoading={isTableLoading}
           refetch={refetchArticles}
@@ -120,6 +132,7 @@ const Articles = () => {
           setIsDeleteAlertOpen={setIsDeleteAlertOpen}
           setRowToBeDeleted={setRowToBeDeleted}
           setSearchTerm={setSearchTerm}
+          setSelectedCategories={setSelectedCategories}
           setSelectedRowIds={setSelectedArticleRowIds}
           totalCount={data?.filtered_articles_count}
         />
@@ -135,12 +148,9 @@ const Articles = () => {
         refetch={refetchArticles}
         rowToBeDeleted={rowToBeDeleted}
         selectedArticleRowIds={selectedArticleRowIds}
-        setIsBulkDelete={setIsBulkDelete}
-        setIsOpen={setIsDeleteAlertOpen}
-        setRowToBeDeleted={setRowToBeDeleted}
-        setSelectedArticleRowIds={setSelectedArticleRowIds}
+        onClose={handleClose}
       />
-    </>
+    </SidebarWrapper>
   );
 };
 

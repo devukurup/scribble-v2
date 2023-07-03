@@ -9,17 +9,21 @@ export const DASHBOARD_ROUTES = [
   {
     path: routes.articles.edit,
     component: EditArticle,
+    isExact: true,
   },
   {
     path: routes.articles.new,
     component: CreateArticle,
+    isExact: true,
   },
   {
     path: routes.articles.index,
     component: Articles,
+    isExact: true,
   },
   {
     path: routes.settings.index,
     component: Settings,
+    isExact: false,
   },
 ];
