@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { LOAD_REDIRECTIONS_KEY } from "src/constants";
 
-import redirectionsApi from "../../apis/redirections";
+import redirectionsApi from "apis/redirections";
 
 export const useFetchRedirections = (options = {}) =>
   useQuery([LOAD_REDIRECTIONS_KEY], () => redirectionsApi.list(), options);

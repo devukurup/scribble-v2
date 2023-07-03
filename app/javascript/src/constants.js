@@ -11,3 +11,5 @@ export const API_V1_BASE_URL = "/api/v1";
 export const LOAD_CATEGORIES_KEY = "load-categories";
 
 export const LOAD_REDIRECTIONS_KEY = "load-redirections";
+
+export const LOAD_SITE_KEY = "load-site";
