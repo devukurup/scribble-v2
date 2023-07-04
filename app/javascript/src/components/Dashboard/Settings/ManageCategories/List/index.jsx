@@ -5,7 +5,7 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 import DeleteCategory from "Dashboard/Categories/Delete";
 import EditCategory from "Dashboard/Categories/Edit";
-import { useUpdateCategories } from "hooks/useUpdateCategories";
+import { useUpdateCategory } from "hooks/reactQuery/useCategoriesApi";
 
 import Item from "./Item";
 
@@ -25,8 +25,7 @@ const List = ({ categories, isLoading, refetch, isSingleCategoryPresent }) => {
     setCategoryToBeDeleted(category);
   };
 
-  const { update: updateCategory, isLoading: isUpdating } =
-    useUpdateCategories();
+  const { mutate: updateCategory, isLoading: isUpdating } = useUpdateCategory();
 
   const handleDragEnd = ({ destination, draggableId }) => {
     if (!destination) return;
@@ -36,10 +35,9 @@ const List = ({ categories, isLoading, refetch, isSingleCategoryPresent }) => {
       id: draggableId,
       payload,
       onSuccess: refetch,
-      quiet: true,
+      isQuiet: true,
     });
   };
-
   if (isLoading || isUpdating) {
     return (
       <div className="flex w-full justify-center">

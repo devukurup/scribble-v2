@@ -11,7 +11,7 @@ import { formattedDate, truncate } from "src/utils";
 
 import { buildUrl } from "neetocommons/utils";
 
-import { DEFAULT_ACTIVE_STATUS } from "./constants";
+import { ARTICLE_STATUSES, DEFAULT_ACTIVE_STATUS } from "./constants";
 
 const { Menu, MenuItem } = Dropdown;
 
@@ -104,7 +104,7 @@ export const buildUrlParams = ({ page, limit, search, status }) => {
     ? currentUrlParams.set("search", search)
     : currentUrlParams.delete("search");
 
-  status !== "All"
+  status !== ARTICLE_STATUSES.all
     ? currentUrlParams.set("status", status)
     : currentUrlParams.delete("status");
 

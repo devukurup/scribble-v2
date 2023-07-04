@@ -5,7 +5,13 @@ import * as yup from "yup";
 import { SINGULAR } from "constants";
 import { capitalize } from "neetocommons/pure";
 
-export const DEFAULT_ACTIVE_STATUS = t("statuses.all");
+export const ARTICLE_STATUSES = {
+  all: "all",
+  published: "published",
+  draft: "draft",
+};
+
+export const DEFAULT_ACTIVE_STATUS = ARTICLE_STATUSES.all;
 
 export const EDITOR_ADDONS = [
   "highlight",

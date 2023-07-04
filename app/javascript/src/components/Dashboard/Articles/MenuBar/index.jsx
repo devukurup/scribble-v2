@@ -6,6 +6,7 @@ import { MenuBar as NeetoUIMenuBar } from "neetoui/layouts";
 import { useTranslation } from "react-i18next";
 
 import { PLURAL } from "constants";
+import useDebounce from "hooks/useDebounce";
 import { capitalize } from "neetocommons/pure";
 
 import Categories from "./Categories";
@@ -17,16 +18,13 @@ const MenuBar = ({
   setActiveStatus,
   isMenuBarOpen,
   setIsCreateModalOpen,
-  isCategoriesLoading,
-  categories,
-  fetchCategories,
-  searchTerm,
-  setSearchTerm,
-  debouncedSearchTerm,
   selectedCategories,
   setSelectedCategories,
   articles,
 }) => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const debouncedSearchTerm = useDebounce(searchTerm);
+
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
 
   const { t } = useTranslation();
@@ -87,10 +85,7 @@ const MenuBar = ({
         onKeyDown={handleKeyDown}
       />
       <Categories
-        categories={categories}
         debouncedSearchTerm={debouncedSearchTerm}
-        fetchCategories={fetchCategories}
-        isLoading={isCategoriesLoading}
         isSearchCollapsed={isSearchCollapsed}
         selectedCategories={selectedCategories}
         setSelectedCategories={setSelectedCategories}

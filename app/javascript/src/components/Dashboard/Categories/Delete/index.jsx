@@ -4,8 +4,10 @@ import { Warning } from "neetoicons";
 import { Modal, Button, Typography, Callout } from "neetoui";
 import { Trans, useTranslation } from "react-i18next";
 
-import { useDeleteCategory } from "hooks/reactQuery/useCategoriesApi";
-import { useFetchCategories } from "hooks/useFetchCategories";
+import {
+  useDeleteCategory,
+  useFetchCategories,
+} from "hooks/reactQuery/useCategoriesApi";
 
 import Form from "./Form";
 
@@ -17,7 +19,7 @@ const Delete = ({
   isSingleCategoryPresent,
 }) => {
   const { title, articles_count, id } = categoryToBeDeleted;
-  const { data, isLoading: isLoadingCategories } = useFetchCategories();
+  const { data, isLoading: isLoadingCategories } = useFetchCategories({});
 
   const handleAfterDelete = () => {
     refetch();
@@ -43,7 +45,7 @@ const Delete = ({
       </Modal.Header>
       {articles_count > 0 && !isSingleCategoryPresent ? (
         <Form
-          categories={data?.categories}
+          categories={data.data?.categories}
           category={categoryToBeDeleted}
           isLoading={isLoadingCategories}
           onClose={onClose}

@@ -33,6 +33,7 @@ export const useCreateRedirection = (options = {}) => {
     },
   });
 };
+
 export const useDeleteRedirection = (options = {}) => {
   const queryClient = useQueryClient();
 

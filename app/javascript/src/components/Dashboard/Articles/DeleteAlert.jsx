@@ -1,47 +1,41 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { Alert } from "neetoui";
 import { Trans, useTranslation } from "react-i18next";
 
-import articlesApi from "apis/articles";
-import { noop } from "neetocommons/pure";
+import {
+  useBulkDeleteArticles,
+  useDeleteArticle,
+} from "hooks/reactQuery/useArticlesApi";
 
 import { SINGLE_ARTICLE_COUNT } from "./constants";
 
 const DeleteAlert = ({
   isOpen,
   rowToBeDeleted,
-  refetch = noop,
   isBulkDelete = false,
   selectedArticleRowIds = [],
   onClose,
 }) => {
-  const [isDeleting, setIsDeleting] = useState(false);
   const { title, id } = rowToBeDeleted;
 
   const { t } = useTranslation();
 
+  const { mutate: bulkDelete, isLoading: isBulkDeleting } =
+    useBulkDeleteArticles({ onSuccess: onClose });
+
+  const { mutate: destroy, isLoading: isDeleting } = useDeleteArticle({
+    onSuccess: onClose,
+  });
+
   const handleDelete = async () => {
-    try {
-      setIsDeleting(true);
-      isBulkDelete
-        ? await articlesApi.bulkDeleteArticles({
-            article_ids: selectedArticleRowIds,
-          })
-        : await articlesApi.destroy(id);
-      onClose();
-      refetch();
-    } catch (error) {
-      logger.error(error);
-    } finally {
-      setIsDeleting(false);
-    }
+    isBulkDelete ? bulkDelete(selectedArticleRowIds) : destroy(id);
   };
 
   return (
     <Alert
       isOpen={isOpen}
-      isSubmitting={isDeleting}
+      isSubmitting={isBulkDeleting || isDeleting}
       message={
         isBulkDelete ? (
           t("delete.messageWithoutTitle", {

@@ -23,3 +23,5 @@ export const LOAD_PUBLIC_ARTICLES_KEY = "load-public-articles";
 export const SINGULAR = { count: 1 };
 
 export const PLURAL = { count: 2 };
+
+export const LOAD_ARTICLES_KEY = "load-articles";

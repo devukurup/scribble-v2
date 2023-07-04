@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { Search } from "neetoicons";
 import { Dropdown, Input } from "neetoui";
@@ -6,20 +6,13 @@ import { useTranslation } from "react-i18next";
 
 import { SINGULAR } from "constants";
 import useDebounce from "hooks/useDebounce";
-import { useFetchCategories } from "hooks/useFetchCategories";
 
 import List from "./List";
 
 const Categories = ({ handleUpdate }) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const { data, isLoading, refetch } = useFetchCategories();
   const debouncedSearchTerm = useDebounce(searchTerm);
-
   const { t } = useTranslation();
-
-  useEffect(() => {
-    refetch(searchTerm);
-  }, [debouncedSearchTerm]);
 
   return (
     <Dropdown
@@ -36,11 +29,7 @@ const Categories = ({ handleUpdate }) => {
           value={searchTerm}
           onChange={event => setSearchTerm(event.target.value)}
         />
-        <List
-          categories={data?.categories}
-          handleUpdate={handleUpdate}
-          isLoading={isLoading}
-        />
+        <List handleUpdate={handleUpdate} searchTerm={debouncedSearchTerm} />
       </div>
     </Dropdown>
   );

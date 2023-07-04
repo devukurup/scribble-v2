@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import routes from "src/routes";
 
-import articlesApi from "apis/articles";
+import { useCreateArticle } from "hooks/reactQuery/useArticlesApi";
 
 import { INITIAL_VALUES, STATUS } from "./constants";
 import Form from "./Form";
@@ -15,6 +15,11 @@ const Create = () => {
   const history = useHistory();
 
   const { t } = useTranslation();
+  const redirectToDashboard = () => history.push(routes.articles.index);
+
+  const { mutate: createArticle, isLoading: isCreating } = useCreateArticle({
+    onSuccess: redirectToDashboard,
+  });
 
   const handleSubmit = async values => {
     const payload = {
@@ -23,12 +28,7 @@ const Create = () => {
       body: values.body,
       status: STATUS[values.status],
     };
-    try {
-      await articlesApi.create(payload);
-      history.push(routes.articles.index);
-    } catch (error) {
-      logger.error(error);
-    }
+    createArticle(payload);
   };
 
   return (
@@ -37,7 +37,8 @@ const Create = () => {
         handleSubmit={handleSubmit}
         initialStatus={t("statuses.publish")}
         initialValues={INITIAL_VALUES}
-        onClose={() => history.push(routes.articles.index)}
+        isSubmitting={isCreating}
+        onClose={redirectToDashboard}
       />
     </SidebarWrapper>
   );

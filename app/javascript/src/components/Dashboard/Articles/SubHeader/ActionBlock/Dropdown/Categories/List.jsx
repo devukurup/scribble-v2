@@ -4,12 +4,17 @@ import { Spinner, Dropdown, Typography } from "neetoui";
 import { useTranslation } from "react-i18next";
 import { isPresent } from "src/utils";
 
+import { useFetchCategories } from "hooks/reactQuery/useCategoriesApi";
+
 const { Menu, MenuItem } = Dropdown;
 
-const List = ({ isLoading, categories, handleUpdate }) => {
+const List = ({ searchTerm, handleUpdate }) => {
   const { t } = useTranslation();
+  const { data, isFetching } = useFetchCategories({
+    searchTerm,
+  });
 
-  if (isLoading) {
+  if (isFetching) {
     <div className="flex justify-center p-4">
       <Spinner />
     </div>;
@@ -17,9 +22,9 @@ const List = ({ isLoading, categories, handleUpdate }) => {
 
   return (
     <>
-      {isPresent(categories) ? (
+      {isPresent(data.data?.categories) ? (
         <Menu className="flex flex-col gap-y-1">
-          {categories.map(({ title, id }) => (
+          {data.data?.categories.map(({ title, id }) => (
             <MenuItem.Button key={id} onClick={() => handleUpdate(id)}>
               {title}
             </MenuItem.Button>

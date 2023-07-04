@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
 
 import classnames from "classnames";
-import { Table as NeetoUITable, PageLoader } from "neetoui";
+import { Table as NeetoUITable } from "neetoui";
 import { useHistory } from "react-router-dom";
 import { DEFAULT_PAGE_NUMBER, PAGINATION_LIMIT } from "src/constants";
 import { isEven } from "src/utils";
 
-import { useUpdateArticles } from "hooks/useUpdateArticles";
+import { useUpdateArticle } from "hooks/reactQuery/useArticlesApi";
 
-import { ACTION_KEY, DEFAULT_ACTIVE_STATUS } from "./constants";
+import {
+  ACTION_KEY,
+  DEFAULT_ACTIVE_STATUS,
+  ARTICLE_STATUSES,
+} from "./constants";
 import Empty from "./Empty";
 import { columnData, buildUrlParams } from "./utils";
 
@@ -16,9 +20,8 @@ const Table = ({
   setRowToBeDeleted,
   setIsDeleteAlertOpen,
   data,
-  isLoading,
-  refetch,
   totalCount,
+  isLoading,
   debouncedSearchTerm,
   activeStatus,
   setActiveStatus,
@@ -29,7 +32,6 @@ const Table = ({
   selectedRowIds,
   setSelectedRowIds,
 }) => {
-  const { update } = useUpdateArticles();
   const history = useHistory();
   const [currentPageNumber, setCurrentPageNumber] =
     useState(DEFAULT_PAGE_NUMBER);
@@ -40,11 +42,13 @@ const Table = ({
     setRowToBeDeleted(row);
   };
 
+  const { mutate: updateArticle, isLoading: isUpdating } = useUpdateArticle();
+
   const handleUpdate = ({ id, publishStatus }) => {
     const payload = {
       status: publishStatus === "Publish" ? "published" : "draft",
     };
-    update({ id, payload, onSuccess: refetch });
+    updateArticle({ id, payload });
   };
 
   const handlePagination = (page, limit) => {
@@ -61,14 +65,13 @@ const Table = ({
     const urlStatus = searchParams.get("status");
     const urlSearchTerm = searchParams.get("search");
     urlStatus
-      ? setActiveStatus(urlStatus)
+      ? setActiveStatus(ARTICLE_STATUSES[urlStatus] ?? DEFAULT_ACTIVE_STATUS)
       : setActiveStatus(DEFAULT_ACTIVE_STATUS);
     urlSearchTerm ? setSearchTerm(urlSearchTerm) : setSearchTerm("");
     setCurrentPageNumber(
       parseInt(searchParams.get("page") || DEFAULT_PAGE_NUMBER)
     );
-    refetch(selectedCategories);
-  }, [window.location.search]);
+  }, []);
 
   useEffect(() => {
     const currentUrlParams = buildUrlParams({
@@ -77,12 +80,9 @@ const Table = ({
       search: debouncedSearchTerm,
       status: activeStatus,
     });
+
     history.push({ search: `?${currentUrlParams.toString()}` });
   }, [debouncedSearchTerm, activeStatus]);
-
-  useEffect(() => {
-    refetch(selectedCategories);
-  }, [selectedCategories]);
 
   const filterColumns = () => {
     const availableColumnKeys = selectedColumns
@@ -93,14 +93,6 @@ const Table = ({
       ({ key }) => key === ACTION_KEY || availableColumnKeys.includes(key)
     );
   };
-
-  if (isLoading) {
-    return (
-      <div className="h-screen">
-        <PageLoader />
-      </div>
-    );
-  }
 
   if (data?.filtered_articles_count === 0) {
     return (
@@ -124,7 +116,7 @@ const Table = ({
       currentPageNumber={currentPageNumber}
       defaultPageSize={PAGINATION_LIMIT}
       handlePageChange={handlePagination}
-      loading={isLoading}
+      loading={isUpdating || isLoading}
       rowData={data?.articles}
       selectedRowKeys={selectedRowIds}
       totalCount={totalCount}
