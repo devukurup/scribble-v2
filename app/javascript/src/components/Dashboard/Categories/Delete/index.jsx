@@ -2,11 +2,12 @@ import React from "react";
 
 import { Warning } from "neetoicons";
 import { Modal, Button, Typography, Callout } from "neetoui";
-import { isNil } from "ramda";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 
-import { useDeleteCategory } from "hooks/reactQuery/useCategoriesApi";
-import { useFetchCategories } from "hooks/useFetchCategories";
+import {
+  useDeleteCategory,
+  useFetchCategories,
+} from "hooks/reactQuery/useCategoriesApi";
 
 import Form from "./Form";
 
@@ -17,8 +18,8 @@ const Delete = ({
   refetch,
   isSingleCategoryPresent,
 }) => {
-  const { title, articles_count, id } = categoryToBeDeleted;
-  const { data, isLoading: isLoadingCategories } = useFetchCategories();
+  const { title, articles_count: articlesCount, id } = categoryToBeDeleted;
+  const { data, isLoading: isLoadingCategories } = useFetchCategories({});
 
   const handleAfterDelete = () => {
     refetch();
@@ -31,7 +32,7 @@ const Delete = ({
 
   const handleDelete = (values = {}) => {
     const payload =
-      !isNil(articles_count) && !isSingleCategoryPresent
+      articlesCount > 0 && !isSingleCategoryPresent
         ? { id, targetCategoryId: values.category.value }
         : { id };
     mutate(payload);
@@ -40,11 +41,11 @@ const Delete = ({
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <Modal.Header>
-        <Typography style="h3">{t("category.delete.title")}</Typography>
+        <Typography style="h3">{t("delete.category.title")}</Typography>
       </Modal.Header>
-      {!isNil(articles_count) && !isSingleCategoryPresent ? (
+      {articlesCount > 0 && !isSingleCategoryPresent ? (
         <Form
-          categories={data?.categories}
+          categories={data.data?.categories}
           category={categoryToBeDeleted}
           isLoading={isLoadingCategories}
           onClose={onClose}
@@ -54,22 +55,30 @@ const Delete = ({
         <>
           <Modal.Body>
             <Typography style="body1">
-              {t("category.delete.description", { title })}
+              <Trans
+                components={{ bold: <strong /> }}
+                defaults={t("delete.messageWithTitle", { title })}
+              />
             </Typography>
-            {articles_count > 0 && (
+            {articlesCount > 0 && (
               <Callout icon={Warning} style="danger">
                 <Typography style="body1" weight="semibold">
-                  {t("category.delete.newCategoryAlert", {
-                    title,
-                    count: articles_count || 0,
-                  })}
+                  <Trans
+                    components={{ bold: <strong /> }}
+                    defaults={t("delete.category.newCategoryAlert", {
+                      title,
+                      articlesCount: t("common.articleCount", {
+                        count: articlesCount || 0,
+                      }),
+                    })}
+                  />
                 </Typography>
               </Callout>
             )}
           </Modal.Body>
           <Modal.Footer className="flex space-x-2">
             <Button
-              label={t("common.proceed")}
+              label={t("common.continue")}
               style="danger"
               type="submit"
               onClick={handleDelete}

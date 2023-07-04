@@ -45,6 +45,18 @@ class Api::V1::CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert 2, @category.reload.position
   end
 
+  def test_should_destroy_category_on_delete_serivice_success
+    delete(api_v1_category_path(@category.id), headers:)
+
+    assert_response :success
+  end
+
+  def test_should_destroy_category_on_delete_service_serror
+    delete(api_v1_category_path("unknown id"), headers:)
+
+    assert_response :not_found
+  end
+
   private
 
     def category_params

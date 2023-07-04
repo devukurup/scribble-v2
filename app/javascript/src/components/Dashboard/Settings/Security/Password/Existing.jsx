@@ -21,7 +21,9 @@ const Existing = ({ setIsNewPassword }) => {
         value={DEFAULT_PASSWORD}
       />
       <Button
-        label={t("common.changePassword")}
+        label={t("common.changeEntity", {
+          entity: t("common.password"),
+        })}
         onClick={() => setIsNewPassword(true)}
       />
     </div>

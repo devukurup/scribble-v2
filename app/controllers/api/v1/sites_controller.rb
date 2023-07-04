@@ -2,6 +2,7 @@
 
 class Api::V1::SitesController < ApplicationController
   before_action :load_site!, only: %i[show update]
+  skip_before_action :load_current_user!
 
   def show
     render

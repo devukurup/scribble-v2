@@ -1,23 +1,25 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import { Spinner, Typography } from "neetoui";
 import { MenuBar } from "neetoui/layouts";
 import { useTranslation } from "react-i18next";
 
+import { useFetchCategories } from "hooks/reactQuery/useCategoriesApi";
 import { isPresent } from "utils";
 
 import { isCategoryPresent, removeCategory } from "./utils";
 
 const Categories = ({
-  isLoading,
-  categories,
-  fetchCategories,
   debouncedSearchTerm,
   selectedCategories,
   setSelectedCategories,
   isSearchCollapsed,
 }) => {
   const { t } = useTranslation();
+
+  const { data, isFetching } = useFetchCategories({
+    searchTerm: debouncedSearchTerm,
+  });
 
   const handleCategoryClick = category => {
     if (
@@ -37,11 +39,7 @@ const Categories = ({
     }
   };
 
-  useEffect(() => {
-    fetchCategories();
-  }, [debouncedSearchTerm]);
-
-  if (isLoading) {
+  if (isFetching) {
     return (
       <div className="flex w-full justify-center">
         <Spinner />
@@ -49,17 +47,17 @@ const Categories = ({
     );
   }
 
-  if (!isPresent(categories) && !isSearchCollapsed) {
+  if (!isPresent(data.data?.categories) && !isSearchCollapsed) {
     return (
       <Typography className="flex justify-center" style="body2">
-        {t("category.empty")}
+        {t("empty.category")}
       </Typography>
     );
   }
 
   return (
     <>
-      {categories.map(category => (
+      {data.data?.categories.map(category => (
         <MenuBar.Block
           count={category.articles_count || 0}
           key={category.id}

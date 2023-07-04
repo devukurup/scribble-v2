@@ -5,6 +5,7 @@ import { Close, Check } from "neetoicons";
 import { Button } from "neetoui";
 import { Input } from "neetoui/formik";
 
+import { FROM_PATH_PLACHOLDER, TO_PATH_PLACEHOLDER } from "./constants";
 import Row from "./Row";
 import Cell from "./Row/Cell";
 import { formatPaths } from "./utils";
@@ -27,14 +28,14 @@ const Form = ({ isSubmitting = false, initialValues, onSubmit, onClose }) => (
               <Cell>
                 <Input
                   name="from"
-                  placeholder="/articles/welcome"
+                  placeholder={FROM_PATH_PLACHOLDER}
                   size="large"
                 />
               </Cell>
               <Cell>
                 <Input
                   name="to"
-                  placeholder="https://spinkart.scribble.com/"
+                  placeholder={TO_PATH_PLACEHOLDER}
                   size="large"
                 />
               </Cell>

@@ -5,14 +5,14 @@ import { Button, Typography } from "neetoui";
 import { useTranslation } from "react-i18next";
 
 import Create from "Dashboard/Categories/Create";
-import { useFetchCategories } from "hooks/useFetchCategories";
+import { useFetchCategories } from "hooks/reactQuery/useCategoriesApi";
 
 import List from "./List";
 
 const ManageCategories = () => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
-  const { data, isLoading, refetch } = useFetchCategories();
+  const { data, isLoading, refetch } = useFetchCategories({});
 
   const { t } = useTranslation();
 
@@ -41,7 +41,7 @@ const ManageCategories = () => {
           weight="normal"
         >
           {t("settings.manageCategories.count", {
-            count: data?.categories_count,
+            count: data?.data.categories_count,
           })}
         </Typography>
         <Button
@@ -54,9 +54,9 @@ const ManageCategories = () => {
         />
       </div>
       <List
-        categories={data?.categories}
+        categories={data?.data.categories}
         isLoading={isLoading}
-        isSingleCategoryPresent={data?.categories_count === 1}
+        isSingleCategoryPresent={data?.data.categories_count === 1}
         refetch={refetch}
       />
       <Create

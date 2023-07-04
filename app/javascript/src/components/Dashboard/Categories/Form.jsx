@@ -7,7 +7,13 @@ import { useTranslation } from "react-i18next";
 
 import { INITIAL_TOUCHED, VALIDATION_SCHEMA } from "./constants";
 
-const Form = ({ initialValues, onClose, handleSubmit, isEdit = false }) => {
+const Form = ({
+  initialValues,
+  isSubmitting = false,
+  onClose,
+  handleSubmit,
+  isEdit = false,
+}) => {
   const { t } = useTranslation();
 
   return (
@@ -19,7 +25,7 @@ const Form = ({ initialValues, onClose, handleSubmit, isEdit = false }) => {
       validationSchema={VALIDATION_SCHEMA}
       onSubmit={handleSubmit}
     >
-      {({ isSubmitting, isValid, dirty }) => (
+      {({ isValid, dirty }) => (
         <FormikForm noValidate>
           <Modal.Body className="space-y-2">
             <Input
@@ -32,6 +38,7 @@ const Form = ({ initialValues, onClose, handleSubmit, isEdit = false }) => {
           <Modal.Footer className="space-x-2">
             <Button
               disabled={isSubmitting || !isValid || !dirty}
+              loading={isSubmitting}
               type="submit"
               label={
                 isEdit ? t("common.saveChanges") : t("category.addButtonLabel")

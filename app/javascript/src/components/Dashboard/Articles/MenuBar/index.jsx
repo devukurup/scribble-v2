@@ -5,7 +5,12 @@ import { Typography } from "neetoui";
 import { MenuBar as NeetoUIMenuBar } from "neetoui/layouts";
 import { useTranslation } from "react-i18next";
 
+import { PLURAL } from "constants";
+import useDebounce from "hooks/useDebounce";
+import { capitalize } from "neetocommons/pure";
+
 import Categories from "./Categories";
+import { ESCAPE_KEY } from "./constants";
 import { statuses } from "./utils";
 
 const MenuBar = ({
@@ -13,16 +18,13 @@ const MenuBar = ({
   setActiveStatus,
   isMenuBarOpen,
   setIsCreateModalOpen,
-  isCategoriesLoading,
-  categories,
-  fetchCategories,
-  searchTerm,
-  setSearchTerm,
-  debouncedSearchTerm,
   selectedCategories,
   setSelectedCategories,
   articles,
 }) => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const debouncedSearchTerm = useDebounce(searchTerm);
+
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
 
   const { t } = useTranslation();
@@ -33,20 +35,23 @@ const MenuBar = ({
   };
 
   const handleKeyDown = event => {
-    if (event.key === "Escape") {
+    if (event.key === ESCAPE_KEY) {
       handleClose();
     }
   };
 
   return (
-    <NeetoUIMenuBar showMenu={isMenuBarOpen} title={t("common.articles")}>
-      {statuses(articles).map(({ label, count }) => (
+    <NeetoUIMenuBar
+      showMenu={isMenuBarOpen}
+      title={capitalize(t("common.article", PLURAL))}
+    >
+      {statuses(articles).map(({ label, count, value }) => (
         <NeetoUIMenuBar.Block
-          active={activeStatus === label}
+          active={activeStatus === value}
           count={count}
-          key={label}
+          key={value}
           label={label}
-          onClick={() => setActiveStatus(label)}
+          onClick={() => setActiveStatus(value)}
         />
       ))}
       <NeetoUIMenuBar.SubTitle
@@ -68,7 +73,7 @@ const MenuBar = ({
           textTransform="uppercase"
           weight="bold"
         >
-          {t("common.categories")}
+          {t("common.category", PLURAL)}
         </Typography>
       </NeetoUIMenuBar.SubTitle>
       <NeetoUIMenuBar.Search
@@ -80,10 +85,7 @@ const MenuBar = ({
         onKeyDown={handleKeyDown}
       />
       <Categories
-        categories={categories}
         debouncedSearchTerm={debouncedSearchTerm}
-        fetchCategories={fetchCategories}
-        isLoading={isCategoriesLoading}
         isSearchCollapsed={isSearchCollapsed}
         selectedCategories={selectedCategories}
         setSelectedCategories={setSelectedCategories}

@@ -1,46 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { Formik, Form as FormikForm } from "formik";
 import { Button, Typography, Spinner } from "neetoui";
 import { Input } from "neetoui/formik";
 import { useTranslation } from "react-i18next";
 
-import siteApi from "apis/site";
+import { useShowSite, useUpdateSite } from "hooks/reactQuery/useSiteApi";
 
 import { INITIAL_TOUCHED, VALIDATION_SCHEMA } from "./constants";
 
 const Form = () => {
-  const [title, setTitle] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const { data, isLoading } = useShowSite();
+
+  const { mutate: updateSite, isLoading: isUpdating } = useUpdateSite();
 
   const { t } = useTranslation();
-
-  const fetchSite = async () => {
-    try {
-      setIsLoading(true);
-      const {
-        data: { site },
-      } = await siteApi.show();
-      setTitle(site.title);
-    } catch (error) {
-      logger.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchSite();
-  }, []);
-
-  const handleSubmit = async values => {
-    try {
-      await siteApi.update(values);
-      fetchSite();
-    } catch (error) {
-      logger.error(error);
-    }
-  };
 
   if (isLoading) {
     return (
@@ -50,16 +24,19 @@ const Form = () => {
     );
   }
 
+  const title = data.data.site.title;
+
   return (
     <Formik
+      enableReinitialize
       validateOnBlur
       validateOnChange
       initialTouched={INITIAL_TOUCHED}
       initialValues={{ title }}
       validationSchema={VALIDATION_SCHEMA}
-      onSubmit={handleSubmit}
+      onSubmit={updateSite}
     >
-      {({ isSubmitting, isValid, dirty }) => (
+      {({ isValid, dirty }) => (
         <FormikForm noValidate>
           <div className="mt-8 flex flex-col space-y-5">
             <Input
@@ -72,7 +49,7 @@ const Form = () => {
             </Typography>
             <div className="flex space-x-3">
               <Button
-                disabled={isSubmitting || !isValid || !dirty}
+                disabled={isUpdating || !isValid || !dirty}
                 label={t("common.saveChanges")}
                 type="submit"
               />

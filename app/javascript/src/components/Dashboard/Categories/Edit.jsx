@@ -3,19 +3,20 @@ import React from "react";
 import { Typography, Modal } from "neetoui";
 import { useTranslation } from "react-i18next";
 
-import { useUpdateCategories } from "hooks/useUpdateCategories";
+import { useUpdateCategory } from "hooks/reactQuery/useCategoriesApi";
 
 import Form from "./Form";
 
 const Edit = ({ isOpen, refetch, onClose, categoryToUpdate }) => {
-  const { update } = useUpdateCategories();
+  const { mutate: updateCategory, isLoading: isUpdating } = useUpdateCategory({
+    onSuccess: onClose,
+  });
 
   const { t } = useTranslation();
 
   const handleUpdate = values => {
     const { id } = categoryToUpdate;
-    update({ id, payload: values, onSuccess: refetch });
-    onClose();
+    updateCategory({ id, payload: values, onSuccess: refetch });
   };
 
   return (
@@ -27,6 +28,7 @@ const Edit = ({ isOpen, refetch, onClose, categoryToUpdate }) => {
         isEdit
         handleSubmit={handleUpdate}
         initialValues={categoryToUpdate}
+        isSubmitting={isUpdating}
         onClose={onClose}
       />
     </Modal>

@@ -3,14 +3,21 @@ import React, { useState } from "react";
 import { FormikEditor } from "@bigbinary/neeto-editor";
 import { Formik, Form as FormikForm } from "formik";
 import { MenuHorizontal } from "neetoicons";
-import { ActionDropdown, Dropdown, Typography, Button } from "neetoui";
+import { ActionDropdown, Dropdown, Typography, Button, Spinner } from "neetoui";
 import { Textarea, Select } from "neetoui/formik";
 import { useTranslation } from "react-i18next";
 
-import categoriesApi from "apis/categories";
-import { useFetchCategories } from "hooks/useFetchCategories";
+import {
+  useFetchCategories,
+  useCreateCategory,
+} from "hooks/reactQuery/useCategoriesApi";
 
-import { VALIDATION_SCHEMA, EDITOR_ADDONS } from "./constants";
+import {
+  VALIDATION_SCHEMA,
+  EDITOR_ADDONS,
+  KEYBOARD_ENTER_KEY,
+  DEFAULT_ROW_COUNT,
+} from "./constants";
 import { formatCategories } from "./utils";
 
 import { CATEGORY_VALIDATION_SCHEMA } from "../Categories/constants";
@@ -25,10 +32,14 @@ const Form = ({
   isEdit = false,
   handleDelete = () => {},
   dateString = "",
+  isSubmitting,
 }) => {
   const [status, setStatus] = useState(initialStatus);
 
-  const { data, isLoading, refetch } = useFetchCategories();
+  const { data, isFetching: isFetchingCategories } = useFetchCategories({});
+
+  const { isLoading: isCreatingCategories, mutate: createCategory } =
+    useCreateCategory();
 
   const { t } = useTranslation();
 
@@ -46,15 +57,17 @@ const Form = ({
     try {
       const validationError = await validateCategoryTitle(title);
       if (!validationError) {
-        const {
-          data: { category },
-        } = await categoriesApi.create({ title: title.trim() });
-        refetch();
-
-        setFieldValue("category", {
-          label: category?.title,
-          value: category?.id,
-        });
+        createCategory(
+          { title: title.trim() },
+          {
+            onSuccess: ({ data }) => {
+              setFieldValue("category", {
+                label: data.category?.title,
+                value: data.category?.id,
+              });
+            },
+          }
+        );
       } else {
         setErrors({ ...errors, category: validationError });
       }
@@ -73,38 +86,35 @@ const Form = ({
         validationSchema={VALIDATION_SCHEMA}
         onSubmit={values => handleSubmit({ ...values, status })}
       >
-        {({
-          errors,
-          setFieldValue,
-          isValid,
-          dirty,
-          isSubmitting,
-          setErrors,
-        }) => (
+        {({ errors, setFieldValue, isValid, dirty, setErrors }) => (
           <FormikForm>
             <div className="mx-4 flex items-center justify-between">
               <div className="w-96">
-                <Select
-                  isCreateable
-                  isSearchable
-                  isLoading={isLoading}
-                  name="category"
-                  options={formatCategories(data?.categories)}
-                  placeholder={t("articles.selectCategory")}
-                  onCreateOption={title =>
-                    handleCreate({
-                      title,
-                      setErrors,
-                      errors,
-                      setFieldValue,
-                    })
-                  }
-                />
+                {isFetchingCategories ? (
+                  <Spinner />
+                ) : (
+                  <Select
+                    isCreateable
+                    isSearchable
+                    isLoading={isFetchingCategories || isCreatingCategories}
+                    name="category"
+                    options={formatCategories(data.data?.categories)}
+                    placeholder={t("articles.selectCategory")}
+                    onCreateOption={title =>
+                      handleCreate({
+                        title,
+                        setErrors,
+                        errors,
+                        setFieldValue,
+                      })
+                    }
+                  />
+                )}
               </div>
               <div className="flex items-center space-x-3">
                 {isEdit && (
                   <Typography>
-                    {initialStatus === t("articles.publish")
+                    {initialStatus === t("statuses.publish")
                       ? t("articles.lastPublishedAt", { date: dateString })
                       : t("articles.draftSavedAt", { date: dateString })}
                   </Typography>
@@ -122,14 +132,14 @@ const Form = ({
                 >
                   <Menu>
                     <MenuItem.Button
-                      onClick={() => setStatus(t("articles.publish"))}
+                      onClick={() => setStatus(t("statuses.publish"))}
                     >
-                      {t("articles.publish")}
+                      {t("statuses.publish")}
                     </MenuItem.Button>
                     <MenuItem.Button
-                      onClick={() => setStatus(t("articles.saveDraft"))}
+                      onClick={() => setStatus(t("statuses.saveDraft"))}
                     >
-                      {t("articles.saveDraft")}
+                      {t("statuses.saveDraft")}
                     </MenuItem.Button>
                   </Menu>
                 </ActionDropdown>
@@ -164,10 +174,10 @@ const Form = ({
                   error={errors.title}
                   name="title"
                   placeholder={t("articles.placeholders.title")}
-                  rows={1}
+                  rows={DEFAULT_ROW_COUNT}
                   onChange={event => setFieldValue("title", event.target.value)}
                   onKeyDown={event =>
-                    event.key === "Enter" &&
+                    event.key === KEYBOARD_ENTER_KEY &&
                     !event.shiftKey &&
                     event.preventDefault()
                   }

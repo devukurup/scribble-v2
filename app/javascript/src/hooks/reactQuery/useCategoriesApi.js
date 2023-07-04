@@ -3,7 +3,7 @@ import { LOAD_CATEGORIES_KEY } from "src/constants";
 
 import categoriesApi from "apis/categories";
 
-export const useFetchCategories = (searchTerm = "", options = {}) =>
+export const useFetchCategories = ({ searchTerm = "", options = {} }) =>
   useQuery(
     [LOAD_CATEGORIES_KEY, searchTerm],
     () => categoriesApi.list(searchTerm),

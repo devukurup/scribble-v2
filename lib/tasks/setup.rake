@@ -18,6 +18,14 @@ def create_sample_data!
   puts "Seeding with sample data..."
   create_site!
   create_user! email: "oliver@example.com"
+  5.times do
+    category = create_category!
+    2.times do
+      create_article!("draft", category)
+      create_article!("published", category)
+    end
+  end
+
 end
 
 def create_site!
@@ -27,5 +35,24 @@ end
 
 def create_user!(options = {})
   user_attributes = { first_name: "Oliver", last_name: "Smith", site_id: Site.first.id }.merge options
-  User.create! user_attributes
+  @user = User.create! user_attributes
+end
+
+def create_category!
+  category_attributes = {
+    title: Faker::Lorem.unique.word,
+    user: @user
+  }
+  Category.create! category_attributes
+end
+
+def create_article!(status, category)
+  article_attribute = {
+    title: Faker::Lorem.word,
+    body: Faker::Lorem.paragraph,
+    status: status,
+    category: category,
+    user: @user
+  }
+  Article.create! article_attribute
 end

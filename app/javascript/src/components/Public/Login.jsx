@@ -5,10 +5,10 @@ import NavBar from "./NavBar";
 import { useShowSite } from "hooks/useShowSite";
 import { Formik, Form } from "formik";
 import { INITIAL_VALUES, VALIDATION_SCHEMA } from "./constants";
-import sessionsApi from "apis/public/sessions";
 import { setToSessionStorage } from "helpers/session";
 import routes from "src/routes";
 import { useTranslation } from "react-i18next";
+import { useLoginSession } from "hooks/reactQuery/public/useSessionApi";
 
 const Login = () => {
   const {
@@ -18,20 +18,17 @@ const Login = () => {
 
   const { t } = useTranslation();
 
-  const handleSubmit = async values => {
-    try {
-      const { data } = await sessionsApi.login({
-        site: { password: values.password },
-      });
-      const authToken = data?.authentication_token;
-      if (authToken) {
-        setToSessionStorage({ authToken });
-        window.location.href = routes.public.articles;
-      }
-    } catch (error) {
-      logger.error(error);
+  const handleSuccess = data => {
+    const authToken = data.data.authentication_token;
+    if (authToken) {
+      setToSessionStorage({ authToken });
+      window.location.href = routes.public.articles;
     }
   };
+
+  const { mutate: loginSession, isLoading: isLoggingIn } = useLoginSession({
+    onSuccess: handleSuccess,
+  });
 
   if (isLoading) {
     return (
@@ -59,9 +56,9 @@ const Login = () => {
           validateOnChange
           initialValues={INITIAL_VALUES}
           validationSchema={VALIDATION_SCHEMA}
-          onSubmit={handleSubmit}
+          onSubmit={loginSession}
         >
-          {({ isValid, isSubmitting, dirty }) => (
+          {({ isValid, dirty }) => (
             <Form>
               <div className="flex flex-col space-y-2">
                 <Input
@@ -76,7 +73,7 @@ const Login = () => {
                   className="justify-center"
                   size="large"
                   type="submit"
-                  disabled={isSubmitting || !isValid || !dirty}
+                  disabled={isLoggingIn || !isValid || !dirty}
                 />
               </div>
             </Form>

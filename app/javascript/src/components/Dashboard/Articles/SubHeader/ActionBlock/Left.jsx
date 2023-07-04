@@ -1,13 +1,12 @@
 import React from "react";
 
-import { Button } from "@bigbinary/neetoui";
 import { Delete } from "neetoicons";
-import { Tag, Typography } from "neetoui";
+import { Button, Tag, Typography } from "neetoui";
 import { isEmpty } from "ramda";
 import { useTranslation } from "react-i18next";
 import { isPresent } from "src/utils";
 
-import articlesApi from "apis/articles";
+import { useBulkUpdateArticles } from "hooks/reactQuery/useArticlesApi";
 
 import Categories from "./Dropdown/Categories";
 import Statuses from "./Dropdown/Statuses";
@@ -21,7 +20,6 @@ const Left = ({
   setSelectedArticleRowIds,
   setIsDeleteAlertOpen,
   setIsBulkDelete,
-  refetchArticles,
 }) => {
   const { t } = useTranslation();
 
@@ -30,25 +28,22 @@ const Left = ({
       categories.filter(category => category.id !== id)
     );
 
-  const bulkUpdateArticles = async param => {
-    try {
-      await articlesApi.bulkUpdateArticles({
-        article_ids: selectedArticleRowIds,
-        ...param,
-      });
-      setSelectedArticleRowIds([]);
-      refetchArticles();
-    } catch (error) {
-      logger.error(error);
-    }
-  };
+  const { mutate: bulkUpdate } = useBulkUpdateArticles({
+    onSuccess: () => setSelectedArticleRowIds([]),
+  });
 
   const handleUpdateCategory = categoryId => {
-    bulkUpdateArticles({ category_id: categoryId });
+    bulkUpdate({
+      article_ids: selectedArticleRowIds,
+      category_id: categoryId,
+    });
   };
 
   const handleUpdateStatus = status => {
-    bulkUpdateArticles({ status });
+    bulkUpdate({
+      article_ids: selectedArticleRowIds,
+      status,
+    });
   };
 
   const handleDelete = () => {
@@ -60,9 +55,11 @@ const Left = ({
     <div className="flex items-center justify-center space-x-3">
       {isPresent(selectedArticleRowIds) ? (
         <>
-          <Typography>
-            {t("articles.subHeader.selectedCount", {
-              count: selectedArticleRowIds.length,
+          <Typography weight="semibold">
+            {t("dashboard.subHeader.selectedCount", {
+              articleCount: t("common.articleCount", {
+                count: selectedArticleRowIds.length,
+              }),
               totalCount,
             })}
           </Typography>
@@ -79,8 +76,8 @@ const Left = ({
       ) : (
         <Typography weight="semibold">
           {isEmpty(searchTerm.trim())
-            ? t("articles.subHeader.totalCount", { count: totalCount })
-            : t("articles.subHeader.searchCount", {
+            ? t("common.articleCount", { count: totalCount })
+            : t("dashboard.subHeader.searchCount", {
                 count: totalCount,
                 search: searchTerm,
               })}

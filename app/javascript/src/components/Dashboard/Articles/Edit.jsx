@@ -5,8 +5,10 @@ import { useTranslation } from "react-i18next";
 import { useParams, useHistory } from "react-router-dom";
 import routes from "src/routes";
 
-import { useShowArticle } from "hooks/useShowArticle";
-import { useUpdateArticles } from "hooks/useUpdateArticles";
+import {
+  useShowArticle,
+  useUpdateArticle,
+} from "hooks/reactQuery/useArticlesApi";
 
 import { STATUS } from "./constants";
 import DeleteAlert from "./DeleteAlert";
@@ -24,12 +26,14 @@ const Edit = () => {
 
   const history = useHistory();
 
-  const { update } = useUpdateArticles();
+  const redirectToDashboard = () => {
+    history.push(routes.articles.index);
+  };
 
-  const {
-    data: { article },
-    isLoading,
-  } = useShowArticle(articleId);
+  const { mutate: updateArticle, isLoading: isUpdating } = useUpdateArticle({
+    onSuccess: redirectToDashboard,
+  });
+  const { data, isLoading } = useShowArticle({ id: articleId });
 
   const handleSubmit = values => {
     const payload = {
@@ -38,16 +42,16 @@ const Edit = () => {
       body: values.body,
       status: STATUS[values.status],
     };
-    update({ id: articleId, payload });
+    updateArticle({ id: articleId, payload });
+  };
+
+  const handleClose = () => {
+    setIsDeleteAlertOpen(false);
     redirectToDashboard();
   };
 
   const handleDelete = () => {
     setIsDeleteAlertOpen(true);
-  };
-
-  const redirectToDashboard = () => {
-    history.push(routes.articles.index);
   };
 
   if (isLoading) {
@@ -58,6 +62,8 @@ const Edit = () => {
     );
   }
 
+  const article = data.data.article;
+
   return (
     <SidebarWrapper>
       <Form
@@ -65,26 +71,29 @@ const Edit = () => {
         handleDelete={handleDelete}
         handleSubmit={handleSubmit}
         dateString={formattedDateTime(
-          article.status === "published"
+          article.status === t("statuses.published").toLowerCase()
             ? article?.last_published_at
             : article?.updated_at
         )}
         initialStatus={
-          article.status === "published"
-            ? t("articles.publish")
-            : t("articles.saveDraft")
+          article.status === t("statuses.published").toLowerCase()
+            ? t("statuses.publish")
+            : t("statuses.saveDraft")
         }
         initialValues={{
           ...article,
-          category: { label: article.category, value: article.category_id },
+          category: {
+            label: article.category.title,
+            value: article.category.id,
+          },
         }}
         onClose={redirectToDashboard}
       />
       <DeleteAlert
         isOpen={isDeleteAlertOpen}
-        refetch={redirectToDashboard}
+        isSubmitting={isUpdating}
         rowToBeDeleted={article}
-        onClose={() => setIsDeleteAlertOpen(false)}
+        onClose={handleClose}
       />
     </SidebarWrapper>
   );
