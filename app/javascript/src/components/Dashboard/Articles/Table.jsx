@@ -64,9 +64,7 @@ const Table = ({
   useEffect(() => {
     const urlStatus = searchParams.get("status");
     const urlSearchTerm = searchParams.get("search");
-    urlStatus
-      ? setActiveStatus(ARTICLE_STATUSES[urlStatus] ?? DEFAULT_ACTIVE_STATUS)
-      : setActiveStatus(DEFAULT_ACTIVE_STATUS);
+    setActiveStatus(ARTICLE_STATUSES[urlStatus] ?? DEFAULT_ACTIVE_STATUS);
     urlSearchTerm ? setSearchTerm(urlSearchTerm) : setSearchTerm("");
     setCurrentPageNumber(
       parseInt(searchParams.get("page") || DEFAULT_PAGE_NUMBER)

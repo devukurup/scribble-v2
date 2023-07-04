@@ -13,6 +13,7 @@ class Api::V1::CategoriesController < ApplicationController
 
   def update
     @category.update!(category_params)
+
     render_notice(t("successfully_updated", entity: "Category")) unless params.key?(:quiet)
   end
 

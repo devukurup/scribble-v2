@@ -42,7 +42,7 @@
       "searchCount_one": "{{count}} result for '{{search}}'",
       "searchCount_other": "{{count}} results for '{{search}}'",
 
-      "selectedCount": "{{count}} selected of {{totalCount}}",
+      "selectedCount": "{{articleCount}} selected of {{totalCount}}",
       "search": {
         "category": "Search category"
       }

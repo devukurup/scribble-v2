@@ -45,6 +45,41 @@ class Api::V1::ArticlesControllerTest < ActionDispatch::IntegrationTest
     assert_equal @article.title, response_json["article"]["title"]
   end
 
+  def test_should_bulk_destroy_article
+    article_ids = create_list(:article, 5, user: @user).pluck(:id)
+
+    delete(bulk_destroy_api_v1_articles_path, params: { article_ids: }, headers:)
+
+    assert_response :success
+  end
+
+  def test_bulk_update_success_on_vailid_params
+    article_ids = create_list(:article, 5, user: @user).pluck(:id)
+    params = {
+      status: :draft,
+      category_id: @category.id,
+      article_ids:
+    }
+
+    patch(bulk_update_api_v1_articles_path, params:, headers:)
+
+    assert_response :success
+  end
+
+  def test_bulk_update_error_response_on_service_errors
+    article_ids = [@article.id]
+    params = {
+      status: :draft,
+      category_id: "invalid_id",
+      article_ids:
+    }
+
+    patch(bulk_update_api_v1_articles_path, params:, headers:)
+
+    assert_response :unprocessable_entity
+    assert_includes response_json["error"], "Category must exist"
+  end
+
   private
 
     def article_params(title = "")

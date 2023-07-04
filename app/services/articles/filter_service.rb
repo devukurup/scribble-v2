@@ -31,9 +31,7 @@ class Articles::FilterService
     end
 
     def filter_by_categories
-      if filters[:category_ids].present?
-        @articles = @articles.where(category_id: filters[:category_ids])
-      end
+      @articles = @articles.where(category_id: filters[:category_ids]) if filters[:category_ids].present?
     end
 
     def filter_by_status
@@ -41,7 +39,7 @@ class Articles::FilterService
     end
 
     def set_filtered_articles_count
-      @filtered_articles_count = @articles.count
+      @filtered_articles_count = @articles.size
     end
 
     def paginate

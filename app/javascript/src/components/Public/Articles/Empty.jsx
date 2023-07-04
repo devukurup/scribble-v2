@@ -8,7 +8,7 @@ import { t } from "i18next";
 const Empty = () => {
   return (
     <div className="mt-48 flex w-full items-center justify-center">
-      <NoData image={<EmptyImage />} title={t("articles.empty.public.title")} />
+      <NoData image={<EmptyImage />} title={t("empty.article.public.title")} />
     </div>
   );
 };

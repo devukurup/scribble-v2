@@ -3,6 +3,7 @@
 class Api::V1::RedirectionsController < ApplicationController
   before_action :load_site!
   before_action :load_redirection!, only: %i[destroy update]
+  skip_before_action :load_current_user!
 
   def create
     @site.redirections.create!(redirection_params)

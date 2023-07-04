@@ -82,7 +82,10 @@ const Edit = () => {
         }
         initialValues={{
           ...article,
-          category: { label: article.category, value: article.category_id },
+          category: {
+            label: article.category.title,
+            value: article.category.id,
+          },
         }}
         onClose={redirectToDashboard}
       />

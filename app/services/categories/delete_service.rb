@@ -30,7 +30,7 @@ class Categories::DeleteService
   private
 
     def last_category?
-      user.categories.count == 1
+      user.categories.size == 1
     end
 
     def has_articles?
@@ -38,7 +38,9 @@ class Categories::DeleteService
     end
 
     def load_target_category!
-      @target_category = user.categories.find(target_category_id) and return if target_category_id.present?
+      if target_category_id.present?
+        @target_category = user.categories.find(target_category_id) and return
+      end
 
       @target_category = create_general_category!
     end
@@ -70,7 +72,7 @@ class Categories::DeleteService
     def validate_category!
       return if target_category_id.present?
 
-      set_error!(t("errors.category.last_general_category")) if last_general_category?
-      set_error!(t("errors.category.missing_target_category")) unless last_category?
+      set_error!(I18n.t("errors.category.last_general_category")) if last_general_category?
+      set_error!(I18n.t("errors.category.missing_target_category")) unless last_category?
     end
 end

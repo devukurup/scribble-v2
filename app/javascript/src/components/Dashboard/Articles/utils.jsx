@@ -52,9 +52,9 @@ export const columnData = ({ handleDelete, handleUpdate }) => [
     dataIndex: "last_published_at",
     key: "last_published_at",
     width: 150,
-    render: last_published_at => (
+    render: lastPublishedAt => (
       <Typography style="body2">
-        {last_published_at ? formattedDate(last_published_at) : "-"}
+        {lastPublishedAt ? formattedDate(lastPublishedAt) : "-"}
       </Typography>
     ),
   },

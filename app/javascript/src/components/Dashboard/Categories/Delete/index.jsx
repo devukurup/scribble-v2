@@ -18,7 +18,7 @@ const Delete = ({
   refetch,
   isSingleCategoryPresent,
 }) => {
-  const { title, articles_count, id } = categoryToBeDeleted;
+  const { title, articles_count: articlesCount, id } = categoryToBeDeleted;
   const { data, isLoading: isLoadingCategories } = useFetchCategories({});
 
   const handleAfterDelete = () => {
@@ -32,7 +32,7 @@ const Delete = ({
 
   const handleDelete = (values = {}) => {
     const payload =
-      articles_count > 0 && !isSingleCategoryPresent
+      articlesCount > 0 && !isSingleCategoryPresent
         ? { id, targetCategoryId: values.category.value }
         : { id };
     mutate(payload);
@@ -43,7 +43,7 @@ const Delete = ({
       <Modal.Header>
         <Typography style="h3">{t("delete.category.title")}</Typography>
       </Modal.Header>
-      {articles_count > 0 && !isSingleCategoryPresent ? (
+      {articlesCount > 0 && !isSingleCategoryPresent ? (
         <Form
           categories={data.data?.categories}
           category={categoryToBeDeleted}
@@ -60,7 +60,7 @@ const Delete = ({
                 defaults={t("delete.messageWithTitle", { title })}
               />
             </Typography>
-            {articles_count > 0 && (
+            {articlesCount > 0 && (
               <Callout icon={Warning} style="danger">
                 <Typography style="body1" weight="semibold">
                   <Trans
@@ -68,7 +68,7 @@ const Delete = ({
                     defaults={t("delete.category.newCategoryAlert", {
                       title,
                       articlesCount: t("common.articleCount", {
-                        count: articles_count || 0,
+                        count: articlesCount || 0,
                       }),
                     })}
                   />

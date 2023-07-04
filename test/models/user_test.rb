@@ -36,12 +36,14 @@ class UserTest < ActiveSupport::TestCase
     @user.first_name = "a" * (User::MAX_NAME_LENGTH + 1)
 
     assert_not @user.valid?
+    assert_includes @user.errors.full_messages, "First name is too long (maximum is 50 characters)"
   end
 
   def test_last_name_should_be_invalid_if_length_exceeds_maximum_length
     @user.last_name = "a" * (User::MAX_NAME_LENGTH + 1)
 
     assert_not @user.valid?
+    assert_includes @user.errors.full_messages, "Last name is too long (maximum is 50 characters)"
   end
 
   def test_user_should_not_be_valid_and_saved_if_email_not_unique

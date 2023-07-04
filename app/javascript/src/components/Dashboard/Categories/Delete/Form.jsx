@@ -12,7 +12,7 @@ import { INITIAL_VALUES, VALIDATION_SCHEMA } from "./constants";
 import { formatCategories } from "../../Articles/utils";
 
 const Form = ({ onSubmit, category, onClose, categories = [], isLoading }) => {
-  const { title, articles_count, id } = category;
+  const { title, articles_count: articlesCount, id } = category;
   const { t } = useTranslation();
 
   return (
@@ -41,7 +41,7 @@ const Form = ({ onSubmit, category, onClose, categories = [], isLoading }) => {
                     defaults={t("delete.category.alert", {
                       title,
                       articlesCount: t("common.articleCount", {
-                        count: articles_count || 0,
+                        count: articlesCount || 0,
                       }),
                     })}
                   />

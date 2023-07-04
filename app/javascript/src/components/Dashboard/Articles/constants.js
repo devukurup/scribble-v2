@@ -19,8 +19,6 @@ export const EDITOR_ADDONS = [
   "block-quote",
   "divider",
   "paste-unformatted",
-  "undo",
-  "redo",
 ];
 
 export const VALID_TITLE_REGEX = /^[a-zA-Z][a-zA-Z0-9& -]*$/;

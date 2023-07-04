@@ -57,7 +57,9 @@ const Left = ({
         <>
           <Typography weight="semibold">
             {t("dashboard.subHeader.selectedCount", {
-              count: selectedArticleRowIds.length,
+              articleCount: t("common.articleCount", {
+                count: selectedArticleRowIds.length,
+              }),
               totalCount,
             })}
           </Typography>

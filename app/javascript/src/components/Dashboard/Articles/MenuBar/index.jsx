@@ -45,13 +45,13 @@ const MenuBar = ({
       showMenu={isMenuBarOpen}
       title={capitalize(t("common.article", PLURAL))}
     >
-      {statuses(articles).map(({ label, count }) => (
+      {statuses(articles).map(({ label, count, value }) => (
         <NeetoUIMenuBar.Block
-          active={activeStatus === label}
+          active={activeStatus === value}
           count={count}
-          key={label}
+          key={value}
           label={label}
-          onClick={() => setActiveStatus(label)}
+          onClick={() => setActiveStatus(value)}
         />
       ))}
       <NeetoUIMenuBar.SubTitle
