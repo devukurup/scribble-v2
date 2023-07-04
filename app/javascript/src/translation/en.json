@@ -1,128 +1,60 @@
 {
   "common": {
-    "articles": "Articles",
+    "article_one": "article",
+    "article_other": "articles",
+    "category_one": "category",
+    "category_other": "categories",
+    "changeEntity": "Change {{entity}}",
+    "status": "status",
+    "password": "password",
+    "delete": "Delete",
+    "title": "Title",
+    "description": "Description",
     "settings": "Settings",
     "preview": "Preview",
     "appLogo": "App Logo",
-    "categories": "Categories",
     "cancel": "Cancel",
-    "title": "Title",
     "defaultError": "Something went wrong!",
     "general": "General",
     "redirections": "Redirections",
     "security": "Security",
     "manageCategories": "Manage Categories",
     "edit": "Edit",
-    "delete": "Delete",
-    "description": "Description",
-    "category": "Category",
     "saveChanges": "Save changes",
-    "changeCategory": "Change category",
-    "searchCategory": "Search category",
     "changeStatus": "Change status",
-    "password": "Password",
     "changePassword": "Change password",
     "enterPassword": "Enter password",
     "proceed": "Proceed",
     "redirectToHome": "Go to home page",
-    "errorImage": "Error Image"
+    "errorImage": "Error Image",
+    "articleCount_one": "{{count}} article",
+    "articleCount_other": "{{count}} articles",
+    "continue": "Continue"
   },
-  "tooltips": {
-    "manageArticles": "Manage and list all your KB articles",
-    "configureSettings": "Configure KB settings",
-    "launchPreview": "Launch your KB preview"
-  },
-  "statuses": {
-    "all": "All",
-    "published": "Published",
-    "draft": "Draft"
-  },
-  "header": {
-    "articles": {
+
+  "dashboard": {
+    "header": {
       "title": "{{status}} articles",
-      "placeholder": "Search article titles",
-      "buttonLabel": "Add article"
-    }
-  },
-  "category": {
-    "add": "New category",
-    "edit": "Edit category",
-    "inputLabel": "Category title",
-    "addButtonLabel": "Add",
-    "placeholder": "Enter category title here.",
-    "empty": "No categories found!",
-    "delete": {
-      "title": "Delete category",
-      "description": "You are permanently deleting the {{title}} category. This action cannot be undone. Are you sure you wish to continue?",
-      "alert": "Category {{title}} has {{count}} articles. Before this category can be deleted, these articles needs to be moved to another category.",
-      "newCategoryAlert": "Category {{title}} has {{count}} articles. These articles will be moved to a 'General' category",
-      "selectLabel": "Select a category to move these articles into"
-    }
-  },
-  "validations": {
-    "required": "{{field}} is required",
-    "maximumLength": "{{field}} shouldn't exceed the maximum limit",
-    "invalidPattern": "Enter a valid {{field}}",
-    "invalidPassword": "Include at least {{letterCount}} letter and {{digitCount}} number",
-    "minPasswordCharacters": "Have at least {{count}} characters",
-    "invalidFromPath": "From path must be valid",
-    "invalidToPath": "To path must be a valid URL or a path"
-  },
-  "settingsDescription": {
-    "general": "Configure general settings of your EUI.",
-    "redirections": "Create and configure redirection rules.",
-    "security": "Secure knowledge base.",
-    "manageCategories": "Edit and reorder KB structure."
-  },
-  "settings": {
-    "manageCategories": {
-      "title": "Manage categories",
-      "description": "Create and configure the categories inside your scribble.",
-      "count": "{{count}} categories"
-    },
-    "generalSettings": {
-      "title": "General Settings",
-      "description": "Configure general attributes of knowledge base",
-      "inputLabel": "Site title",
-      "placeholder": "Enter site title",
-      "inputDescription": "Customize the site name which is used to show the site name in  Open Graph Tags."
-    },
-    "redirections": {
-      "title": "Redirections",
-      "description": "Create and configure redirection rules to send users from old links to new links. All redirections are performed with 301 status codes to be SEO friendly",
-      "from": "From",
-      "to": "To",
-      "delete": {
-        "title": "Delete redirection",
-        "message": "You are permanently deleting redirection from {{from}} to {{to}}. This action cannot be undone. Are you sure you wish to continue?"
-      }
-    },
-    "security": {
-      "description": "Configure security related settings for your site.",
-      "switchLabel": "Password protect your site"
-    }
-  },
-  "articles": {
-    "selectCategory": "Select category",
-    "publish": "Publish",
-    "draft": "Draft",
-    "saveDraft": "Save as draft",
-    "draftSavedAt": "Draft saved at {{date}}",
-    "lastPublishedAt": "Last published at {{date}}",
-    "placeholders": {
-      "body": "Add description here.",
-      "title": "Add title here."
-    },
-    "delete": {
-      "title": "Delete article",
-      "message": "You are permanently deleting {{title}}. This action cannot be undone. Are you sure you wish to continue?"
+      "buttonLabel": "Add article",
+      "placeholder": "Search article titles"
     },
     "subHeader": {
-      "searchCount": "{{count}} results for '{{search}}'",
-      "totalCount": "{{count}} articles",
-      "selectedCount": "{{count}} articles selected of {{totalCount}}"
+      "searchCount_one": "{{count}} result for '{{search}}'",
+      "searchCount_other": "{{count}} results for '{{search}}'",
+
+      "selectedCount": "{{count}} selected of {{totalCount}}",
+      "search": {
+        "category": "Search category"
+      }
     },
-    "empty": {
+    "table": {
+      "author": "Author",
+      "lastPublishedAt": "Last published at"
+    }
+  },
+  "empty": {
+    "category": "No categories found!",
+    "article": {
       "title": "No articles found!",
       "public": {
         "title": "No published articles found!"
@@ -149,6 +81,93 @@
       }
     }
   },
+  "statuses": {
+    "all": "All",
+    "published": "Published",
+    "draft": "Draft",
+    "publish": "Publish",
+    "saveDraft": "Save as draft",
+    "unpublish": "Unpublish"
+  },
+  "validations": {
+    "required": "{{field}} is required",
+    "maximumLength": "{{field}} shouldn't exceed the maximum limit",
+    "invalidPattern": "Enter a valid {{field}}",
+    "invalidPassword": "Include at least {{letterCount}} letter and {{digitCount}} number",
+    "minPasswordCharacters": "Have at least {{count}} characters",
+    "invalidFromPath": "From path must be valid",
+    "invalidToPath": "To path must be a valid URL or a path"
+  },
+  "delete": {
+    "title": "Delete {{entity}}",
+    "messageWithTitle": "You are permanently deleting <bold>{{title}}</bold>. This action cannot be undone. Are you sure you wish to continue?",
+    "messageWithoutTitle": "You are permanently deleting the selected {{entity}}. This action cannot be undone. Are you sure you wish to continue?",
+    "category": {
+      "title": "Delete category",
+      "alert": "Category <bold>{{title}}</bold> has <bold>{{articlesCount}}</bold>. Before this category can be deleted, these articles needs to be moved to another category.",
+      "newCategoryAlert": "Category <bold>{{title}}</bold> has <bold>{{articlesCount}}</bold>. These articles will be moved to a <bold>General</bold> category",
+      "selectLabel": "Select a category to move these articles into"
+    }
+  },
+  "articles": {
+    "selectCategory": "Select category",
+    "draftSavedAt": "Draft saved at {{date}}",
+    "lastPublishedAt": "Last published at {{date}}",
+    "placeholders": {
+      "body": "Add description here.",
+      "title": "Add title here."
+    }
+  },
+  "category": {
+    "add": "New category",
+    "edit": "Edit category",
+    "inputLabel": "Category title",
+    "addButtonLabel": "Add",
+    "placeholder": "Enter category title here."
+  },
+
+  "tooltips": {
+    "manageArticles": "Manage and list all your KB articles",
+    "configureSettings": "Configure KB settings",
+    "launchPreview": "Launch your KB preview"
+  },
+
+  "settingsDescription": {
+    "general": "Configure general settings of your EUI.",
+    "redirections": "Create and configure redirection rules.",
+    "security": "Secure knowledge base.",
+    "manageCategories": "Edit and reorder KB structure."
+  },
+  "settings": {
+    "manageCategories": {
+      "title": "Manage categories",
+      "description": "Create and configure the categories inside your scribble.",
+      "count": "{{count}} categories"
+    },
+    "generalSettings": {
+      "title": "General Settings",
+      "description": "Configure general attributes of knowledge base",
+      "inputLabel": "Site title",
+      "placeholder": "Enter site title",
+      "inputDescription": "Customize the site name which is used to show the site name in  Open Graph Tags."
+    },
+    "redirections": {
+      "title": "Redirections",
+      "add": "Add new redirection",
+      "description": "Create and configure redirection rules to send users from old links to new links. All redirections are performed with 301 status codes to be SEO friendly",
+      "from": "From",
+      "to": "To",
+      "delete": {
+        "title": "Delete redirection",
+        "message": "You are permanently deleting redirection from <bold>{{from}}</bold> to <bold>{{to}}</bold>. This action cannot be undone. Are you sure you wish to continue?"
+      }
+    },
+    "security": {
+      "description": "Configure security related settings for your site.",
+      "switchLabel": "Password protect your site"
+    }
+  },
+
   "public": {
     "login": {
       "title": "{{title}} is password protected!",

@@ -8,9 +8,9 @@ import { isEven } from "src/utils";
 
 import { useUpdateArticles } from "hooks/useUpdateArticles";
 
-import { DEFAULT_ACTIVE_STATUS } from "./constants";
+import { ACTION_KEY, DEFAULT_ACTIVE_STATUS } from "./constants";
 import Empty from "./Empty";
-import { columnData, setUrlParams } from "./utils";
+import { columnData, buildUrlParams } from "./utils";
 
 const Table = ({
   setRowToBeDeleted,
@@ -48,7 +48,7 @@ const Table = ({
   };
 
   const handlePagination = (page, limit) => {
-    const currentUrlParams = setUrlParams({
+    const currentUrlParams = buildUrlParams({
       page,
       limit,
       search: debouncedSearchTerm,
@@ -71,7 +71,7 @@ const Table = ({
   }, [window.location.search]);
 
   useEffect(() => {
-    const currentUrlParams = setUrlParams({
+    const currentUrlParams = buildUrlParams({
       page: DEFAULT_PAGE_NUMBER,
       limit: PAGINATION_LIMIT,
       search: debouncedSearchTerm,
@@ -90,7 +90,7 @@ const Table = ({
       .map(column => column.key);
 
     return columnData({ handleDelete, handleUpdate }).filter(
-      ({ key }) => key === "action" || availableColumnKeys.includes(key)
+      ({ key }) => key === ACTION_KEY || availableColumnKeys.includes(key)
     );
   };
 

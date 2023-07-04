@@ -27,7 +27,7 @@ const List = ({ isLoading, categories, handleUpdate }) => {
         </Menu>
       ) : (
         <Typography className="mx-auto py-2" style="body3">
-          {t("category.empty")}
+          {t("empty.category")}
         </Typography>
       )}
     </>

@@ -5,6 +5,7 @@ import { t } from "i18next";
 import { Plus } from "neetoicons";
 import { Button } from "neetoui";
 import { isEmpty } from "ramda";
+import { Trans } from "react-i18next";
 import {
   useCreateRedirection,
   useDeleteRedirection,
@@ -85,7 +86,7 @@ const Table = () => {
       <Button
         icon={Plus}
         iconPosition="left"
-        label="Add new redirection"
+        label={t("settings.redirections.add")}
         style="link"
         disabled={
           isEmpty(selectedRedirection?.id) || !isEmpty(selectedRedirection)
@@ -96,10 +97,15 @@ const Table = () => {
         isOpen={isDeleteAlertOpen}
         isSubmitting={isDeleting}
         title={t("settings.redirections.delete.title")}
-        message={t("settings.redirections.delete.message", {
-          from: selectedRedirection.from,
-          to: selectedRedirection.to,
-        })}
+        message={
+          <Trans
+            components={{ bold: <strong /> }}
+            defaults={t("settings.redirections.delete.message", {
+              from: selectedRedirection.from,
+              to: selectedRedirection.to,
+            })}
+          />
+        }
         onClose={handleClose}
         onSubmit={() => deleteRedirection(selectedRedirection.id)}
       />

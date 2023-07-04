@@ -4,7 +4,7 @@ import { Form as FormikForm, Formik } from "formik";
 import { Warning } from "neetoicons";
 import { Button, Callout, Spinner, Modal, Typography } from "neetoui";
 import { Select } from "neetoui/formik";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { deleteObjectById } from "src/utils";
 
 import { INITIAL_VALUES, VALIDATION_SCHEMA } from "./constants";
@@ -29,20 +29,28 @@ const Form = ({ onSubmit, category, onClose, categories = [], isLoading }) => {
           <FormikForm>
             <Modal.Body className="flex flex-col space-y-4">
               <Typography style="body1">
-                {t("category.delete.description", { title })}
+                <Trans
+                  components={{ bold: <strong /> }}
+                  defaults={t("delete.messageWithTitle", { title })}
+                />
               </Typography>
               <Callout icon={Warning} style="danger">
                 <Typography style="body1" weight="semibold">
-                  {t("category.delete.alert", {
-                    title,
-                    count: articles_count || 0,
-                  })}
+                  <Trans
+                    components={{ bold: <strong /> }}
+                    defaults={t("delete.category.alert", {
+                      title,
+                      articlesCount: t("common.articleCount", {
+                        count: articles_count || 0,
+                      }),
+                    })}
+                  />
                 </Typography>
               </Callout>
               <Select
                 isSearchable
                 required
-                label={t("category.delete.selectLabel")}
+                label={t("delete.category.selectLabel")}
                 name="category"
                 placeholder={t("articles.selectCategory")}
                 options={formatCategories(
@@ -53,7 +61,7 @@ const Form = ({ onSubmit, category, onClose, categories = [], isLoading }) => {
             <Modal.Footer className="flex space-x-2">
               <Button
                 disabled={isSubmitting || !isValid || !dirty}
-                label={t("common.proceed")}
+                label={t("common.continue")}
                 style="danger"
                 type="submit"
               />

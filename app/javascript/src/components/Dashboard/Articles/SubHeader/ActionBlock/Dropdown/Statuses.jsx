@@ -9,17 +9,20 @@ const Statuses = ({ handleUpdate }) => {
   const { t } = useTranslation();
 
   return (
-    <Dropdown buttonStyle="secondary" label={t("common.changeStatus")}>
+    <Dropdown
+      buttonStyle="secondary"
+      label={t("common.changeEntity", { entity: t("common.status") })}
+    >
       <Menu>
         <MenuItem.Button
           onClick={() => handleUpdate(t("statuses.published").toLowerCase())}
         >
-          {t("articles.publish")}
+          {t("statuses.publish")}
         </MenuItem.Button>
         <MenuItem.Button
           onClick={() => handleUpdate(t("statuses.draft").toLowerCase())}
         >
-          {t("articles.draft")}
+          {t("statuses.draft")}
         </MenuItem.Button>
       </Menu>
     </Dropdown>

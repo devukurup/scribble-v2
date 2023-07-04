@@ -35,7 +35,7 @@ const Create = () => {
     <SidebarWrapper>
       <Form
         handleSubmit={handleSubmit}
-        initialStatus={t("articles.publish")}
+        initialStatus={t("statuses.publish")}
         initialValues={INITIAL_VALUES}
         onClose={() => history.push(routes.articles.index)}
       />

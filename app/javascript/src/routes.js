@@ -1,5 +1,6 @@
 const routes = {
   dashboard: "/",
+  login: "/login",
   articles: {
     index: "/articles",
     new: "/articles/new",
@@ -13,7 +14,11 @@ const routes = {
     manageCategories: "/settings/manage-categories",
   },
   public: {
-    articles: "/public/articles",
+    index: "/public/",
+    articles: {
+      index: "/public/articles",
+      show: "/public/articles/:slug",
+    },
   },
 };
 

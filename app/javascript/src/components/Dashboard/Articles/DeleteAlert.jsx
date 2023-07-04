@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 
-import { noop } from "@bigbinary/neeto-commons-frontend/pure";
 import { Alert } from "neetoui";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 
 import articlesApi from "apis/articles";
+import { noop } from "neetocommons/pure";
+
+import { SINGLE_ARTICLE_COUNT } from "./constants";
 
 const DeleteAlert = ({
   isOpen,
@@ -40,8 +42,27 @@ const DeleteAlert = ({
     <Alert
       isOpen={isOpen}
       isSubmitting={isDeleting}
-      message={t("articles.delete.message", { title })}
-      title={t("articles.delete.title")}
+      message={
+        isBulkDelete ? (
+          t("delete.messageWithoutTitle", {
+            entity: t("common.article", {
+              count: selectedArticleRowIds.length,
+            }),
+          })
+        ) : (
+          <Trans
+            components={{ bold: <strong /> }}
+            defaults={t("delete.messageWithTitle", { title })}
+          />
+        )
+      }
+      title={t("delete.title", {
+        entity: t("common.article", {
+          count: isBulkDelete
+            ? selectedArticleRowIds.length
+            : SINGLE_ARTICLE_COUNT,
+        }),
+      })}
       onClose={onClose}
       onSubmit={handleDelete}
     />

@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 import routes from "src/routes";
 
 import categoriesApi from "apis/categories";
+import SidebarWrapper from "components/Dashboard/SidebarWrapper";
 import CreateCategory from "Dashboard/Categories/Create";
 import useDebounce from "hooks/useDebounce";
 import { useFetchArticles } from "hooks/useFetchArticles";
@@ -16,8 +17,6 @@ import ArticleDeleteAlert from "./DeleteAlert";
 import MenuBar from "./MenuBar";
 import SubHeader from "./SubHeader";
 import Table from "./Table";
-
-import SidebarWrapper from "../SidebarWrapper";
 
 const Articles = () => {
   const [activeStatus, setActiveStatus] = useState(DEFAULT_ACTIVE_STATUS);
@@ -89,10 +88,10 @@ const Articles = () => {
       />
       <div className="mx-4 w-full">
         <Header
-          title={t("header.articles.title", { status: activeStatus })}
+          title={t("dashboard.header.title", { status: activeStatus })}
           actionBlock={
             <Button
-              label={t("header.articles.buttonLabel")}
+              label={t("dashboard.header.buttonLabel")}
               size="small"
               onClick={() => history.push(routes.articles.new)}
             />
@@ -103,7 +102,7 @@ const Articles = () => {
           searchProps={{
             value: searchTerm,
             onChange: event => setSearchTerm(event.target.value),
-            placeholder: t("header.articles.placeholder"),
+            placeholder: t("dashboard.header.placeholder"),
           }}
         />
         <SubHeader

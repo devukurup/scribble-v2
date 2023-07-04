@@ -1,8 +1,7 @@
 import React from "react";
 
-import { Button } from "@bigbinary/neetoui";
 import { Delete } from "neetoicons";
-import { Tag, Typography } from "neetoui";
+import { Button, Tag, Typography } from "neetoui";
 import { isEmpty } from "ramda";
 import { useTranslation } from "react-i18next";
 import { isPresent } from "src/utils";
@@ -60,8 +59,8 @@ const Left = ({
     <div className="flex items-center justify-center space-x-3">
       {isPresent(selectedArticleRowIds) ? (
         <>
-          <Typography>
-            {t("articles.subHeader.selectedCount", {
+          <Typography weight="semibold">
+            {t("dashboard.subHeader.selectedCount", {
               count: selectedArticleRowIds.length,
               totalCount,
             })}
@@ -79,8 +78,8 @@ const Left = ({
       ) : (
         <Typography weight="semibold">
           {isEmpty(searchTerm.trim())
-            ? t("articles.subHeader.totalCount", { count: totalCount })
-            : t("articles.subHeader.searchCount", {
+            ? t("common.articleCount", { count: totalCount })
+            : t("dashboard.subHeader.searchCount", {
                 count: totalCount,
                 search: searchTerm,
               })}

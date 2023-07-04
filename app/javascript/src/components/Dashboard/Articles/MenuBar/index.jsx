@@ -5,7 +5,11 @@ import { Typography } from "neetoui";
 import { MenuBar as NeetoUIMenuBar } from "neetoui/layouts";
 import { useTranslation } from "react-i18next";
 
+import { PLURAL } from "constants";
+import { capitalize } from "neetocommons/pure";
+
 import Categories from "./Categories";
+import { ESCAPE_KEY } from "./constants";
 import { statuses } from "./utils";
 
 const MenuBar = ({
@@ -33,13 +37,16 @@ const MenuBar = ({
   };
 
   const handleKeyDown = event => {
-    if (event.key === "Escape") {
+    if (event.key === ESCAPE_KEY) {
       handleClose();
     }
   };
 
   return (
-    <NeetoUIMenuBar showMenu={isMenuBarOpen} title={t("common.articles")}>
+    <NeetoUIMenuBar
+      showMenu={isMenuBarOpen}
+      title={capitalize(t("common.article", PLURAL))}
+    >
       {statuses(articles).map(({ label, count }) => (
         <NeetoUIMenuBar.Block
           active={activeStatus === label}
@@ -68,7 +75,7 @@ const MenuBar = ({
           textTransform="uppercase"
           weight="bold"
         >
-          {t("common.categories")}
+          {t("common.category", PLURAL)}
         </Typography>
       </NeetoUIMenuBar.SubTitle>
       <NeetoUIMenuBar.Search

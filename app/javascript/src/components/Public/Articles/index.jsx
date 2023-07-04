@@ -5,6 +5,7 @@ import { useParams, useHistory } from "react-router-dom";
 import Content from "./Content";
 import { isEmpty } from "ramda";
 import Empty from "./Empty";
+import { buildUrl } from "neetocommons/utils";
 import { useFetchCategories } from "hooks/reactQuery/public/useCategoriesApi";
 
 const Articles = () => {
@@ -14,7 +15,9 @@ const Articles = () => {
   const handleSuccess = data => {
     if (!slug) {
       const firstArticleSlug = data.data.categories[0]["articles"][0]["slug"];
-      history.push(`/public/articles/${firstArticleSlug}`);
+      history.push(
+        buildUrl(routes.public.articles.show, { slug: firstArticleSlug })
+      );
     }
   };
 

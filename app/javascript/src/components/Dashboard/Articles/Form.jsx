@@ -10,7 +10,12 @@ import { useTranslation } from "react-i18next";
 import categoriesApi from "apis/categories";
 import { useFetchCategories } from "hooks/useFetchCategories";
 
-import { VALIDATION_SCHEMA, EDITOR_ADDONS } from "./constants";
+import {
+  VALIDATION_SCHEMA,
+  EDITOR_ADDONS,
+  KEYBOARD_ENTER_KEY,
+  DEFAULT_ROW_COUNT,
+} from "./constants";
 import { formatCategories } from "./utils";
 
 import { CATEGORY_VALIDATION_SCHEMA } from "../Categories/constants";
@@ -104,7 +109,7 @@ const Form = ({
               <div className="flex items-center space-x-3">
                 {isEdit && (
                   <Typography>
-                    {initialStatus === t("articles.publish")
+                    {initialStatus === t("statuses.publish")
                       ? t("articles.lastPublishedAt", { date: dateString })
                       : t("articles.draftSavedAt", { date: dateString })}
                   </Typography>
@@ -122,14 +127,14 @@ const Form = ({
                 >
                   <Menu>
                     <MenuItem.Button
-                      onClick={() => setStatus(t("articles.publish"))}
+                      onClick={() => setStatus(t("statuses.publish"))}
                     >
-                      {t("articles.publish")}
+                      {t("statuses.publish")}
                     </MenuItem.Button>
                     <MenuItem.Button
-                      onClick={() => setStatus(t("articles.saveDraft"))}
+                      onClick={() => setStatus(t("statuses.saveDraft"))}
                     >
-                      {t("articles.saveDraft")}
+                      {t("statuses.saveDraft")}
                     </MenuItem.Button>
                   </Menu>
                 </ActionDropdown>
@@ -164,10 +169,10 @@ const Form = ({
                   error={errors.title}
                   name="title"
                   placeholder={t("articles.placeholders.title")}
-                  rows={1}
+                  rows={DEFAULT_ROW_COUNT}
                   onChange={event => setFieldValue("title", event.target.value)}
                   onKeyDown={event =>
-                    event.key === "Enter" &&
+                    event.key === KEYBOARD_ENTER_KEY &&
                     !event.shiftKey &&
                     event.preventDefault()
                   }

@@ -52,7 +52,7 @@ const Categories = ({
   if (!isPresent(categories) && !isSearchCollapsed) {
     return (
       <Typography className="flex justify-center" style="body2">
-        {t("category.empty")}
+        {t("empty.category")}
       </Typography>
     );
   }

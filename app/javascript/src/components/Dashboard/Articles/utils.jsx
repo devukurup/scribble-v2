@@ -5,8 +5,11 @@ import { t } from "i18next";
 import { MenuHorizontal } from "neetoicons";
 import { Button, Typography, Dropdown } from "neetoui";
 import { isEmpty } from "ramda";
-import { TITLE_TRUNCATE_LENGTH } from "src/constants";
+import { TITLE_TRUNCATE_LENGTH, SINGULAR } from "src/constants";
+import routes from "src/routes";
 import { formattedDate, truncate } from "src/utils";
+
+import { buildUrl } from "neetocommons/utils";
 
 import { DEFAULT_ACTIVE_STATUS } from "./constants";
 
@@ -17,7 +20,7 @@ export const formatCategories = categories =>
 
 export const columnData = ({ handleDelete, handleUpdate }) => [
   {
-    title: "Title",
+    title: t("common.title"),
     dataIndex: "title",
     key: "title",
     width: 350,
@@ -25,7 +28,7 @@ export const columnData = ({ handleDelete, handleUpdate }) => [
       <Button
         label={truncate(title)}
         style="link"
-        to={`/articles/${id}/edit`}
+        to={buildUrl(routes.articles.edit, { articleId: id })}
         tooltipProps={
           title.length > TITLE_TRUNCATE_LENGTH && { content: title }
         }
@@ -33,19 +36,19 @@ export const columnData = ({ handleDelete, handleUpdate }) => [
     ),
   },
   {
-    title: "Category",
+    title: t("common.category", SINGULAR),
     dataIndex: "category",
     key: "category",
     width: 200,
   },
   {
-    title: "Author",
+    title: t("dashboard.table.author"),
     dataIndex: "author",
     key: "author",
     width: 125,
   },
   {
-    title: "Last published at",
+    title: t("dashboard.table.lastPublishedAt"),
     dataIndex: "last_published_at",
     key: "last_published_at",
     width: 150,
@@ -56,7 +59,7 @@ export const columnData = ({ handleDelete, handleUpdate }) => [
     ),
   },
   {
-    title: "Status",
+    title: t("common.status"),
     dataIndex: "status",
     key: "status",
     width: 100,
@@ -72,7 +75,8 @@ export const columnData = ({ handleDelete, handleUpdate }) => [
     width: 25,
     render: (_, row) => {
       const { status, id } = row;
-      const publishStatus = status === "draft" ? "Publish" : "Unpublish";
+      const publishStatus =
+        status === "draft" ? t("statuses.publish") : t("statuses.unpublish");
 
       return (
         <Dropdown buttonStyle="text" icon={MenuHorizontal}>
@@ -92,7 +96,7 @@ export const columnData = ({ handleDelete, handleUpdate }) => [
   },
 ];
 
-export const setUrlParams = ({ page, limit, search, status }) => {
+export const buildUrlParams = ({ page, limit, search, status }) => {
   const currentUrlParams = new URLSearchParams(window.location.search);
   currentUrlParams.set("page", page);
   currentUrlParams.set("limit", limit);
@@ -122,35 +126,35 @@ export const getEmptyArticleProps = ({
 }) => {
   if (totalCount === 0) {
     return {
-      title: t("articles.empty.noArticle.title"),
-      description: t("articles.empty.noArticle.description"),
-      label: t("articles.empty.noArticle.label"),
+      title: t("empty.article.noArticle.title"),
+      description: t("empty.article.noArticle.description"),
+      label: t("empty.article.noArticle.label"),
       onClick: () => redirectToNewArticle(),
     };
   } else if (!isEmpty(search)) {
     return {
-      title: t("articles.empty.search.title", { search }),
-      description: t("articles.empty.search.description"),
-      label: t("articles.empty.search.label"),
+      title: t("empty.article.search.title", { search }),
+      description: t("empty.article.search.description"),
+      label: t("empty.article.search.label"),
       onClick: () => setSearch(""),
     };
   } else if (!isEmpty(selectedCategories)) {
     return {
-      title: t("articles.empty.selectedCategories.title"),
-      description: t("articles.empty.selectedCategories.description"),
-      label: t("articles.empty.selectedCategories.label"),
+      title: t("empty.article.selectedCategories.title"),
+      description: t("empty.article.selectedCategories.description"),
+      label: t("empty.article.selectedCategories.label"),
       onClick: () => setSelectedCategories([]),
     };
   } else if (activeStatus !== DEFAULT_ACTIVE_STATUS) {
     return {
-      title: t("articles.empty.status.title"),
-      description: t("articles.empty.status.description"),
-      label: t("articles.empty.status.label"),
+      title: t("empty.article.status.title"),
+      description: t("empty.article.status.description"),
+      label: t("empty.article.status.label"),
       onClick: () => setActiveStatus(DEFAULT_ACTIVE_STATUS),
     };
   }
 
   return {
-    title: t("articles.empty.title"),
+    title: t("empty.article.title"),
   };
 };

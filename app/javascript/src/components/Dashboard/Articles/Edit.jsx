@@ -65,14 +65,14 @@ const Edit = () => {
         handleDelete={handleDelete}
         handleSubmit={handleSubmit}
         dateString={formattedDateTime(
-          article.status === "published"
+          article.status === t("statuses.published").toLowerCase()
             ? article?.last_published_at
             : article?.updated_at
         )}
         initialStatus={
-          article.status === "published"
-            ? t("articles.publish")
-            : t("articles.saveDraft")
+          article.status === t("statuses.published").toLowerCase()
+            ? t("statuses.publish")
+            : t("statuses.saveDraft")
         }
         initialValues={{
           ...article,

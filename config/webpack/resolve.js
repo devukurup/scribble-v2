@@ -18,6 +18,7 @@ module.exports = {
     hooks: absolutePath("src/hooks"),
     images: absolutePath("src/assets/images"),
     Dashboard: absolutePath("src/components/Dashboard"),
+    neetocommons: "@bigbinary/neeto-commons-frontend",
   },
   fallback: {
     crypto: require.resolve("crypto-browserify"),

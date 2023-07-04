@@ -2,6 +2,9 @@ import { isEditorEmpty } from "@bigbinary/neeto-editor";
 import { t } from "i18next";
 import * as yup from "yup";
 
+import { SINGULAR } from "constants";
+import { capitalize } from "neetocommons/pure";
+
 export const DEFAULT_ACTIVE_STATUS = t("statuses.all");
 
 export const EDITOR_ADDONS = [
@@ -33,9 +36,11 @@ export const VALIDATION_SCHEMA = yup.object().shape({
       t("validations.required", { field: t("common.description") }),
       value => !isEditorEmpty(value)
     ),
-  category: yup
-    .object()
-    .required(t("validations.required", { field: t("common.category") })),
+  category: yup.object().required(
+    t("validations.required", {
+      field: capitalize(t("common.category", SINGULAR)),
+    })
+  ),
 });
 
 export const INITIAL_VALUES = {
@@ -45,39 +50,47 @@ export const INITIAL_VALUES = {
 };
 
 export const STATUS = {
-  Publish: "published",
-  "Save as draft": "draft",
+  Publish: t("statuses.published").toLowerCase(),
+  "Save as draft": t("statuses.draft").toLowerCase(),
 };
 
 export const COLUMNS = [
   {
-    label: "Title",
+    label: t("common.title"),
     key: "title",
     checked: true,
     disabled: true,
   },
   {
-    label: "Category",
+    label: t("common.category", SINGULAR),
     key: "category",
     checked: true,
     disabled: false,
   },
   {
-    label: "Author",
+    label: t("dashboard.table.author"),
     key: "author",
     checked: true,
     disabled: false,
   },
   {
-    label: "Last published at",
+    label: t("dashboard.table.lastPublishedAt"),
     key: "last_published_at",
     checked: true,
     disabled: false,
   },
   {
-    label: "Status",
+    label: t("common.status"),
     key: "status",
     checked: true,
     disabled: false,
   },
 ];
+
+export const SINGLE_ARTICLE_COUNT = 1;
+
+export const DEFAULT_ROW_COUNT = 1;
+
+export const KEYBOARD_ENTER_KEY = "Enter";
+
+export const ACTION_KEY = "action";

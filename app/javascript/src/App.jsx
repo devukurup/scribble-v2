@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { useDisplayErrorPage } from "@bigbinary/neeto-commons-frontend/react-utils";
-import { PageLoader } from "@bigbinary/neetoui";
+import { PageLoader } from "neetoui";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import {
@@ -11,17 +10,17 @@ import {
   Redirect,
 } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import PageNotFound from "src/PageNotFound";
 import routes from "src/routes";
 
 import { setAuthHeaders, registerIntercepts } from "apis/axios";
 import "common/i18n";
 import { initializeLogger } from "common/logger";
 import ErrorBoundary from "components/commons/ErrorBoundary";
+import { DASHBOARD_ROUTES } from "components/Dashboard/constants";
 import Public from "components/Public";
 import Login from "components/Public/Login";
-
-import { DASHBOARD_ROUTES } from "./components/Dashboard/constants";
-import PageNotFound from "./PageNotFound";
+import { useDisplayErrorPage } from "neetocommons/react-utils";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -36,7 +35,7 @@ const App = () => {
 
   const displayErrorPage = useDisplayErrorPage();
   if (displayErrorPage) {
-    return <PageNotFound route="/" />;
+    return <PageNotFound route={routes.dashboard} />;
   }
 
   if (isLoading) {
@@ -53,8 +52,8 @@ const App = () => {
         <ToastContainer />
         <ErrorBoundary>
           <Switch>
-            <Route exact component={Login} path="/login" />
-            <Route component={Public} path="/public/" />
+            <Route exact component={Login} path={routes.login} />
+            <Route component={Public} path={routes.public.index} />
             {DASHBOARD_ROUTES.map(({ path, component, isExact }) => (
               <Route
                 component={component}
@@ -68,7 +67,10 @@ const App = () => {
               from={routes.dashboard}
               to={routes.articles.index}
             />
-            <Route path="*" render={() => <PageNotFound route="/" />} />
+            <Route
+              path="*"
+              render={() => <PageNotFound route={routes.dashboard} />}
+            />
           </Switch>
         </ErrorBoundary>
       </Router>
