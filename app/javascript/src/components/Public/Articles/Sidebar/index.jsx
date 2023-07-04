@@ -20,7 +20,7 @@ const Sidebar = ({ categories }) => {
   };
 
   return (
-    <div className="scribble-sidebar flex flex-shrink-0 flex-col overflow-y-auto overflow-x-hidden p-2">
+    <div className="scribble-sidebar fixed flex flex-shrink-0 flex-col overflow-y-auto overflow-x-hidden p-2">
       {categories.map(({ title, id, articles }, index) => (
         <div key={id} className="flex flex-col space-y-2 p-3">
           <div

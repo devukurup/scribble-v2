@@ -6,6 +6,7 @@ import Content from "./Content";
 import { isEmpty } from "ramda";
 import Empty from "./Empty";
 import { buildUrl } from "neetocommons/utils";
+import routes from "src/routes";
 import { useFetchCategories } from "hooks/reactQuery/public/useCategoriesApi";
 
 const Articles = () => {
@@ -22,10 +23,9 @@ const Articles = () => {
   };
 
   const { data, isLoading } = useFetchCategories({ onSuccess: handleSuccess });
-
   if (isLoading) {
     return (
-      <div className="flex w-full justify-center">
+      <div className="flex h-full w-full justify-center">
         <PageLoader />
       </div>
     );
@@ -38,7 +38,7 @@ const Articles = () => {
   }
 
   return (
-    <div className="flex">
+    <div className="flex flex-row">
       <Sidebar categories={categories} />
       {slug && <Content />}
     </div>

@@ -54,9 +54,9 @@ const ManageCategories = () => {
         />
       </div>
       <List
-        categories={data.data.categories}
+        categories={data?.data.categories}
         isLoading={isLoading}
-        isSingleCategoryPresent={data.data?.categories_count === 1}
+        isSingleCategoryPresent={data?.data.categories_count === 1}
         refetch={refetch}
       />
       <Create
