@@ -1,6 +1,6 @@
 import React from "react";
 import { EditorContent } from "@bigbinary/neeto-editor";
-import { Typography, PageLoader } from "neetoui";
+import { Typography, Spinner } from "neetoui";
 import { useParams } from "react-router-dom";
 import { useShowArticle } from "hooks/reactQuery/public/useArticlesApi";
 
@@ -10,8 +10,8 @@ const Content = () => {
 
   if (isLoading) {
     return (
-      <div className="flex w-full justify-center">
-        <PageLoader />
+      <div className="flex h-full w-full items-center justify-center">
+        <Spinner />
       </div>
     );
   }
