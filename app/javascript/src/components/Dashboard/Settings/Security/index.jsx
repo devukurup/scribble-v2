@@ -28,6 +28,12 @@ const Security = () => {
     setIsNewPassword(false);
   };
 
+  const handleCancel = () => {
+    isPasswordProtected
+      ? setIsNewPassword(false)
+      : setIsPasswordToggleOn(false);
+  };
+
   useEffect(() => {
     if (isPresent(site)) {
       setIsPasswordProtected(site.is_password_protected);
@@ -80,6 +86,7 @@ const Security = () => {
           </div>
           {isPasswordToggleOn && (
             <Password
+              handleCancel={handleCancel}
               isNewPassword={isNewPassword}
               refetchSite={refetchSiteOnUpdate}
               setIsNewPassword={setIsNewPassword}

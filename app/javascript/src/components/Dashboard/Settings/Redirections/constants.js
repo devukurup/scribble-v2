@@ -29,7 +29,7 @@ export const FORM_VALIDATION_SCHEMA = yup.object().shape({
       })
     ),
 });
-export const ROOT_URL = "https://scribble.com";
+export const ROOT_URL = `${window.location.protocol}//${window.location.host}`;
 
 export const NEW_REDIRECTION = {
   id: "",

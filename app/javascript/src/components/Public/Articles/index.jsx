@@ -1,6 +1,5 @@
 import React from "react";
 import Sidebar from "./Sidebar";
-import { PageLoader } from "neetoui";
 import { useParams, useHistory } from "react-router-dom";
 import Content from "./Content";
 import { isEmpty } from "ramda";
@@ -8,6 +7,7 @@ import Empty from "./Empty";
 import { buildUrl } from "neetocommons/utils";
 import routes from "src/routes";
 import { useFetchCategories } from "hooks/reactQuery/public/useCategoriesApi";
+import { Spinner } from "neetoui";
 
 const Articles = () => {
   const { slug } = useParams();
@@ -23,10 +23,11 @@ const Articles = () => {
   };
 
   const { data, isLoading } = useFetchCategories({ onSuccess: handleSuccess });
+
   if (isLoading) {
     return (
-      <div className="flex h-full w-full justify-center">
-        <PageLoader />
+      <div className="flex h-screen items-center justify-center">
+        <Spinner />
       </div>
     );
   }
@@ -38,7 +39,7 @@ const Articles = () => {
   }
 
   return (
-    <div className="flex flex-row">
+    <div className="flex h-full flex-row">
       <Sidebar categories={categories} />
       {slug && <Content />}
     </div>

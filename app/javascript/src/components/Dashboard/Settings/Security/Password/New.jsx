@@ -12,7 +12,7 @@ import { useUpdateSite } from "hooks/useUpdateSite";
 import { INITIAL_VALUE, VALIDATION_MESSAGES } from "./constants";
 import { validation } from "./utils";
 
-const New = ({ refetchSite }) => {
+const New = ({ refetchSite, handleCancel }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const { update } = useUpdateSite();
@@ -81,6 +81,7 @@ const New = ({ refetchSite }) => {
                 label={t("common.cancel")}
                 style="text"
                 type="reset"
+                onClick={handleCancel}
               />
             </div>
           </div>

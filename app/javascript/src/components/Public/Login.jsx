@@ -22,7 +22,7 @@ const Login = () => {
     const authToken = data.data.authentication_token;
     if (authToken) {
       setToSessionStorage({ authToken });
-      window.location.href = routes.public.articles;
+      window.location.href = routes.public.articles.index;
     }
   };
 

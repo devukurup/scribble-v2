@@ -59,6 +59,7 @@ const Table = ({
       status: activeStatus,
     });
     history.push({ search: `?${currentUrlParams.toString()}` });
+    setCurrentPageNumber(page);
   };
 
   useEffect(() => {
@@ -78,7 +79,7 @@ const Table = ({
       search: debouncedSearchTerm,
       status: activeStatus,
     });
-
+    setCurrentPageNumber(DEFAULT_PAGE_NUMBER);
     history.push({ search: `?${currentUrlParams.toString()}` });
   }, [debouncedSearchTerm, activeStatus]);
 
