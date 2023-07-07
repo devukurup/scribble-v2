@@ -30,12 +30,12 @@ end
 
 def create_site!
   site_attributes = { title: "Spinkart" }
-  Site.create! site_attributes
+  @site = Site.create! site_attributes
 end
 
 def create_user!(options = {})
-  user_attributes = { first_name: "Oliver", last_name: "Smith", site_id: Site.first.id }.merge options
-  @user = User.create! user_attributes
+  user_attributes = { first_name: "Oliver", last_name: "Smith" }.merge options
+  @user = @site.users.create! user_attributes
 end
 
 def create_category!
@@ -43,7 +43,7 @@ def create_category!
     title: Faker::Lorem.unique.word,
     user: @user
   }
-  Category.create! category_attributes
+  @site.categories.create! category_attributes
 end
 
 def create_article!(status, category)
@@ -54,5 +54,5 @@ def create_article!(status, category)
     category: category,
     user: @user
   }
-  Article.create! article_attribute
+  @site.articles.create! article_attribute
 end
