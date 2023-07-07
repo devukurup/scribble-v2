@@ -16,7 +16,7 @@ module Authenticatable
       end
     end
 
-    def is_authenticatable
+    def authenticatable?
       @site.password_digest.present?
     end
 end
