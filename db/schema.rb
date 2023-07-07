@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_25_202446) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_07_162317) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -22,7 +22,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_25_202446) do
     t.datetime "last_published_at"
     t.string "status", default: "draft", null: false
     t.uuid "category_id", null: false
-    t.uuid "user_id", null: false
+    t.uuid "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_articles_on_category_id"
@@ -34,7 +34,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_25_202446) do
     t.string "title", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "user_id", null: false
+    t.uuid "user_id"
     t.integer "position"
     t.integer "articles_count"
     t.index ["title"], name: "index_categories_on_title", unique: true
@@ -47,8 +47,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_25_202446) do
     t.uuid "site_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "user_id"
     t.index ["from"], name: "index_redirections_on_from", unique: true
     t.index ["site_id"], name: "index_redirections_on_site_id"
+    t.index ["user_id"], name: "index_redirections_on_user_id"
   end
 
   create_table "sites", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -76,5 +78,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_25_202446) do
   add_foreign_key "articles", "users"
   add_foreign_key "categories", "users"
   add_foreign_key "redirections", "sites"
+  add_foreign_key "redirections", "users"
   add_foreign_key "users", "sites"
 end
