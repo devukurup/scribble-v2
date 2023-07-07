@@ -6,6 +6,7 @@ class Article < ApplicationRecord
 
   enum :status, { draft: "draft", published: "published" }, default: :draft
 
+  belongs_to :site
   belongs_to :user
   belongs_to :category, counter_cache: true
 
