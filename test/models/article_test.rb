@@ -17,7 +17,7 @@ class ArticleTest < ActiveSupport::TestCase
     assert_includes @article.errors.full_messages, t("errors.blank", entity: "Title")
   end
 
-  def test_article_title_should_not_exceed_maximum_length
+  def test_article_title_should_be_invalid_if_length_exceeds_maximum_length
     @article.title = "a" * (Article::MAX_TITLE_LENGTH + 1)
 
     assert_not @article.valid?
