@@ -39,10 +39,7 @@ def create_user!(options = {})
 end
 
 def create_category!
-  category_attributes = {
-    title: Faker::Lorem.unique.word,
-    user: @user
-  }
+  category_attributes = { title: Faker::Lorem.unique.word }
   @site.categories.create! category_attributes
 end
 

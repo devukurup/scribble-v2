@@ -8,7 +8,6 @@ class Redirection < ApplicationRecord
   VALID_FROM_REGEX = /\A\/[\w.\/-]*\z/
 
   belongs_to :site
-  belongs_to :user
 
   validates :from, presence: true, uniqueness: true, length: { maximum: MAX_FROM_LENGTH },
     format: { with: VALID_FROM_REGEX }
