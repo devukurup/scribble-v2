@@ -3,10 +3,6 @@
 module LoadUser
   extend ActiveSupport::Concern
 
-  included do
-    before_action :load_current_user!
-  end
-
   private
 
     def load_current_user!
