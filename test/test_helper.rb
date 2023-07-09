@@ -39,6 +39,10 @@ def response_json
   response.parsed_body
 end
 
+def pluck_values(list, key)
+  list.map { |item| item[key] }.sort
+end
+
 def response_ids(response)
-  response.map { |item| item["id"] }.sort
+  pluck_values(response, key = "id")
 end

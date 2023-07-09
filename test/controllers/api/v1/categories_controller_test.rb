@@ -5,6 +5,7 @@ require "test_helper"
 class Api::V1::CategoriesControllerTest < ActionDispatch::IntegrationTest
   def setup
     @site = create(:site)
+    @user = create(:user, site: @site)
     @category = create(:category, site: @site)
   end
 
@@ -58,7 +59,17 @@ class Api::V1::CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_equal t("success.deleted", entity: Category.model_name.human), response_json["notice"]
   end
 
-  def test_should_not_destroy_category_on_delete_service_serror
+  def test_should_not_destroy_category_on_delete_service_error
+    create_list(:article, 2, site: @site, category: @category, user: @user)
+    @category.update!(title: Category::GENERAL_CATEGORY_TITLE)
+
+    delete(api_v1_category_path(@category.id), headers:)
+
+    assert_response :unprocessable_entity
+    assert_equal t("errors.category.last_general_category"), response_json["error"]
+  end
+
+  def test_error_response_on_invalid_category_id
     delete(api_v1_category_path("unknown id"), headers:)
 
     assert_response :not_found

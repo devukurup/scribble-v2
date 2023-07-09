@@ -14,8 +14,6 @@ class Redirection < ApplicationRecord
   validate :unique_from_and_to
   validate :no_cyclic_redirection
 
-  before_update if :from_changed?
-
   def redirect_url
     return to unless to.start_with?("www.")
 

@@ -24,7 +24,7 @@ class Api::V1::CategoriesController < ApplicationController
     if service.success?
       render_notice(t("success.deleted", entity: Category.model_name.human))
     else
-      render_error(service.errors.full_messages.to_sentence)
+      render_error(service.errors.to_sentence)
     end
   end
 

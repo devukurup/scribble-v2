@@ -4,7 +4,9 @@ require "test_helper"
 
 class CategoryTest < ActiveSupport::TestCase
   def setup
-    @category = build(:category)
+    @site = create(:site)
+    @user = create(:user, site: @site)
+    @category = build(:category, site: @site)
   end
 
   def test_category_should_be_valid
@@ -62,17 +64,16 @@ class CategoryTest < ActiveSupport::TestCase
   end
 
   def test_with_published_articles_scope_should_return_categories_with_published_articles
-    site = create(:site)
-    category_with_published_articles = create(:category, site:)
-    category_with_draft_articles = create(:category, site:)
+    category_with_published_articles = create(:category, site: @site)
+    category_with_draft_articles = create(:category, site: @site)
 
-    assert_empty site.categories.with_published_articles
+    assert_empty @site.categories.with_published_articles
 
-    create_list(:article, 2, status: "published", category: category_with_published_articles, site:)
-    create_list(:article, 2, category: category_with_draft_articles, site:)
+    create_list(:article, 2, status: "published", category: category_with_published_articles, site: @site, user: @user)
+    create_list(:article, 2, category: category_with_draft_articles, site: @site, user: @user)
 
-    assert_equal site.articles.published.pluck(:category_id).uniq.sort,
-      site.categories.with_published_articles.map(&:id).sort
+    assert_equal @site.articles.published.pluck(:category_id).uniq.sort,
+      @site.categories.with_published_articles.map(&:id).sort
   end
 
   def test_article_count_increments_by_one_on_associating_a_category
@@ -80,13 +81,13 @@ class CategoryTest < ActiveSupport::TestCase
     assert_nil @category.articles_count
 
     assert_difference("@category.reload.articles_count.to_i", 1) do
-      create(:article, category: @category)
+      create(:article, category: @category, site: @site, user: @user)
     end
   end
 
   def test_article_count_decrements_by_one_on_destroying_an_associated_article
     @category.save!
-    test_article = create(:article, category: @category)
+    test_article = create(:article, category: @category, user: @user, site: @site)
 
     assert_difference("@category.reload.articles_count", -1) do
       test_article.destroy!

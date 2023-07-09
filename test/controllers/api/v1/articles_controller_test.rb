@@ -71,7 +71,7 @@ class Api::V1::ArticlesControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_should_bulk_destroy_articles
-    article_ids = create_list(:article, 5, user: @user, site: @site, status: :published).pluck(:id)
+    article_ids = create_list(:article, 5, user: @user, site: @site, category: @category, status: :published).pluck(:id)
 
     delete(bulk_destroy_api_v1_articles_path, params: { article_ids: }, headers:)
 
@@ -104,6 +104,13 @@ class Api::V1::ArticlesControllerTest < ActionDispatch::IntegrationTest
     patch(bulk_update_api_v1_articles_path, params:, headers:)
 
     assert_response :unprocessable_entity
+  end
+
+  def test_error_response_on_empty_parameter
+    params = {}
+    put(api_v1_article_path(@article.id), params:, headers:)
+
+    assert_response :internal_server_error
   end
 
   private

@@ -11,18 +11,33 @@ class Api::V1::Public::ArticlesControllerTest < ActionDispatch::IntegrationTest
     @site_headers = headers("X-Auth-Token" => @site.authentication_token)
   end
 
-  def test_should_show_published_article
-    get(api_v1_public_article_path(@article.slug), headers: @site_headers)
+  def test_should_show_with_valid_token
+    get api_v1_public_article_path(@article.slug), headers: @site_headers
 
     assert_response :success
     assert_equal @article.title, response_json["article"]["title"]
   end
 
-  def test_should_not_show_draft_article
+  def test_should_not_show_draft_articles_with_valid_token
     @article.update!(status: :draft)
 
-    get(api_v1_public_article_path(@article.slug), headers: @site_headers)
+    get api_v1_public_article_path(@article.slug), headers: @site_headers
 
     assert_response :not_found
+  end
+
+  def test_should_not_show_with_invalid_token
+    get(api_v1_public_article_path(@article.slug), headers: headers("X-Auth-Token" => "invalid_token"))
+
+    assert_response :unauthorized
+    assert_equal t("session.could_not_auth"), response_json["error"]
+  end
+
+  def test_should_show_article_in_site_with_no_password_without_token
+    @site.update!(password: nil)
+
+    get(api_v1_public_article_path(@article.slug), headers:)
+
+    assert_response :success
   end
 end

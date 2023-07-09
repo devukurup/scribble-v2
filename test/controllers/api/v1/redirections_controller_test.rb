@@ -12,30 +12,47 @@ class Api::V1::RedirectionsControllerTest < ActionDispatch::IntegrationTest
     get(api_v1_redirections_path, headers:)
 
     assert_response :success
-    assert Redirection.count, response_json["redirections"].count
+    assert @site.redirections.pluck(:id), response_ids(response_json["redirections"])
   end
 
-  def test_should_create_valid_redirection
+  def test_should_create_redirection
     post(api_v1_redirections_path, params: redirection_params, headers:)
 
     assert_response :success
-    assert_equal response_json["notice"], t("successfully_created", entity: "Redirection")
+    assert_equal t("success.created", entity: "Redirection"), response_json["notice"]
+  end
+
+  def test_error_response_on_creating_redirection_with_invalid_params
+    params = {
+      redirection: { from: "", to: "" }
+    }
+
+    post(api_v1_redirections_path, params:, headers:)
+
+    assert_response :unprocessable_entity
   end
 
   def test_should_destroy_redirection
-    assert_difference "Redirection.count", -1 do
+    assert_difference "@site.redirections.count", -1 do
       delete(api_v1_redirection_path(@redirection.id), headers:)
     end
 
-    assert_response :ok
+    assert_response :success
+    assert_not @site.redirections.exists?(@redirection.id)
+  end
+
+  def test_error_response_on_invalid_redirection_id
+    delete(api_v1_redirection_path("invalid_id"), headers:)
+
+    assert_response :not_found
   end
 
   def test_should_update_redirection
     put(api_v1_redirection_path(@redirection.id), params: redirection_params, headers:)
 
     assert_response :success
-    assert_equal redirection_params.dig(:redirection, :from), @redirection.reload.from
-    assert_equal redirection_params.dig(:redirection, :to), @redirection.reload.to
+    assert_equal redirection_params[:redirection][:from], @redirection.reload.from
+    assert_equal redirection_params[:redirection][:to], @redirection.reload.to
   end
 
   private

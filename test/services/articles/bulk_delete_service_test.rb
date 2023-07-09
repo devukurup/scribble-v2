@@ -8,7 +8,8 @@ class Articles::BulkDeleteServiceTest < ActiveSupport::TestCase
   def setup
     user = create(:user)
     @site = user.site
-    @articles = create_list(:article, ARTICLES_COUNT, site: @site, user:)
+    category = create(:category, site: @site)
+    @articles = create_list(:article, ARTICLES_COUNT, site: @site, category:, user:)
   end
 
   def test_articles_should_be_deleted

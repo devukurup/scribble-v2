@@ -8,7 +8,8 @@ class Articles::BulkUpdateServiceTest < ActiveSupport::TestCase
   def setup
     @site = create(:site)
     user = create(:user, site: @site)
-    @articles = create_list(:article, ARTICLES_COUNT, site: @site, user:)
+    category = create(:category, site: @site)
+    @articles = create_list(:article, ARTICLES_COUNT, site: @site, category:, user:)
 
     @options = {
       article_ids: @articles.map(&:id)
