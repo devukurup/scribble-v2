@@ -6,66 +6,95 @@ class Articles::FilterServiceTest < ActiveSupport::TestCase
   ARTICLES_COUNT = 2
 
   def setup
-    @user = create(:user)
+    @site = create(:site)
   end
 
   def test_filter_articles_based_on_search_term
-    create(:article, title: "Hello there", user: @user)
-    articles_service = service({ search_term: "hello" })
-    articles_service.process
+    test_article_1 = create(:article, title: "Hello there", site: @site)
+    create(:article, title: "Hai there", site: @site)
+    articles = service({ search_term: "hello" }).process
 
-    assert_equal 1, articles_service.articles.size
+    assert_equal [test_article_1.id], articles.map(&:id)
   end
 
-  def test_filter_articles_based_category_ids
-    category_ids = create_list(:article, ARTICLES_COUNT, user: @user).pluck(:category_id)
+  def test_filter_articles_based_on_category_ids
+    test_articles = create_list(:article, ARTICLES_COUNT, site: @site)
+    create(:article, site: @site)
+    category_ids = test_articles.pluck(:category_id)
+    articles = service({ category_ids: }).process
 
-    articles_service = service({ category_ids: })
-    articles_service.process
-
-    assert_equal ARTICLES_COUNT, articles_service.articles.size
+    assert_equal test_articles.pluck(:id).sort, articles.map(&:id).sort
   end
 
   def test_filter_articles_based_on_status
-    create(:article, user: @user, status: :published)
+    status = "published"
+    test_articles = create_list(:article, ARTICLES_COUNT, site: @site)
+    test_article_1 = test_articles.first
+    test_article_1.update!(status:)
+    articles = service({ status: }).process
 
-    articles_service = service({ status: :published })
-    articles_service.process
-
-    assert_equal 1, articles_service.articles.size
+    assert_equal [test_article_1.id], articles.map(&:id)
   end
 
-  def test_article_are_filtered_only_if_all_filters_are_matched
-    category = create(:category, user: @user)
-    article_1 = create(:article, title: "Non matching title", user: @user, status: :published, category:)
-    article_2 = create(:article, title: "A random matching title", user: @user, status: :draft, category:)
-
+  def test_articles_are_filtered_only_if_all_filters_are_matched
+    category = create(:category, site: @site)
+    article_1 = create(:article, title: "Non matching title", site: @site, status: :published, category:)
+    article_2 = create(:article, title: "A random matching title", site: @site, status: :draft, category:)
     filters = {
-      status: :published,
       status: :draft,
       search_term: "random",
       category_ids: [category.id]
     }
-    articles_service = service(filters)
-    articles_service.process
+    articles = service(filters).process
 
-    assert_equal 1, articles_service.articles.size
-    assert_equal article_2, articles_service.articles.first
+    assert_equal [article_2.id], articles.map(&:id)
   end
 
-  def test_filter_coun_is_loaded
-    create(:article, user: @user, status: :published)
+  def test_filter_count_is_loaded
+    create(:article, site: @site, status: :published)
+    articles = service({ status: :published }).process
 
-    articles_service = service({ status: :published })
-    articles_service.process
+    assert_equal @site.articles.count, articles.total_count
+  end
 
-    assert_equal 1, articles_service.articles.size
-    assert_equal 1, articles_service.filtered_articles_count
+  def test_should_return_paginated_articles
+    page_limit = 2
+    test_articles = create_list(:article, 4, site: @site, status: :published)
+    filters = {
+      status: :published,
+      page: 1,
+      limit: page_limit
+    }
+    articles = service(filters).process
+
+    assert_equal page_limit, articles.count
+  end
+
+  def test_should_return_all_articles_when_no_filters_are_provided
+    test_articles = create_list(:article, ARTICLES_COUNT, site: @site)
+    filters = {}
+    articles = service(filters).process
+
+    assert_equal @site.articles.count, articles.count
+    assert_equal test_articles.pluck(:id).sort, articles.map(&:id).sort
+  end
+
+  def test_should_return_empty_articles_when_no_articles_match_the_filters
+    test_articles = create_list(:article, ARTICLES_COUNT, site: @site, title: "Test articles")
+    filters = {
+      search_term: "Invalid",
+      status: :published,
+      page: 1,
+      limit: 2
+    }
+    articles = service(filters).process
+
+    assert_equal 0, articles.count
   end
 
   private
 
     def service(filters)
-      service = Articles::FilterService.new(@user, filters)
+      service = Articles::FilterService.new(@site, filters)
     end
 end
