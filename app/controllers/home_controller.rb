@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class HomeController < ApplicationController
+  before_action :load_current_user!
   before_action :redirect
 
   def index
