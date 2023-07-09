@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
 class Redirection < ApplicationRecord
-  MAX_FROM_LENGTH = 300
-  MAX_TO_LENGTH = 500
-
   VALID_TO_REGEX = /\A(?:(?:https?:\/\/|www\.)[\w.-]+(?:\.[\w.-]+)+(?:\/[\w.\/-]*)*|\/[\w.\/-]+)\z/
   VALID_FROM_REGEX = /\A\/[\w.\/-]*\z/
+  MAX_FROM_LENGTH = 300
+  MAX_TO_LENGTH = 500
 
   belongs_to :site
 
@@ -14,8 +13,6 @@ class Redirection < ApplicationRecord
   validates :to, presence: true, length: { maximum: MAX_TO_LENGTH }, format: { with: VALID_TO_REGEX }
   validate :unique_from_and_to
   validate :no_cyclic_redirection
-
-  before_update if :from_changed?
 
   def redirect_url
     return to unless to.start_with?("www.")

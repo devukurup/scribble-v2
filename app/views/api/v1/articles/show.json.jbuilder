@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
 json.article do
-  json.extract! @article, :id, :title, :body, :status, :last_published_at, :updated_at
+  json.partial! "api/v1/articles/article", article: @article
 
   json.category do
-    json.title @article.category.title
-    json.id @article.category.id
+    json.partial! "api/v1/categories/category", category: @article.category
   end
 end

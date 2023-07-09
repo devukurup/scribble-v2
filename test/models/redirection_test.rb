@@ -7,7 +7,7 @@ class RedirectionTest < ActiveSupport::TestCase
     @redirection = build(:redirection)
   end
 
-  def test_valid
+  def test_redirection_should_be_valid
     assert @redirection.valid?
   end
 
@@ -15,32 +15,41 @@ class RedirectionTest < ActiveSupport::TestCase
     @redirection.from = ""
 
     assert_not @redirection.valid?
-    assert_includes @redirection.errors.full_messages, "From can't be blank"
+    assert_includes @redirection.errors.full_messages, t("errors.blank", entity: "From")
   end
 
   def test_redirection_should_not_be_valid_without_to
     @redirection.to = ""
 
     assert_not @redirection.valid?
-    assert_includes @redirection.errors.full_messages, "To can't be blank"
+    assert_includes @redirection.errors.full_messages, t("errors.blank", entity: "To")
   end
 
-  def test_redirection_should_not_be_valid_with_duplicate_from
+  def test_redirection_should_not_be_valid_without_unique_from
     @redirection.save!
     test_redirection = build(:redirection, from: @redirection.from)
 
     assert_not test_redirection.valid?
-    assert_includes test_redirection.errors.full_messages, "From has already been taken"
+    assert_includes test_redirection.errors.full_messages, t("errors.taken", entity: "From")
   end
 
-  def test_redirection_should_not_be_valid_with_same_from_and_to
-    @redirection.to = @redirection.from
+  def test_redirection_to_path_should_be_invalid_if_length_exceeds_maximum_length
+    @redirection.to = "a" * (Redirection::MAX_TO_LENGTH + 1)
 
     assert_not @redirection.valid?
-    assert_includes @redirection.errors.full_messages, "From and to values are identical"
+    assert_includes @redirection.errors.full_messages,
+      t("errors.too_long", maximum: Redirection::MAX_TO_LENGTH, entity: "To")
   end
 
-  def test_valid_to_paths
+  def test_redirection_from_path_should_be_invalid_if_length_exceeds_maximum_length
+    @redirection.from = "/#{"a" * (Redirection::MAX_FROM_LENGTH)}"
+
+    assert_not @redirection.valid?
+    assert_includes @redirection.errors.full_messages,
+      t("errors.too_long", maximum: Redirection::MAX_FROM_LENGTH, entity: "From")
+  end
+
+  def test_validation_should_accept_valid_to_paths
     valid_to_paths = ["https://neeto.com", "http://neeto.com", "https://neeto.com/a/b", "www.neeto.com", "/a/b"]
 
     valid_to_paths.each do |to_path|
@@ -50,17 +59,18 @@ class RedirectionTest < ActiveSupport::TestCase
     end
   end
 
-  def test_invalid_to_paths
-    valid_to_paths = ["https:// neeto.com", "a/b", "a/b/c a", "5http://@neeto.com"]
+  def test_validation_should_reject_invalid_to_paths
+    invalid_to_paths = ["https:// neeto.com", "a/b", "a/b/c a", "5http://@neeto.com"]
 
-    valid_to_paths.each do |to_path|
+    invalid_to_paths.each do |to_path|
       @redirection.to = to_path
 
       assert_not @redirection.valid?
+      assert_includes @redirection.errors.full_messages, t("errors.invalid", entity: "To")
     end
   end
 
-  def test_valid_from_paths
+  def test_validation_should_accept_valid_from_paths
     valid_from_paths = ["/articles/getting_started", "/articles/getting.started", "/a/b123_a"]
 
     valid_from_paths.each do |from_path|
@@ -70,14 +80,29 @@ class RedirectionTest < ActiveSupport::TestCase
     end
   end
 
-  def test_invalid_from_paths
-    valid_from_paths = [ "a/b", "a/b/c a", "http://@neeto.com"]
+  def test_validation_should_reject_invalid_from_paths
+    invalid_from_paths = [ "a/b", "a/b/c a", "http://@neeto.com"]
 
-    valid_from_paths.each do |from_path|
+    invalid_from_paths.each do |from_path|
       @redirection.from = from_path
 
       assert_not @redirection.valid?
+      assert_includes @redirection.errors.full_messages, t("errors.invalid", entity: "From")
     end
+  end
+
+  def test_redirection_should_not_be_valid_without_site
+    @redirection.site = nil
+
+    assert_not @redirection.valid?
+    assert_includes @redirection.errors.full_messages, t("errors.must_exist", entity: "Site")
+  end
+
+  def test_redirection_should_not_be_valid_with_same_from_and_to
+    @redirection.to = @redirection.from
+
+    assert_not @redirection.valid?
+    assert_includes @redirection.errors.full_messages, t("errors.identical", entity_1: "From", entity_2: "to")
   end
 
   def test_redirection_should_not_be_valid_with_cyclic_redirection
@@ -86,7 +111,7 @@ class RedirectionTest < ActiveSupport::TestCase
     test_redirection_2 = build(:redirection, from: test_redirection_1.to, to: @redirection.from)
 
     assert_not test_redirection_2.valid?
-    assert_includes test_redirection_2.errors.full_messages, "Redirection forms a cycle, Try with different values"
+    assert_includes test_redirection_2.errors.full_messages, t("errors.cyclic", entity: "Redirection")
   end
 
   def test_redirection_should_be_valid_with_transitive_redirection
@@ -96,10 +121,9 @@ class RedirectionTest < ActiveSupport::TestCase
     assert test_redirection_1.valid?
   end
 
-  def test_redirection_should_be_valid_with_transitive_redirection
-    @redirection.save!
-    test_redirection_1 = build(:redirection, to: @redirection.from)
+  def test_redirect_url_should_return_correct_url_format
+    redirection = build(:redirection, to: "www.example.com")
 
-    assert test_redirection_1.valid?
+    assert_equal "https://www.example.com", redirection.redirect_url
   end
 end

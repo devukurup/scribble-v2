@@ -10,8 +10,8 @@ class HomeController < ApplicationController
   private
 
     def redirect
-      redirection = Redirection.find_by(from: request.path)
+      redirection = @site.redirections.find_by(from: request.path)
 
-      redirect_to(redirection.redirect_url, status: 301, allow_other_host: true) if redirection.present?
+      redirect_to(redirection.redirect_url, status: :moved_permanently, allow_other_host: true) if redirection.present?
     end
 end

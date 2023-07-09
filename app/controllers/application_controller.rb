@@ -3,7 +3,7 @@
 class ApplicationController < ActionController::Base
   include ApiResponders
   include ApiExceptions
-  include LoadUser
   include LoadSite
+  include LoadUser
   include Authenticatable
 end

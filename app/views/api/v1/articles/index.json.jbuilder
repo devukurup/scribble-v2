@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-json.articles @service.articles do |article|
-  json.extract! article, :id, :title, :body, :status, :last_published_at
+json.articles @filtered_articles do |article|
+  json.partial!("api/v1/articles/article", article:)
   json.author article.user.name
   json.category article.category.title
 end
 
-json.filtered_articles_count @service.filtered_articles_count
-json.all_articles_count Article.count
-json.published_articles_count Article.published.size
-json.draft_articles_count Article.draft.size
+json.filtered_articles_count @filtered_articles.total_count
+json.all_articles_count @articles.size
+json.published_articles_count @articles.published.size
+json.draft_articles_count @articles.draft.size

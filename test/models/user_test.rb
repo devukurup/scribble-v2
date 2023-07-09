@@ -15,35 +15,37 @@ class UserTest < ActiveSupport::TestCase
     @user.first_name = ""
 
     assert_not @user.valid?
-    assert_includes @user.errors.full_messages, "First name can't be blank"
+    assert_includes @user.errors.full_messages, t("errors.blank", entity: "First name")
   end
 
   def test_user_should_not_be_valid_without_last_name
     @user.last_name = ""
 
     assert_not @user.valid?
-    assert_includes @user.errors.full_messages, "Last name can't be blank"
+    assert_includes @user.errors.full_messages, t("errors.blank", entity: "Last name")
   end
 
   def test_user_should_not_be_valid_without_email
     @user.email = ""
 
     assert_not @user.valid?
-    assert_includes @user.errors.full_messages, "Email can't be blank"
+    assert_includes @user.errors.full_messages, t("errors.blank", entity: "Email")
   end
 
   def test_first_name_should_be_invalid_if_length_exceeds_maximum_length
     @user.first_name = "a" * (User::MAX_NAME_LENGTH + 1)
 
     assert_not @user.valid?
-    assert_includes @user.errors.full_messages, "First name is too long (maximum is 50 characters)"
+    assert_includes @user.errors.full_messages,
+      t("errors.too_long", entity: "First name", maximum: User::MAX_NAME_LENGTH)
   end
 
   def test_last_name_should_be_invalid_if_length_exceeds_maximum_length
     @user.last_name = "a" * (User::MAX_NAME_LENGTH + 1)
 
     assert_not @user.valid?
-    assert_includes @user.errors.full_messages, "Last name is too long (maximum is 50 characters)"
+    assert_includes @user.errors.full_messages,
+      t("errors.too_long", entity: "Last name", maximum: User::MAX_NAME_LENGTH)
   end
 
   def test_user_should_not_be_valid_and_saved_if_email_not_unique
@@ -51,7 +53,7 @@ class UserTest < ActiveSupport::TestCase
     test_user = @user.dup
 
     assert_not test_user.valid?
-    assert_includes test_user.errors.full_messages, "Email has already been taken"
+    assert_includes test_user.errors.full_messages, t("errors.taken", entity: "Email")
   end
 
   def test_email_should_be_saved_in_lowercase
@@ -77,7 +79,20 @@ fishy+#.com]
       @user.email = email
 
       assert_not @user.valid?
-      assert_includes @user.errors.full_messages, "Email is invalid"
+      assert_includes @user.errors.full_messages, t("errors.invalid", entity: "Email")
     end
+  end
+
+  def test_user_should_not_be_valid_without_site
+    @user.site = nil
+
+    assert_not @user.valid?
+    assert_includes @user.errors.full_messages, t("errors.must_exist", entity: "Site")
+  end
+
+  def test_name_should_concatenate_first_name_and_last_name
+    @user = create(:user, first_name: "Oliver", last_name: "Smith")
+
+    assert_equal "Oliver Smith", @user.name
   end
 end

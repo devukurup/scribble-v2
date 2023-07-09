@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
 class Articles::FilterService
-  attr_reader :user, :filters, :filtered_articles_count, :articles
+  attr_reader :site, :filters, :articles
 
-  def initialize(user, filters)
-    @user = user
+  def initialize(site, filters)
+    @site = site
     @filters = filters
+
+    @articles = []
   end
 
   def process
@@ -14,37 +16,30 @@ class Articles::FilterService
     filter_by_search_term
     filter_by_categories
     filter_by_status
-
-    set_filtered_articles_count
-
     paginate
+
+    articles
   end
 
   private
 
     def load_articles
-      @articles = user.articles.includes(:category).order(updated_at: :desc)
+      @articles = site.articles.includes(:category, :user).order(updated_at: :desc)
     end
 
     def filter_by_search_term
-      @articles = @articles.where("title ILIKE ?", "%#{filters[:search_term]}%")
+      @articles = articles.where("title ILIKE ?", "%#{filters[:search_term]}%")
     end
 
     def filter_by_categories
-      @articles = @articles.where(category_id: filters[:category_ids]) if filters[:category_ids].present?
+      @articles = articles.where(category_id: filters[:category_ids]) if filters[:category_ids].present?
     end
 
     def filter_by_status
-      @articles = @articles.where(status: filters[:status]) if filters[:status].present?
-    end
-
-    def set_filtered_articles_count
-      @filtered_articles_count = @articles.size
+      @articles = articles.where(status: filters[:status]) if filters[:status].present?
     end
 
     def paginate
-      return @articles unless filters[:page].present?
-
-      @articles.page(filters[:page]).per(filters[:limit])
+      @articles = articles.page(filters[:page]).per(filters[:limit])
     end
 end

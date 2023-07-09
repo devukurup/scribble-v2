@@ -6,15 +6,15 @@ class Article < ApplicationRecord
 
   enum :status, { draft: "draft", published: "published" }, default: :draft
 
+  belongs_to :site
   belongs_to :user
   belongs_to :category, counter_cache: true
 
   validates :title, presence: true, length: { maximum: MAX_TITLE_LENGTH }, format: { with: VALID_TITLE_REGEX }
-  validates_presence_of :body, :status
   validates :slug, presence: true, uniqueness: true
+  validates_presence_of :body, :status
 
   before_validation :set_slug!, if: :title_changed?
-
   before_save :set_last_published_at
 
   private
@@ -37,7 +37,7 @@ class Article < ApplicationRecord
 
     def set_last_published_at
       if status_changed? && status_was == "draft"
-        self.last_published_at = DateTime.now
+        self.last_published_at = Time.zone.now
       end
     end
 end

@@ -3,6 +3,6 @@
 FactoryBot.define do
   factory :category do
     title { Faker::Lorem.unique.word }
-    user
+    site
   end
 end
