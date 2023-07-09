@@ -32,7 +32,7 @@ class CategoryTest < ActiveSupport::TestCase
 
     assert_not @category.valid?
     assert_includes @category.errors.full_messages,
-      t("errors.exceed_maximum_limit", entity: "Title", maximum_length: Category::MAX_TITLE_LENGTH)
+      t("errors.too_long", entity: "Title", maximum: Category::MAX_TITLE_LENGTH)
   end
 
   def test_validation_should_accept_valid_titles
@@ -50,7 +50,7 @@ class CategoryTest < ActiveSupport::TestCase
       @category.title = title
 
       assert_not @category.valid?
-      assert_includes @category.errors.full_messages, t("errors.invalid_format", entity: "Title")
+      assert_includes @category.errors.full_messages, t("errors.invalid", entity: "Title")
     end
   end
 

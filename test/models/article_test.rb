@@ -22,7 +22,7 @@ class ArticleTest < ActiveSupport::TestCase
 
     assert_not @article.valid?
     assert_includes @article.errors.full_messages,
-      t("errors.exceed_maximum_limit", entity: "Title", maximum_length: Article::MAX_TITLE_LENGTH)
+      t("errors.too_long", entity: "Title", maximum: Article::MAX_TITLE_LENGTH)
   end
 
   def test_validation_should_accept_valid_titles
@@ -40,7 +40,7 @@ class ArticleTest < ActiveSupport::TestCase
       @article.title = title
 
       assert_not @article.valid?
-      assert_includes @article.errors.full_messages, t("errors.invalid_format", entity: "Title")
+      assert_includes @article.errors.full_messages, t("errors.invalid", entity: "Title")
     end
   end
 
