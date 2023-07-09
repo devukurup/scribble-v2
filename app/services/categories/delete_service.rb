@@ -1,16 +1,19 @@
 # frozen_string_literal: true
 
 class Categories::DeleteService
-  attr_accessor :category, :user, :target_category_id, :errors
+  include ActionView::Helpers::TranslationHelper
 
-  def initialize(user, category, target_category_id = nil)
-    @user = user
+  attr_reader :category, :site, :target_category_id, :errors, :target_category
+
+  def initialize(site, category, target_category_id = nil)
+    @site = site
     @category = category
     @target_category_id = target_category_id
+
     @errors = []
   end
 
-  def process
+  def process!
     Category.transaction do
       if has_articles?
         validate_category!
@@ -30,7 +33,7 @@ class Categories::DeleteService
   private
 
     def last_category?
-      user.categories.size == 1
+      site.categories.size == 1
     end
 
     def has_articles?
@@ -39,32 +42,32 @@ class Categories::DeleteService
 
     def load_target_category!
       if target_category_id.present?
-        @target_category = user.categories.find(target_category_id) and return
+        @target_category = site.categories.find(target_category_id) and return
       end
 
       @target_category = create_general_category!
     end
 
     def create_general_category!
-      user.categories.create!(title: "General")
+      site.categories.create!(title: Category::GENERAL_CATEGORY_TITLE)
     end
 
     def move_articles_to_target_category!
       category.articles.find_each do |article|
-        article.update!(category_id: @target_category.id)
+        article.update!(category_id: target_category.id)
       end
     end
 
     def destroy_category!
-      @category.destroy!
+      category.destroy!
     end
 
     def last_general_category?
-      last_category? && category.title.downcase == "general"
+      last_category? && category.title.downcase == Category::GENERAL_CATEGORY_TITLE.downcase
     end
 
-    def set_error!(erorr)
-      @errors << erorr
+    def set_error!(error)
+      errors << error
 
       raise ActiveRecord::Rollback
     end
@@ -72,7 +75,7 @@ class Categories::DeleteService
     def validate_category!
       return if target_category_id.present?
 
-      set_error!(I18n.t("errors.category.last_general_category")) if last_general_category?
-      set_error!(I18n.t("errors.category.missing_target_category")) unless last_category?
+      set_error!(t("errors.category.last_general_category")) if last_general_category?
+      set_error!(t("errors.category.missing_target_category")) unless last_category?
     end
 end

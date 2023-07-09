@@ -16,7 +16,7 @@ class Articles::BulkDeleteServiceTest < ActiveSupport::TestCase
       article_ids: @articles.map(&:id)
     }
 
-    assert_difference "Article.count", -ARTICLES_COUNT do
+    assert_difference "@site.articles.count", -ARTICLES_COUNT do
       Articles::BulkDeleteService.new(@site, options).process
     end
   end

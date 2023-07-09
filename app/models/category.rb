@@ -5,6 +5,7 @@ class Category < ApplicationRecord
 
   MAX_TITLE_LENGTH = 255
   VALID_TITLE_REGEX = /\A[a-zA-Z][a-zA-Z0-9& -]*\z/
+  GENERAL_CATEGORY_TITLE = "General"
 
   acts_as_list scope: :site
 
