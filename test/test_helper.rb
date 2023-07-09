@@ -38,3 +38,7 @@ end
 def response_json
   response.parsed_body
 end
+
+def response_ids(response)
+  response.map { |item| item["id"] }.sort
+end

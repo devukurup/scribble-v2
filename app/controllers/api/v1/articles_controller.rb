@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 class Api::V1::ArticlesController < ApplicationController
+  before_action :load_current_user!, only: :create
   before_action :load_article!, only: %i[show update destroy]
+  before_action :load_articles, only: :index
 
   def index
-    @service = Articles::FilterService.new(@current_user, filter_params)
-    @service.process
+    @filtered_articles = Articles::FilterService.new(@site, filter_params).process
   end
 
   def show
@@ -14,29 +15,32 @@ class Api::V1::ArticlesController < ApplicationController
 
   def update
     @article.update!(article_params)
-    render_notice(t("successfully_updated", entity: "Article"))
+
+    render_notice(t("success.updated", entity: Article.model_name.human))
   end
 
   def create
-    @current_user.articles.create!(article_params)
-    render_notice(t("successfully_created", entity: "Article"))
+    @site.articles.create!(article_params.merge(user: @current_user))
+
+    render_notice(t("success.created", entity: Article.model_name.human))
   end
 
   def destroy
     @article.destroy!
-    render_notice(t("successfully_deleted", entity: "Article"))
+
+    render_notice(t("success.deleted", entity: Article.model_name.human))
   end
 
   def bulk_destroy
-    Articles::BulkDeleteService.new(@current_user, bulk_params).process
+    Articles::BulkDeleteService.new(@site, bulk_params).process
 
-    render_notice(t("successfully_deleted", entity: "Articles"))
+    render_notice(t("articles.success.deleted", count: bulk_articles_count))
   end
 
   def bulk_update
-    Articles::BulkUpdateService.new(@current_user, bulk_params).process
+    Articles::BulkUpdateService.new(@site, bulk_params).process!
 
-    render_notice(t("successfully_updated", entity: "Articles"))
+    render_notice(t("articles.success.updated", count: bulk_articles_count))
   end
 
   private
@@ -46,7 +50,11 @@ class Api::V1::ArticlesController < ApplicationController
     end
 
     def load_article!
-      @article = @current_user.articles.find(params[:id])
+      @article = @site.articles.find(params[:id])
+    end
+
+    def load_articles
+      @articles = @site.articles
     end
 
     def filter_params
@@ -55,5 +63,9 @@ class Api::V1::ArticlesController < ApplicationController
 
     def bulk_params
       params.permit(:status, :category_id, article_ids: [])
+    end
+
+    def bulk_articles_count
+      bulk_params[:article_ids].length
     end
 end
