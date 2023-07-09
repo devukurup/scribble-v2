@@ -43,7 +43,7 @@ class Api::V1::ArticlesControllerTest < ActionDispatch::IntegrationTest
     put(api_v1_article_path(@article.id), params:, headers:)
 
     assert_response :success
-    assert_equal params.dig(:article, :title), @article.reload.title
+    assert_equal params[:article][:title], @article.reload.title
     assert_equal t("success.updated", entity: Article.model_name.human), response_json["notice"]
   end
 
