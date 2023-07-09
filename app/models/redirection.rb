@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
 class Redirection < ApplicationRecord
-  MAX_FROM_LENGTH = 300
-  MAX_TO_LENGTH = 500
-
   VALID_TO_REGEX = /\A(?:(?:https?:\/\/|www\.)[\w.-]+(?:\.[\w.-]+)+(?:\/[\w.\/-]*)*|\/[\w.\/-]+)\z/
   VALID_FROM_REGEX = /\A\/[\w.\/-]*\z/
+  MAX_FROM_LENGTH = 300
+  MAX_TO_LENGTH = 500
 
   belongs_to :site
 
