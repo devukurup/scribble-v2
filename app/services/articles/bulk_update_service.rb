@@ -1,26 +1,26 @@
 # frozen_string_literal: true
 
 class Articles::BulkUpdateService
-  attr_reader :user, :options, :articles
+  attr_reader :site, :options, :articles
 
-  def initialize(user, options)
-    @user = user
+  def initialize(site, options)
+    @site = site
     @options = options
   end
 
-  def process
+  def process!
     load_articles
 
-    update_articles
+    update_articles!
   end
 
   private
 
     def load_articles
-      @articles = user.articles.where(id: options[:article_ids])
+      @articles = site.articles.where(id: options[:article_ids])
     end
 
-    def update_articles
+    def update_articles!
       Article.transaction do
         articles.find_each do |article|
           article.update!(article_attributes)

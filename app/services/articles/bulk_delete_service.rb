@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class Articles::BulkDeleteService
-  attr_reader :user, :options, :articles
+  attr_reader :site, :options, :articles
 
-  def initialize(user, options)
-    @user = user
+  def initialize(site, options)
+    @site = site
     @options = options
   end
 
@@ -17,10 +17,12 @@ class Articles::BulkDeleteService
   private
 
     def load_articles
-      @articles = user.articles.where(id: options[:article_ids])
+      @articles = site.articles.where(id: options[:article_ids])
     end
 
     def delete_articles
-      articles.destroy_all
+      Article.transaction do
+        articles.destroy_all
+      end
     end
 end
