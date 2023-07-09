@@ -2,6 +2,6 @@
 
 FactoryBot.define do
   factory :site do
-    title { Faker::Lorem.unique.word }
+    title { Faker::Lorem.word }
   end
 end

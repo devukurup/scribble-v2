@@ -1,16 +1,14 @@
 # frozen_string_literal: true
 
 class Api::V1::SitesController < ApplicationController
-  before_action :load_site!, only: %i[show update]
-  skip_before_action :load_current_user!
-
   def show
     render
   end
 
   def update
     @site.update!(site_params)
-    render_notice(t("successfully_updated", entity: "Site"))
+
+    render_notice(t("success.updated", entity: "Site"))
   end
 
   private
