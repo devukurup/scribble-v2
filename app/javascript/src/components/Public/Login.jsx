@@ -2,7 +2,8 @@ import { Button, PageLoader, Typography } from "neetoui";
 import { Input } from "neetoui/formik";
 import React from "react";
 import NavBar from "./NavBar";
-import { useShowSite } from "hooks/useShowSite";
+import { useShowSite } from "hooks/reactQuery/useSiteApi";
+import { capitalize } from "neetocommons/pure";
 import { Formik, Form } from "formik";
 import { INITIAL_VALUES, VALIDATION_SCHEMA } from "./constants";
 import { setToSessionStorage } from "helpers/session";
@@ -11,10 +12,7 @@ import { useTranslation } from "react-i18next";
 import { useLoginSession } from "hooks/reactQuery/public/useSessionApi";
 
 const Login = () => {
-  const {
-    isLoading,
-    data: { site },
-  } = useShowSite();
+  const { isLoading, data } = useShowSite();
 
   const { t } = useTranslation();
 
@@ -38,6 +36,8 @@ const Login = () => {
     );
   }
 
+  const site = data.data.site;
+
   return (
     <div className="flex h-screen flex-col">
       <NavBar title={site?.title} />
@@ -60,10 +60,10 @@ const Login = () => {
         >
           {({ isValid, dirty }) => (
             <Form>
-              <div className="flex flex-col space-y-2">
+              <div className="flex flex-col space-y-3">
                 <Input
                   placeholder={t("public.login.placeholder")}
-                  label={t("common.password")}
+                  label={capitalize(t("common.password"))}
                   type="password"
                   name="password"
                   size="large"

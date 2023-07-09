@@ -4,10 +4,11 @@ import { Switch, Typography, Spinner } from "neetoui";
 import { useTranslation } from "react-i18next";
 import { isPresent } from "src/utils";
 
-import { useShowSite } from "hooks/useShowSite";
-import { useUpdateSite } from "hooks/useUpdateSite";
+import { useShowSite, useUpdateSite } from "hooks/reactQuery/useSiteApi";
 
 import Password from "./Password";
+
+import Wrapper from "../Wrapper";
 
 const Security = () => {
   const [isPasswordProtected, setIsPasswordProtected] = useState(false);
@@ -16,17 +17,8 @@ const Security = () => {
 
   const { t } = useTranslation();
 
-  const { update } = useUpdateSite();
-  const {
-    data: { site },
-    isLoading,
-    refetch,
-  } = useShowSite();
-
-  const refetchSiteOnUpdate = () => {
-    refetch();
-    setIsNewPassword(false);
-  };
+  const { data, isLoading } = useShowSite();
+  const { mutate: update, isLoading: isUpdating } = useUpdateSite();
 
   const handleCancel = () => {
     isPasswordProtected
@@ -35,70 +27,59 @@ const Security = () => {
   };
 
   useEffect(() => {
-    if (isPresent(site)) {
+    if (isPresent(data?.data.site)) {
+      const site = data.data.site;
       setIsPasswordProtected(site.is_password_protected);
       setIsPasswordToggleOn(site.is_password_protected);
     }
-  }, [site]);
+  }, [data?.data]);
 
   useEffect(() => {
     if (!isPasswordToggleOn) {
       isPasswordProtected &&
-        update({
-          payload: { password: null },
-          onSuccess: refetchSiteOnUpdate,
-        });
+        update(
+          { password: null },
+          { onSuccess: () => setIsNewPassword(false) }
+        );
     } else {
       !isPasswordProtected && setIsNewPassword(true);
     }
   }, [isPasswordToggleOn]);
 
+  if (isLoading || isUpdating) {
+    return (
+      <div className="flex h-screen w-full items-center justify-center">
+        <Spinner />
+      </div>
+    );
+  }
+
   return (
-    <div className="m-32 flex w-full flex-col p-5">
-      <Typography
-        className="neeto-ui-text-gray-700"
-        lineHeight="loose"
-        style="h2"
-        weight="semibold"
-      >
-        {t("common.security")}
-      </Typography>
-      <Typography
-        className="neeto-ui-text-gray-600"
-        lineHeight="normal"
-        style="body1"
-        weight="normal"
-      >
-        {t("settings.security.description")}
-      </Typography>
-      {!isLoading ? (
-        <>
-          <div className="mt-5 flex justify-between">
-            <Typography style="body1" weight="medium">
-              {t("settings.security.switchLabel")}
-            </Typography>
-            <Switch
-              checked={isPasswordToggleOn}
-              onChange={() =>
-                setIsPasswordToggleOn(isPasswordToggleOn => !isPasswordToggleOn)
-              }
-            />
-          </div>
-          {isPasswordToggleOn && (
-            <Password
-              handleCancel={handleCancel}
-              isNewPassword={isNewPassword}
-              refetchSite={refetchSiteOnUpdate}
-              setIsNewPassword={setIsNewPassword}
-            />
-          )}
-        </>
-      ) : (
-        <div className="flex w-full justify-center">
-          <Spinner />
+    <Wrapper
+      description={t("settings.security.description")}
+      title={t("common.security")}
+    >
+      <div className="flex w-2/3 flex-col">
+        <div className="mt-5 flex justify-between">
+          <Typography style="body1" weight="medium">
+            {t("settings.security.switchLabel")}
+          </Typography>
+          <Switch
+            checked={isPasswordToggleOn}
+            onChange={() =>
+              setIsPasswordToggleOn(isPasswordToggleOn => !isPasswordToggleOn)
+            }
+          />
         </div>
-      )}
-    </div>
+        {isPasswordToggleOn && (
+          <Password
+            handleCancel={handleCancel}
+            isNewPassword={isNewPassword}
+            setIsNewPassword={setIsNewPassword}
+          />
+        )}
+      </div>
+    </Wrapper>
   );
 };
 

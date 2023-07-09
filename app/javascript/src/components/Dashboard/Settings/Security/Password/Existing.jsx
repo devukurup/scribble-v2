@@ -4,9 +4,11 @@ import { Hide } from "neetoicons";
 import { Input, Button } from "neetoui";
 import { useTranslation } from "react-i18next";
 
+import { capitalize } from "neetocommons/pure";
+
 import { DEFAULT_PASSWORD } from "./constants";
 
-const Existing = ({ setIsNewPassword }) => {
+const Existing = ({ toggleIsNewPassword }) => {
   const { t } = useTranslation();
 
   return (
@@ -14,7 +16,7 @@ const Existing = ({ setIsNewPassword }) => {
       <Input
         disabled
         className="w-3/4"
-        label={t("common.password")}
+        label={capitalize(t("common.password"))}
         name="password"
         suffix={<Hide />}
         type="password"
@@ -24,7 +26,7 @@ const Existing = ({ setIsNewPassword }) => {
         label={t("common.changeEntity", {
           entity: t("common.password"),
         })}
-        onClick={() => setIsNewPassword(true)}
+        onClick={toggleIsNewPassword}
       />
     </div>
   );
