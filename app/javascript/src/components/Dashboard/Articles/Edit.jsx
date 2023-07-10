@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import { PageLoader } from "neetoui";
+import { Container } from "neetoui/layouts";
 import { useTranslation } from "react-i18next";
 import { useParams, useHistory } from "react-router-dom";
 import routes from "src/routes";
@@ -65,35 +66,37 @@ const Edit = () => {
 
   return (
     <SidebarWrapper>
-      <Form
-        isEdit
-        handleDelete={handleDelete}
-        handleSubmit={handleSubmit}
-        dateString={formattedDateTime(
-          article.status === t("statuses.published").toLowerCase()
-            ? article?.lastPublishedAt
-            : article?.updatedAt
-        )}
-        initialStatus={
-          article.status === t("statuses.published").toLowerCase()
-            ? t("statuses.publish")
-            : t("statuses.saveDraft")
-        }
-        initialValues={{
-          ...article,
-          category: {
-            label: article.category.title,
-            value: article.category.id,
-          },
-        }}
-        onClose={redirectToDashboard}
-      />
-      <DeleteAlert
-        isOpen={isDeleteAlertOpen}
-        isSubmitting={isUpdating}
-        rowToBeDeleted={article}
-        onClose={handleClose}
-      />
+      <Container>
+        <Form
+          isEdit
+          handleDelete={handleDelete}
+          handleSubmit={handleSubmit}
+          dateString={formattedDateTime(
+            article.status === t("statuses.published").toLowerCase()
+              ? article?.lastPublishedAt
+              : article?.updatedAt
+          )}
+          initialStatus={
+            article.status === t("statuses.published").toLowerCase()
+              ? t("statuses.publish")
+              : t("statuses.saveDraft")
+          }
+          initialValues={{
+            ...article,
+            category: {
+              label: article.category.title,
+              value: article.category.id,
+            },
+          }}
+          onClose={redirectToDashboard}
+        />
+        <DeleteAlert
+          isOpen={isDeleteAlertOpen}
+          isSubmitting={isUpdating}
+          rowToBeDeleted={article}
+          onClose={handleClose}
+        />
+      </Container>
     </SidebarWrapper>
   );
 };

@@ -1,5 +1,6 @@
 import React from "react";
 
+import { Container } from "neetoui/layouts";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import routes from "src/routes";
@@ -32,13 +33,15 @@ const Create = () => {
 
   return (
     <SidebarWrapper>
-      <Form
-        handleSubmit={handleSubmit}
-        initialStatus={t("statuses.publish")}
-        initialValues={INITIAL_VALUES}
-        isSubmitting={isCreating}
-        onClose={redirectToDashboard}
-      />
+      <Container>
+        <Form
+          handleSubmit={handleSubmit}
+          initialStatus={t("statuses.publish")}
+          initialValues={INITIAL_VALUES}
+          isSubmitting={isCreating}
+          onClose={redirectToDashboard}
+        />
+      </Container>
     </SidebarWrapper>
   );
 };

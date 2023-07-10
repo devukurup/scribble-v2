@@ -50,7 +50,7 @@ const Table = () => {
     resetSelectedRedirection();
   };
 
-  if (isLoading || isCreating) {
+  if (isLoading) {
     return (
       <div className="flex justify-center">
         <Spinner />
@@ -75,6 +75,7 @@ const Table = () => {
         {isEmpty(selectedRedirection?.id) && (
           <Form
             initialValues={FORM_INITIAL_VALUES}
+            isSubmitting={isCreating}
             onClose={resetSelectedRedirection}
             onSubmit={createRedirection}
           />
