@@ -1,4 +1,3 @@
-import { useErrorDisplayStore } from "@bigbinary/neeto-commons-frontend/react-utils";
 import axios from "axios";
 import { t } from "i18next";
 import { Toastr } from "neetoui";
@@ -6,6 +5,7 @@ import { evolve, pipe } from "ramda";
 
 import { getFromSessionStorage } from "helpers/session";
 import { keysToCamelCase, serializeKeysToSnakeCase } from "neetocommons/pure";
+import { useErrorDisplayStore } from "neetocommons/react-utils";
 
 axios.defaults.baseURL = "/";
 

@@ -4,12 +4,11 @@ import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import routes from "src/routes";
 
+import SidebarWrapper from "Dashboard/SidebarWrapper";
 import { useCreateArticle } from "hooks/reactQuery/useArticlesApi";
 
 import { INITIAL_VALUES, STATUS } from "./constants";
 import Form from "./Form";
-
-import SidebarWrapper from "../SidebarWrapper";
 
 const Create = () => {
   const history = useHistory();

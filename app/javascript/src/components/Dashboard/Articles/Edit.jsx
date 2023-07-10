@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useParams, useHistory } from "react-router-dom";
 import routes from "src/routes";
 
+import SidebarWrapper from "Dashboard/SidebarWrapper";
 import {
   useShowArticle,
   useUpdateArticle,
@@ -15,16 +16,13 @@ import DeleteAlert from "./DeleteAlert";
 import Form from "./Form";
 import { formattedDateTime } from "./utils";
 
-import SidebarWrapper from "../SidebarWrapper";
-
 const Edit = () => {
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
 
   const { articleId } = useParams();
+  const history = useHistory();
 
   const { t } = useTranslation();
-
-  const history = useHistory();
 
   const redirectToDashboard = () => {
     history.push(routes.articles.index);

@@ -5,12 +5,11 @@ import { Typography } from "neetoui";
 import { MenuBar as NeetoUIMenuBar } from "neetoui/layouts";
 import { useTranslation } from "react-i18next";
 
-import { PLURAL } from "constants";
+import { PLURAL, ESCAPE_KEY } from "constants";
 import useDebounce from "hooks/useDebounce";
 import { capitalize } from "neetocommons/pure";
 
 import Categories from "./Categories";
-import { ESCAPE_KEY } from "./constants";
 import { statuses } from "./utils";
 
 const MenuBar = ({
@@ -23,9 +22,9 @@ const MenuBar = ({
   articles,
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const debouncedSearchTerm = useDebounce(searchTerm);
-
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
+
+  const debouncedSearchTerm = useDebounce(searchTerm);
 
   const { t } = useTranslation();
 

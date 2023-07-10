@@ -11,7 +11,9 @@ import List from "./List";
 
 const Categories = ({ handleUpdate }) => {
   const [searchTerm, setSearchTerm] = useState("");
+
   const debouncedSearchTerm = useDebounce(searchTerm);
+
   const { t } = useTranslation();
 
   return (

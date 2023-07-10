@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 
-import { FormikEditor } from "@bigbinary/neeto-editor";
 import { Formik, Form as FormikForm } from "formik";
+import { FormikEditor } from "neetoeditor";
 import { MenuHorizontal } from "neetoicons";
 import { ActionDropdown, Dropdown, Typography, Button, Spinner } from "neetoui";
 import { Textarea, Select } from "neetoui/formik";
 import { isEmpty } from "ramda";
 import { useTranslation } from "react-i18next";
 
+import { CATEGORY_VALIDATION_SCHEMA } from "Dashboard/Categories/constants";
 import {
   useFetchCategories,
   useCreateCategory,
@@ -24,8 +25,6 @@ import {
   formatCategories,
   formatTitleAndBodyErrors,
 } from "./utils";
-
-import { CATEGORY_VALIDATION_SCHEMA } from "../Categories/constants";
 
 const { Menu, MenuItem } = ActionDropdown;
 

@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 
-import { Alert, Spinner } from "@bigbinary/neetoui";
 import { t } from "i18next";
 import { Plus } from "neetoicons";
-import { Button } from "neetoui";
+import { Alert, Spinner, Button } from "neetoui";
 import { isEmpty } from "ramda";
 import { Trans } from "react-i18next";
 import {

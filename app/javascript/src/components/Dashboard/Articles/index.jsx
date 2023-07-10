@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import { PageLoader } from "neetoui";
 import { Container } from "neetoui/layouts";
+import { DEFAULT_PAGE_NUMBER, PAGINATION_LIMIT } from "src/constants";
 
 import SidebarWrapper from "components/Dashboard/SidebarWrapper";
 import CreateCategory from "Dashboard/Categories/Create";
@@ -14,8 +15,6 @@ import Header from "./Header";
 import MenuBar from "./MenuBar";
 import SubHeader from "./SubHeader";
 import Table from "./Table";
-
-import { DEFAULT_PAGE_NUMBER, PAGINATION_LIMIT } from "../../../constants";
 
 const Articles = () => {
   const [activeStatus, setActiveStatus] = useState(DEFAULT_ACTIVE_STATUS);

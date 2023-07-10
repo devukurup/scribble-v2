@@ -4,11 +4,10 @@ import { Switch, Typography, Spinner } from "neetoui";
 import { useTranslation } from "react-i18next";
 import { isPresent } from "src/utils";
 
+import Wrapper from "Dashboard/Settings/Wrapper";
 import { useShowSite, useUpdateSite } from "hooks/reactQuery/useSiteApi";
 
 import Password from "./Password";
-
-import Wrapper from "../Wrapper";
 
 const Security = () => {
   const [isPasswordProtected, setIsPasswordProtected] = useState(false);

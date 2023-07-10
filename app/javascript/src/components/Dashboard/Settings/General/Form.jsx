@@ -4,6 +4,7 @@ import { Formik, Form as FormikForm } from "formik";
 import { Button, Typography, Spinner } from "neetoui";
 import { Input } from "neetoui/formik";
 import { useTranslation } from "react-i18next";
+import { ESCAPE_KEY } from "src/constants";
 
 import { useShowSite, useUpdateSite } from "hooks/reactQuery/useSiteApi";
 
@@ -34,13 +35,14 @@ const Form = () => {
       validationSchema={VALIDATION_SCHEMA}
       onSubmit={updateSite}
     >
-      {({ isValid, dirty }) => (
+      {({ isValid, dirty, resetForm }) => (
         <FormikForm noValidate>
           <div className="mt-8 flex flex-col space-y-5">
             <Input
               label={t("settings.generalSettings.inputLabel")}
               name="title"
               placeholder={t("settings.generalSettings.placeholder")}
+              onKeyDown={event => event.key === ESCAPE_KEY && resetForm()}
             />
             <Typography className="neeto-ui-text-gray-600" style="body3">
               {t("settings.generalSettings.inputDescription")}

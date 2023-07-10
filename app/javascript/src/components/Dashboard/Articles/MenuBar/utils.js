@@ -1,6 +1,6 @@
 import { t } from "i18next";
 
-import { ARTICLE_STATUSES } from "../constants";
+import { ARTICLE_STATUSES } from "Dashboard/Articles/constants";
 
 export const isCategoryPresent = ({ categoryId, categories }) =>
   categories.some(({ id }) => categoryId === id);

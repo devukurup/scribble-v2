@@ -1,5 +1,5 @@
-import { isEditorEmpty } from "@bigbinary/neeto-editor";
 import { t } from "i18next";
+import { isEditorEmpty } from "neetoeditor";
 import * as yup from "yup";
 
 import { SINGULAR } from "constants";

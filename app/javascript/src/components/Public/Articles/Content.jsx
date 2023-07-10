@@ -1,7 +1,7 @@
 import React from "react";
-import { EditorContent } from "@bigbinary/neeto-editor";
+import { EditorContent } from "neetoeditor";
 import { Typography, Spinner } from "neetoui";
-import Scrollable from "@bigbinary/neeto-molecules/Scrollable";
+import Scrollable from "neetomolecules/Scrollable";
 
 import { useParams } from "react-router-dom";
 import { useShowArticle } from "hooks/reactQuery/public/useArticlesApi";
