@@ -13,6 +13,7 @@ import { formatCategories } from "../../Articles/utils";
 
 const Form = ({ onSubmit, category, onClose, categories = [], isLoading }) => {
   const { title, articlesCount, id } = category;
+
   const { t } = useTranslation();
 
   return (

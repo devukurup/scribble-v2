@@ -69,7 +69,7 @@ class Categories::DeleteService
     end
 
     def validate_categories
-      return if target_category_id.present?
+      return if target_category_id.present? || !has_articles?
 
       errors << (t("errors.category.last_general_category")) if last_general_category?
       errors << (t("errors.category.missing_target_category")) unless last_category?

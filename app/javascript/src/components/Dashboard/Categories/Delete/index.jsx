@@ -17,12 +17,12 @@ const Delete = ({
   categoryToBeDeleted,
   isSingleCategoryPresent,
 }) => {
-  const { title, articles_count: articlesCount, id } = categoryToBeDeleted;
+  const { title, articlesCount, id } = categoryToBeDeleted;
   const { data, isLoading: isLoadingCategories } = useFetchCategories({
     enabled: false,
   });
 
-  const { mutate } = useDeleteCategory();
+  const { mutate } = useDeleteCategory({ onSuccess: onClose });
 
   const { t } = useTranslation();
 

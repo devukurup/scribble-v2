@@ -8,9 +8,9 @@ import { useUpdateCategory } from "hooks/reactQuery/useCategoriesApi";
 import Form from "./Form";
 
 const Edit = ({ isOpen, onClose, categoryToUpdate }) => {
-  const { mutate: updateCategory, isLoading: isUpdating } = useUpdateCategory(
-    {}
-  );
+  const { mutate: updateCategory, isLoading: isUpdating } = useUpdateCategory({
+    onSuccess: onClose,
+  });
 
   const { t } = useTranslation();
 
