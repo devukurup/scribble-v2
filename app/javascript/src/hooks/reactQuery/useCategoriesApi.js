@@ -9,6 +9,7 @@ export const useFetchCategories = ({ searchTerm = "", options = {} }) =>
     () => categoriesApi.list(searchTerm),
     {
       ...options,
+      refetchOnWindowFocus: false,
     }
   );
 

@@ -9,7 +9,7 @@ import { useUpdateCategory } from "hooks/reactQuery/useCategoriesApi";
 
 import Item from "./Item";
 
-const List = ({ categories, isLoading, refetch, isSingleCategoryPresent }) => {
+const List = ({ categories, isLoading, isSingleCategoryPresent }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [categoryToUpdate, setCategoryToUpdate] = useState({});
@@ -34,20 +34,19 @@ const List = ({ categories, isLoading, refetch, isSingleCategoryPresent }) => {
     updateCategory({
       id: draggableId,
       payload,
-      onSuccess: refetch,
       isQuiet: true,
     });
   };
   if (isLoading || isUpdating) {
     return (
-      <div className="flex w-full justify-center">
+      <div className="flex h-32 w-full items-center justify-center">
         <Spinner />
       </div>
     );
   }
 
   return (
-    <>
+    <div className="w-full overflow-y-auto px-8">
       <DragDropContext onDragEnd={handleDragEnd}>
         <Droppable droppableId="categories">
           {provided => (
@@ -82,17 +81,15 @@ const List = ({ categories, isLoading, refetch, isSingleCategoryPresent }) => {
       <EditCategory
         categoryToUpdate={categoryToUpdate}
         isOpen={isEditModalOpen}
-        refetch={refetch}
         onClose={() => setIsEditModalOpen(false)}
       />
       <DeleteCategory
         categoryToBeDeleted={categoryToBeDeleted}
         isOpen={isDeleteModalOpen}
         isSingleCategoryPresent={isSingleCategoryPresent}
-        refetch={refetch}
         onClose={() => setIsDeleteModalOpen(false)}
       />
-    </>
+    </div>
   );
 };
 

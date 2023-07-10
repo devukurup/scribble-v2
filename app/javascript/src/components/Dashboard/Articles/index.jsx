@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import { PageLoader } from "neetoui";
+import { Container } from "neetoui/layouts";
 
 import SidebarWrapper from "components/Dashboard/SidebarWrapper";
 import CreateCategory from "Dashboard/Categories/Create";
@@ -81,7 +82,7 @@ const Articles = () => {
         setIsCreateModalOpen={setIsCreateModalOpen}
         setSelectedCategories={setSelectedCategories}
       />
-      <div className="mx-4 w-full">
+      <Container className="mx-4 w-full">
         <Header
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
@@ -116,7 +117,7 @@ const Articles = () => {
           setSelectedRowIds={setSelectedArticleRowIds}
           totalCount={articles?.filteredArticlesCount}
         />
-      </div>
+      </Container>
       <CreateCategory
         isOpen={isCreateModalOpen}
         onClose={() => setIsCreateModalOpen(false)}

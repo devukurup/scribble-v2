@@ -108,24 +108,22 @@ const Table = ({
   }
 
   return (
-    <div className="h-full">
-      <NeetoUITable
-        fixedHeight
-        rowSelection
-        columnData={filterColumns()}
-        currentPageNumber={currentPageNumber}
-        defaultPageSize={PAGINATION_LIMIT}
-        handlePageChange={handlePagination}
-        loading={isUpdating || isLoading}
-        rowData={data?.articles}
-        selectedRowKeys={selectedRowIds}
-        totalCount={totalCount}
-        rowClassName={(_, index) =>
-          classnames({ "neeto-ui-bg-gray-100": isEven(index) })
-        }
-        onRowSelect={setSelectedRowIds}
-      />
-    </div>
+    <NeetoUITable
+      fixedHeight
+      rowSelection
+      columnData={filterColumns()}
+      currentPageNumber={currentPageNumber}
+      defaultPageSize={PAGINATION_LIMIT}
+      handlePageChange={handlePagination}
+      loading={isUpdating || isLoading}
+      rowData={data?.articles}
+      selectedRowKeys={selectedRowIds}
+      totalCount={totalCount}
+      rowClassName={(_, index) =>
+        classnames({ "neeto-ui-bg-gray-100": isEven(index) })
+      }
+      onRowSelect={setSelectedRowIds}
+    />
   );
 };
 

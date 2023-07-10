@@ -7,16 +7,16 @@ import { useUpdateCategory } from "hooks/reactQuery/useCategoriesApi";
 
 import Form from "./Form";
 
-const Edit = ({ isOpen, refetch, onClose, categoryToUpdate }) => {
-  const { mutate: updateCategory, isLoading: isUpdating } = useUpdateCategory({
-    onSuccess: onClose,
-  });
+const Edit = ({ isOpen, onClose, categoryToUpdate }) => {
+  const { mutate: updateCategory, isLoading: isUpdating } = useUpdateCategory(
+    {}
+  );
 
   const { t } = useTranslation();
 
   const handleUpdate = values => {
     const { id } = categoryToUpdate;
-    updateCategory({ id, payload: values, onSuccess: refetch });
+    updateCategory({ id, payload: values });
   };
 
   return (

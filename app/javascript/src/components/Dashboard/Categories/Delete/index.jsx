@@ -15,18 +15,14 @@ const Delete = ({
   isOpen,
   onClose,
   categoryToBeDeleted,
-  refetch,
   isSingleCategoryPresent,
 }) => {
-  const { title, articlesCount, id } = categoryToBeDeleted;
-  const { data, isLoading: isLoadingCategories } = useFetchCategories({});
+  const { title, articles_count: articlesCount, id } = categoryToBeDeleted;
+  const { data, isLoading: isLoadingCategories } = useFetchCategories({
+    enabled: false,
+  });
 
-  const handleAfterDelete = () => {
-    refetch();
-    onClose();
-  };
-
-  const { mutate } = useDeleteCategory({ onSuccess: handleAfterDelete });
+  const { mutate } = useDeleteCategory();
 
   const { t } = useTranslation();
 
