@@ -18,7 +18,7 @@ const Delete = ({
   refetch,
   isSingleCategoryPresent,
 }) => {
-  const { title, articles_count: articlesCount, id } = categoryToBeDeleted;
+  const { title, articlesCount, id } = categoryToBeDeleted;
   const { data, isLoading: isLoadingCategories } = useFetchCategories({});
 
   const handleAfterDelete = () => {
@@ -45,7 +45,7 @@ const Delete = ({
       </Modal.Header>
       {articlesCount > 0 && !isSingleCategoryPresent ? (
         <Form
-          categories={data.data?.categories}
+          categories={data?.categories}
           category={categoryToBeDeleted}
           isLoading={isLoadingCategories}
           onClose={onClose}

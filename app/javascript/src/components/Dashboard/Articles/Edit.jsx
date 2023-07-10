@@ -33,11 +33,14 @@ const Edit = () => {
   const { mutate: updateArticle, isLoading: isUpdating } = useUpdateArticle({
     onSuccess: redirectToDashboard,
   });
-  const { data, isLoading } = useShowArticle({ id: articleId });
+
+  const { data: { article } = {}, isLoading } = useShowArticle({
+    id: articleId,
+  });
 
   const handleSubmit = values => {
     const payload = {
-      category_id: values.category.value,
+      categoryId: values.category.value,
       title: values.title,
       body: values.body,
       status: STATUS[values.status],
@@ -62,8 +65,6 @@ const Edit = () => {
     );
   }
 
-  const article = data.data.article;
-
   return (
     <SidebarWrapper>
       <Form
@@ -72,8 +73,8 @@ const Edit = () => {
         handleSubmit={handleSubmit}
         dateString={formattedDateTime(
           article.status === t("statuses.published").toLowerCase()
-            ? article?.last_published_at
-            : article?.updated_at
+            ? article?.lastPublishedAt
+            : article?.updatedAt
         )}
         initialStatus={
           article.status === t("statuses.published").toLowerCase()

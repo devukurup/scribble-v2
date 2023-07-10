@@ -17,7 +17,7 @@ const Security = () => {
 
   const { t } = useTranslation();
 
-  const { data, isLoading } = useShowSite();
+  const { data: { site } = {}, isLoading } = useShowSite();
   const { mutate: update, isLoading: isUpdating } = useUpdateSite();
 
   const handleCancel = () => {
@@ -27,12 +27,11 @@ const Security = () => {
   };
 
   useEffect(() => {
-    if (isPresent(data?.data.site)) {
-      const site = data.data.site;
-      setIsPasswordProtected(site.is_password_protected);
-      setIsPasswordToggleOn(site.is_password_protected);
+    if (isPresent(site)) {
+      setIsPasswordProtected(site.isPasswordProtected);
+      setIsPasswordToggleOn(site.isPasswordProtected);
     }
-  }, [data?.data]);
+  }, [site]);
 
   useEffect(() => {
     if (!isPasswordToggleOn) {

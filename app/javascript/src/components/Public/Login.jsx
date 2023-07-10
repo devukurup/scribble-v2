@@ -12,14 +12,13 @@ import { useTranslation } from "react-i18next";
 import { useLoginSession } from "hooks/reactQuery/public/useSessionApi";
 
 const Login = () => {
-  const { isLoading, data } = useShowSite();
+  const { isLoading, data: { site } = {} } = useShowSite();
 
   const { t } = useTranslation();
 
-  const handleSuccess = data => {
-    const authToken = data.data.authentication_token;
-    if (authToken) {
-      setToSessionStorage({ authToken });
+  const handleSuccess = ({ authenticationToken }) => {
+    if (authenticationToken) {
+      setToSessionStorage({ authToken: authenticationToken });
       window.location.href = routes.public.articles.index;
     }
   };
@@ -35,8 +34,6 @@ const Login = () => {
       </div>
     );
   }
-
-  const site = data.data.site;
 
   return (
     <div className="flex h-screen flex-col">

@@ -2,8 +2,10 @@ import { useErrorDisplayStore } from "@bigbinary/neeto-commons-frontend/react-ut
 import axios from "axios";
 import { t } from "i18next";
 import { Toastr } from "neetoui";
+import { evolve, pipe } from "ramda";
 
 import { getFromSessionStorage } from "helpers/session";
+import { keysToCamelCase, serializeKeysToSnakeCase } from "neetocommons/pure";
 
 axios.defaults.baseURL = "/";
 
@@ -23,7 +25,44 @@ const setAuthHeaders = (setIsLoading = () => null) => {
   setIsLoading(false);
 };
 
-const handleSuccessResponse = response => {
+const transformDataToSnakeCase = request =>
+  evolve(
+    { data: serializeKeysToSnakeCase, params: serializeKeysToSnakeCase },
+    request
+  );
+
+const transformErrorKeysToCamelCase = error => {
+  if (error.response?.data) {
+    error.response.data = keysToCamelCase(error.response.data);
+  }
+
+  return error;
+};
+
+const handleNotFoundError = axiosError => {
+  if (axiosError.response.status === 404) {
+    useErrorDisplayStore.setState({ showErrorPage: true, statusCode: 404 });
+  }
+
+  return axiosError;
+};
+
+const showErrorToastr = axiosError => {
+  const error = axiosError.response.data.error;
+  if (axiosError.response.status !== 404) {
+    Toastr.error(Error(error || t("common.defaultError")));
+  }
+
+  return axiosError;
+};
+
+const transformSuccessKeysToCamelCase = response => {
+  if (response.data) response.data = keysToCamelCase(response.data);
+
+  return response;
+};
+
+const showSuccessToastr = response => {
   if (response) {
     response.success = response.status === 200;
     if (response.data.notice) {
@@ -34,18 +73,26 @@ const handleSuccessResponse = response => {
   return response;
 };
 
-const handleErrorResponse = axiosErrorObject => {
-  const error = axiosErrorObject.response.data.error;
-  if (axiosErrorObject.response.status === 404) {
-    useErrorDisplayStore.setState({ showErrorPage: true, statusCode: 404 });
-  } else {
-    Toastr.error(Error(error || t("common.defaultError")));
-  }
+const extractData = response => response.data;
 
-  return Promise.reject(axiosErrorObject);
-};
+const handleSuccessResponse = pipe(
+  transformSuccessKeysToCamelCase,
+  showSuccessToastr,
+  extractData
+);
 
-const registerIntercepts = () =>
+const rejectError = error => Promise.reject(error);
+
+const handleErrorResponse = pipe(
+  transformErrorKeysToCamelCase,
+  handleNotFoundError,
+  showErrorToastr,
+  rejectError
+);
+
+const registerIntercepts = () => {
+  axios.interceptors.request.use(transformDataToSnakeCase);
   axios.interceptors.response.use(handleSuccessResponse, handleErrorResponse);
+};
 
 export { setAuthHeaders, registerIntercepts };

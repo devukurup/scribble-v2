@@ -34,14 +34,14 @@ const Left = ({
 
   const handleUpdateCategory = categoryId => {
     bulkUpdate({
-      article_ids: selectedArticleRowIds,
-      category_id: categoryId,
+      articleIds: selectedArticleRowIds,
+      categoryId,
     });
   };
 
   const handleUpdateStatus = status => {
     bulkUpdate({
-      article_ids: selectedArticleRowIds,
+      articleIds: selectedArticleRowIds,
       status,
     });
   };

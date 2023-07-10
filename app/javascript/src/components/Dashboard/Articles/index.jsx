@@ -36,7 +36,11 @@ const Articles = () => {
   const status = searchParams.get("status") || "";
   const selectedCategoryIds = selectedCategories?.map(({ id }) => id);
 
-  const { data, isLoading, isFetching } = useFetchArticles({
+  const {
+    data: articles,
+    isLoading,
+    isFetching,
+  } = useFetchArticles({
     params: {
       page,
       limit,
@@ -66,8 +70,6 @@ const Articles = () => {
     );
   }
 
-  const articles = data.data;
-
   return (
     <SidebarWrapper>
       <MenuBar
@@ -87,7 +89,6 @@ const Articles = () => {
           toggleMenubar={toggleMenubar}
         />
         <SubHeader
-          refetchArticles={() => {}}
           searchTerm={searchTerm}
           selectedArticleRowIds={selectedArticleRowIds}
           selectedCategories={selectedCategories}
@@ -97,7 +98,7 @@ const Articles = () => {
           setSelectedArticleRowIds={setSelectedArticleRowIds}
           setSelectedCategories={setSelectedCategories}
           setSelectedColumns={setSelectedColumns}
-          totalCount={articles?.filtered_articles_count}
+          totalCount={articles?.filteredArticlesCount}
         />
         <Table
           activeStatus={activeStatus}
@@ -113,7 +114,7 @@ const Articles = () => {
           setSearchTerm={setSearchTerm}
           setSelectedCategories={setSelectedCategories}
           setSelectedRowIds={setSelectedArticleRowIds}
-          totalCount={articles?.filtered_articles_count}
+          totalCount={articles?.filteredArticlesCount}
         />
       </div>
       <CreateCategory

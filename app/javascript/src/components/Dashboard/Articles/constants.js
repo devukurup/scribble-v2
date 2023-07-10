@@ -79,7 +79,7 @@ export const COLUMNS = [
   },
   {
     label: t("dashboard.table.lastPublishedAt"),
-    key: "last_published_at",
+    key: "lastPublishedAt",
     checked: true,
     disabled: false,
   },
@@ -98,3 +98,5 @@ export const DEFAULT_ROW_COUNT = 1;
 export const KEYBOARD_ENTER_KEY = "Enter";
 
 export const ACTION_KEY = "action";
+
+export const TITLE_BODY_KEYS = ["title", "body"];

@@ -13,16 +13,18 @@ const Articles = () => {
   const { slug } = useParams();
   const history = useHistory();
 
-  const handleSuccess = data => {
+  const handleSuccess = ({ categories }) => {
     if (!slug) {
-      const firstArticleSlug = data.data.categories[0]["articles"][0]["slug"];
+      const firstArticleSlug = categories[0]["articles"][0]["slug"];
       history.push(
         buildUrl(routes.public.articles.show, { slug: firstArticleSlug })
       );
     }
   };
 
-  const { data, isLoading } = useFetchCategories({ onSuccess: handleSuccess });
+  const { data: { categories } = {}, isLoading } = useFetchCategories({
+    onSuccess: handleSuccess,
+  });
 
   if (isLoading) {
     return (
@@ -32,16 +34,12 @@ const Articles = () => {
     );
   }
 
-  const categories = data.data.categories;
-
-  if (isEmpty(categories)) {
-    return <Empty />;
-  }
+  if (isEmpty(categories)) return <Empty />;
 
   return (
     <div className="flex h-full flex-row">
       <Sidebar categories={categories} />
-      {slug && <Content />}
+      <Content />
     </div>
   );
 };

@@ -12,7 +12,7 @@ const PrivateRoute = ({
     return <Redirect to={redirectRoute} />;
   }
 
-  return <Route component={Component} path={path} exact />;
+  return <Route component={Component} path={path} />;
 };
 
 export default PrivateRoute;

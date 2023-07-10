@@ -10,7 +10,7 @@ const { Menu, MenuItem } = Dropdown;
 
 const List = ({ searchTerm, handleUpdate }) => {
   const { t } = useTranslation();
-  const { data, isFetching } = useFetchCategories({
+  const { data: { categories } = {}, isFetching } = useFetchCategories({
     searchTerm,
   });
 
@@ -22,9 +22,9 @@ const List = ({ searchTerm, handleUpdate }) => {
 
   return (
     <>
-      {isPresent(data.data?.categories) ? (
+      {isPresent(categories) ? (
         <Menu className="flex flex-col gap-y-1">
-          {data.data?.categories.map(({ title, id }) => (
+          {categories.map(({ title, id }) => (
             <MenuItem.Button key={id} onClick={() => handleUpdate(id)}>
               {title}
             </MenuItem.Button>

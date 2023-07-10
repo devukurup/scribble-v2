@@ -4,19 +4,28 @@ import dayjs from "dayjs";
 import { t } from "i18next";
 import { MenuHorizontal } from "neetoicons";
 import { Button, Typography, Dropdown } from "neetoui";
-import { isEmpty } from "ramda";
+import { isEmpty, join, pick, values } from "ramda";
 import { TITLE_TRUNCATE_LENGTH, SINGULAR } from "src/constants";
 import routes from "src/routes";
 import { formattedDate, truncate } from "src/utils";
 
 import { buildUrl } from "neetocommons/utils";
 
-import { ARTICLE_STATUSES, DEFAULT_ACTIVE_STATUS } from "./constants";
+import {
+  ARTICLE_STATUSES,
+  DEFAULT_ACTIVE_STATUS,
+  TITLE_BODY_KEYS,
+} from "./constants";
 
 const { Menu, MenuItem } = Dropdown;
 
 export const formatCategories = categories =>
   categories?.map(({ title, id }) => ({ label: title, value: id }));
+
+export const filteredErrors = errors => pick(TITLE_BODY_KEYS, errors);
+
+export const formatTitleAndBodyErrors = errors =>
+  join(", ", values(filteredErrors(errors)));
 
 export const columnData = ({ handleDelete, handleUpdate }) => [
   {
@@ -49,8 +58,8 @@ export const columnData = ({ handleDelete, handleUpdate }) => [
   },
   {
     title: t("dashboard.table.lastPublishedAt"),
-    dataIndex: "last_published_at",
-    key: "last_published_at",
+    dataIndex: "lastPublishedAt",
+    key: "lastPublishedAt",
     width: 150,
     render: lastPublishedAt => (
       <Typography style="body2">
@@ -79,7 +88,7 @@ export const columnData = ({ handleDelete, handleUpdate }) => [
         status === "draft" ? t("statuses.publish") : t("statuses.unpublish");
 
       return (
-        <Dropdown buttonStyle="text" icon={MenuHorizontal}>
+        <Dropdown buttonStyle="text" icon={MenuHorizontal} strategy="fixed">
           <Menu>
             <MenuItem.Button
               onClick={() => handleUpdate({ id, publishStatus })}

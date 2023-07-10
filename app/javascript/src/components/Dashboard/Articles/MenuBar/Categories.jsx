@@ -17,8 +17,8 @@ const Categories = ({
 }) => {
   const { t } = useTranslation();
 
-  const { data, isFetching } = useFetchCategories({
-    searchTerm: debouncedSearchTerm,
+  const { data: { categories } = {}, isFetching } = useFetchCategories({
+    searchTerm: debouncedSearchTerm.trim(),
   });
 
   const handleCategoryClick = category => {
@@ -47,7 +47,7 @@ const Categories = ({
     );
   }
 
-  if (!isPresent(data.data?.categories) && !isSearchCollapsed) {
+  if (!isPresent(categories) && !isSearchCollapsed) {
     return (
       <Typography className="flex justify-center" style="body2">
         {t("empty.category")}
@@ -57,9 +57,9 @@ const Categories = ({
 
   return (
     <>
-      {data.data?.categories.map(category => (
+      {categories.map(category => (
         <MenuBar.Block
-          count={category.articles_count || 0}
+          count={category.articlesCount || 0}
           key={category.id}
           label={category.title}
           active={isCategoryPresent({

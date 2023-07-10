@@ -10,7 +10,7 @@ import { useShowSite, useUpdateSite } from "hooks/reactQuery/useSiteApi";
 import { INITIAL_TOUCHED, VALIDATION_SCHEMA } from "./constants";
 
 const Form = () => {
-  const { data, isLoading } = useShowSite();
+  const { data: { site } = {}, isLoading } = useShowSite();
 
   const { mutate: updateSite, isLoading: isUpdating } = useUpdateSite();
 
@@ -24,15 +24,13 @@ const Form = () => {
     );
   }
 
-  const title = data.data.site.title;
-
   return (
     <Formik
       enableReinitialize
       validateOnBlur
       validateOnChange
       initialTouched={INITIAL_TOUCHED}
-      initialValues={{ title }}
+      initialValues={{ title: site.title }}
       validationSchema={VALIDATION_SCHEMA}
       onSubmit={updateSite}
     >

@@ -15,7 +15,7 @@ const Item = ({
   handleDelete,
   isSingleCategoryPresent,
 }) => {
-  const { title, articles_count: articlesCount } = category;
+  const { title, articlesCount } = category;
   const isLastGeneralCategory =
     isSingleCategoryPresent && title.toLowerCase() === "general";
   const { t } = useTranslation();

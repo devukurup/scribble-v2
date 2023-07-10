@@ -23,7 +23,7 @@ const Create = () => {
 
   const handleSubmit = async values => {
     const payload = {
-      category_id: values.category.value,
+      categoryId: values.category.value,
       title: values.title,
       body: values.body,
       status: STATUS[values.status],

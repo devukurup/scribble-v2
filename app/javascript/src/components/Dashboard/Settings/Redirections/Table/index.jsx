@@ -26,7 +26,7 @@ const Table = () => {
   const [selectedRedirection, setSelectedRedirection] = useState({});
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
 
-  const { data, isLoading } = useFetchRedirections();
+  const { data: { redirections } = {}, isLoading } = useFetchRedirections();
 
   const handleDeleteClick = redirection => {
     setIsDeleteAlertOpen(true);
@@ -58,8 +58,6 @@ const Table = () => {
       </div>
     );
   }
-
-  const redirections = data.data.redirections;
 
   return (
     <div className="flex w-full flex-col items-start space-y-3 bg-blue-50 p-5">

@@ -14,7 +14,7 @@ const routes = {
     manageCategories: "/settings?tab=manage-categories",
   },
   public: {
-    index: "/public/",
+    index: "/public",
     articles: {
       index: "/public/articles",
       show: "/public/articles/:slug",
