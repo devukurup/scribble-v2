@@ -1,7 +1,4 @@
-import {
-  keysToCamelCase,
-  deepFreezeObject,
-} from "@bigbinary/neeto-commons-frontend/pure";
+import { keysToCamelCase, deepFreezeObject } from "neetocommons/pure";
 
 export default function initializeGlobalProps() {
   window.globalProps = keysToCamelCase(

@@ -14,10 +14,12 @@ class Categories::DeleteService
   end
 
   def process!
+    validate_categories
+
+    return unless errors.empty?
+
     Category.transaction do
       if has_articles?
-        validate_category!
-
         load_target_category!
         move_articles_to_target_category!
       end
@@ -66,16 +68,10 @@ class Categories::DeleteService
       last_category? && category.title.downcase == Category::GENERAL_CATEGORY_TITLE.downcase
     end
 
-    def set_error!(error)
-      errors << error
+    def validate_categories
+      return if target_category_id.present? || !has_articles?
 
-      raise ActiveRecord::Rollback
-    end
-
-    def validate_category!
-      return if target_category_id.present?
-
-      set_error!(t("errors.category.last_general_category")) if last_general_category?
-      set_error!(t("errors.category.missing_target_category")) unless last_category?
+      errors << (t("errors.category.last_general_category")) if last_general_category?
+      errors << (t("errors.category.missing_target_category")) unless last_category?
     end
 end

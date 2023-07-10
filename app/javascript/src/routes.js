@@ -8,13 +8,13 @@ const routes = {
   },
   settings: {
     index: "/settings",
-    general: "/settings/general",
-    redirections: "/settings/redirections",
-    security: "/settings/security",
-    manageCategories: "/settings/manage-categories",
+    general: "/settings?tab=general",
+    redirections: "/settings?tab=redirections",
+    security: "/settings?tab=security",
+    manageCategories: "/settings?tab=manage-categories",
   },
   public: {
-    index: "/public/",
+    index: "/public",
     articles: {
       index: "/public/articles",
       show: "/public/articles/:slug",

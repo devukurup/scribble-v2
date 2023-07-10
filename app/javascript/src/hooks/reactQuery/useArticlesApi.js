@@ -1,5 +1,5 @@
 import { useQuery, useQueryClient, useMutation } from "react-query";
-import { LOAD_ARTICLES_KEY } from "src/constants";
+import { LOAD_ARTICLES_KEY, LOAD_CATEGORIES_KEY } from "src/constants";
 
 import articlesApi from "apis/articles";
 
@@ -35,6 +35,7 @@ export const useUpdateArticle = (options = {}) => {
     onSuccess: data => {
       options.onSuccess?.(data);
       queryClient.invalidateQueries(LOAD_ARTICLES_KEY);
+      queryClient.invalidateQueries(LOAD_CATEGORIES_KEY);
     },
   });
 };
@@ -47,6 +48,7 @@ export const useDeleteArticle = (options = {}) => {
     onSuccess: data => {
       options.onSuccess?.(data);
       queryClient.invalidateQueries(LOAD_ARTICLES_KEY);
+      queryClient.invalidateQueries(LOAD_CATEGORIES_KEY);
     },
   });
 };
@@ -61,6 +63,7 @@ export const useBulkDeleteArticles = (options = {}) => {
       onSuccess: data => {
         options.onSuccess?.(data);
         queryClient.invalidateQueries(LOAD_ARTICLES_KEY);
+        queryClient.invalidateQueries(LOAD_CATEGORIES_KEY);
       },
     }
   );
@@ -74,6 +77,7 @@ export const useBulkUpdateArticles = (options = {}) => {
     onSuccess: data => {
       options.onSuccess?.(data);
       queryClient.invalidateQueries(LOAD_ARTICLES_KEY);
+      queryClient.invalidateQueries(LOAD_CATEGORIES_KEY);
     },
   });
 };

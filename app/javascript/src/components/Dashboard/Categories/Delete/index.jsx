@@ -15,18 +15,14 @@ const Delete = ({
   isOpen,
   onClose,
   categoryToBeDeleted,
-  refetch,
   isSingleCategoryPresent,
 }) => {
-  const { title, articles_count: articlesCount, id } = categoryToBeDeleted;
-  const { data, isLoading: isLoadingCategories } = useFetchCategories({});
+  const { title, articlesCount, id } = categoryToBeDeleted;
+  const { data, isLoading: isLoadingCategories } = useFetchCategories({
+    enabled: false,
+  });
 
-  const handleAfterDelete = () => {
-    refetch();
-    onClose();
-  };
-
-  const { mutate } = useDeleteCategory({ onSuccess: handleAfterDelete });
+  const { mutate } = useDeleteCategory({ onSuccess: onClose });
 
   const { t } = useTranslation();
 
@@ -45,7 +41,7 @@ const Delete = ({
       </Modal.Header>
       {articlesCount > 0 && !isSingleCategoryPresent ? (
         <Form
-          categories={data.data?.categories}
+          categories={data?.categories}
           category={categoryToBeDeleted}
           isLoading={isLoadingCategories}
           onClose={onClose}

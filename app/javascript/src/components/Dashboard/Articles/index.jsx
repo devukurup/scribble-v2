@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 
 import { PageLoader } from "neetoui";
+import { Container } from "neetoui/layouts";
+import { DEFAULT_PAGE_NUMBER, PAGINATION_LIMIT } from "src/constants";
 
 import SidebarWrapper from "components/Dashboard/SidebarWrapper";
 import CreateCategory from "Dashboard/Categories/Create";
@@ -13,8 +15,6 @@ import Header from "./Header";
 import MenuBar from "./MenuBar";
 import SubHeader from "./SubHeader";
 import Table from "./Table";
-
-import { DEFAULT_PAGE_NUMBER, PAGINATION_LIMIT } from "../../../constants";
 
 const Articles = () => {
   const [activeStatus, setActiveStatus] = useState(DEFAULT_ACTIVE_STATUS);
@@ -36,7 +36,11 @@ const Articles = () => {
   const status = searchParams.get("status") || "";
   const selectedCategoryIds = selectedCategories?.map(({ id }) => id);
 
-  const { data, isLoading, isFetching } = useFetchArticles({
+  const {
+    data: articles,
+    isLoading,
+    isFetching,
+  } = useFetchArticles({
     params: {
       page,
       limit,
@@ -66,8 +70,6 @@ const Articles = () => {
     );
   }
 
-  const articles = data.data;
-
   return (
     <SidebarWrapper>
       <MenuBar
@@ -79,7 +81,7 @@ const Articles = () => {
         setIsCreateModalOpen={setIsCreateModalOpen}
         setSelectedCategories={setSelectedCategories}
       />
-      <div className="mx-4 w-full">
+      <Container className="mx-4 w-full">
         <Header
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
@@ -87,7 +89,6 @@ const Articles = () => {
           toggleMenubar={toggleMenubar}
         />
         <SubHeader
-          refetchArticles={() => {}}
           searchTerm={searchTerm}
           selectedArticleRowIds={selectedArticleRowIds}
           selectedCategories={selectedCategories}
@@ -97,7 +98,7 @@ const Articles = () => {
           setSelectedArticleRowIds={setSelectedArticleRowIds}
           setSelectedCategories={setSelectedCategories}
           setSelectedColumns={setSelectedColumns}
-          totalCount={articles?.filtered_articles_count}
+          totalCount={articles?.filteredArticlesCount}
         />
         <Table
           activeStatus={activeStatus}
@@ -113,9 +114,9 @@ const Articles = () => {
           setSearchTerm={setSearchTerm}
           setSelectedCategories={setSelectedCategories}
           setSelectedRowIds={setSelectedArticleRowIds}
-          totalCount={articles?.filtered_articles_count}
+          totalCount={articles?.filteredArticlesCount}
         />
-      </div>
+      </Container>
       <CreateCategory
         isOpen={isCreateModalOpen}
         onClose={() => setIsCreateModalOpen(false)}

@@ -1,18 +1,16 @@
 import React from "react";
 import NavBar from "./NavBar";
-import { useShowSite } from "hooks/useShowSite";
+import { useShowSite } from "hooks/reactQuery/useSiteApi";
 import { PageLoader } from "neetoui";
 import { getFromSessionStorage } from "helpers/session";
 import { Switch, Route, Redirect } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
 import Articles from "./Articles";
-import PageNotFound from "../../PageNotFound";
+import PageNotFound from "src/PageNotFound";
+import routes from "src/routes";
 
 const Public = () => {
-  const {
-    data: { site },
-    isLoading,
-  } = useShowSite();
+  const { data: { site } = {}, isLoading } = useShowSite();
 
   const authToken = getFromSessionStorage("authToken");
   const isLoggedIn = authToken ? true : false;
@@ -32,20 +30,18 @@ const Public = () => {
         <Switch>
           <PrivateRoute
             component={Articles}
-            condition={site?.is_password_protected && !isLoggedIn}
-            path="/public/articles/:slug"
-            redirectRoute="/login"
+            condition={site?.isPasswordProtected && !isLoggedIn}
+            path={[routes.public.articles.show, routes.public.articles.index]}
+            redirectRoute={routes.login}
           />
-          <PrivateRoute
-            component={Articles}
-            condition={site?.is_password_protected && !isLoggedIn}
-            path="/public/articles/"
-            redirectRoute="/login"
+          <Redirect
+            exact
+            from={routes.public.index}
+            to={routes.public.articles.index}
           />
-          <Redirect exact from={"/public/"} to={"/public/articles/"} />
           <Route
             path="*"
-            render={() => <PageNotFound route="/public/articles" />}
+            render={() => <PageNotFound route={routes.public.articles.index} />}
           />
         </Switch>
       </div>

@@ -5,12 +5,12 @@ import { Close, Check } from "neetoicons";
 import { Button } from "neetoui";
 import { Input } from "neetoui/formik";
 
+import { FORM_VALIDATION_SCHEMA } from "Dashboard/Settings/Redirections/constants";
+
 import { FROM_PATH_PLACHOLDER, TO_PATH_PLACEHOLDER } from "./constants";
 import Row from "./Row";
 import Cell from "./Row/Cell";
 import { formatPaths } from "./utils";
-
-import { FORM_VALIDATION_SCHEMA } from "../constants";
 
 const Form = ({ isSubmitting = false, initialValues, onSubmit, onClose }) => (
   <Formik

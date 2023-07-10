@@ -1,15 +1,15 @@
 import React from "react";
 
+import { Container } from "neetoui/layouts";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import routes from "src/routes";
 
+import SidebarWrapper from "Dashboard/SidebarWrapper";
 import { useCreateArticle } from "hooks/reactQuery/useArticlesApi";
 
 import { INITIAL_VALUES, STATUS } from "./constants";
 import Form from "./Form";
-
-import SidebarWrapper from "../SidebarWrapper";
 
 const Create = () => {
   const history = useHistory();
@@ -23,7 +23,7 @@ const Create = () => {
 
   const handleSubmit = async values => {
     const payload = {
-      category_id: values.category.value,
+      categoryId: values.category.value,
       title: values.title,
       body: values.body,
       status: STATUS[values.status],
@@ -33,13 +33,15 @@ const Create = () => {
 
   return (
     <SidebarWrapper>
-      <Form
-        handleSubmit={handleSubmit}
-        initialStatus={t("statuses.publish")}
-        initialValues={INITIAL_VALUES}
-        isSubmitting={isCreating}
-        onClose={redirectToDashboard}
-      />
+      <Container>
+        <Form
+          handleSubmit={handleSubmit}
+          initialStatus={t("statuses.publish")}
+          initialValues={INITIAL_VALUES}
+          isSubmitting={isCreating}
+          onClose={redirectToDashboard}
+        />
+      </Container>
     </SidebarWrapper>
   );
 };

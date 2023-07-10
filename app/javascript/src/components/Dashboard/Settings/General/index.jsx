@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Typography } from "@bigbinary/neetoui";
+import { Typography } from "neetoui";
 import { useTranslation } from "react-i18next";
 
 import Form from "./Form";

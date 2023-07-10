@@ -55,7 +55,7 @@ const Table = ({
     const currentUrlParams = buildUrlParams({
       page,
       limit,
-      search: debouncedSearchTerm,
+      search: debouncedSearchTerm.trim(),
       status: activeStatus,
     });
     history.push({ search: `?${currentUrlParams.toString()}` });
@@ -76,7 +76,7 @@ const Table = ({
     const currentUrlParams = buildUrlParams({
       page: DEFAULT_PAGE_NUMBER,
       limit: PAGINATION_LIMIT,
-      search: debouncedSearchTerm,
+      search: debouncedSearchTerm.trim(),
       status: activeStatus,
     });
     setCurrentPageNumber(DEFAULT_PAGE_NUMBER);
@@ -93,7 +93,7 @@ const Table = ({
     );
   };
 
-  if (data?.filtered_articles_count === 0) {
+  if (data?.filteredArticlesCount === 0) {
     return (
       <Empty
         activeStatus={activeStatus}
@@ -102,7 +102,7 @@ const Table = ({
         setActiveStatus={setActiveStatus}
         setSearch={setSearchTerm}
         setSelectedCategories={setSelectedCategories}
-        totalCount={data?.all_articles_count}
+        totalCount={data?.allArticlesCount}
       />
     );
   }

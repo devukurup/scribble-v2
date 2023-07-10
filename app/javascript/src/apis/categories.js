@@ -3,8 +3,7 @@ import { API_V1_BASE_URL } from "src/constants";
 
 const BASE_URL = `${API_V1_BASE_URL}/categories`;
 
-const list = searchTerm =>
-  axios.get(BASE_URL, { params: { search_term: searchTerm } });
+const list = searchTerm => axios.get(BASE_URL, { params: { searchTerm } });
 
 const create = payload => axios.post(BASE_URL, { category: payload });
 

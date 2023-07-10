@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 
-import { FormikEditor } from "@bigbinary/neeto-editor";
 import { Formik, Form as FormikForm } from "formik";
+import { FormikEditor } from "neetoeditor";
 import { MenuHorizontal } from "neetoicons";
 import { ActionDropdown, Dropdown, Typography, Button, Spinner } from "neetoui";
 import { Textarea, Select } from "neetoui/formik";
+import { isEmpty } from "ramda";
 import { useTranslation } from "react-i18next";
 
+import { CATEGORY_VALIDATION_SCHEMA } from "Dashboard/Categories/constants";
 import {
   useFetchCategories,
   useCreateCategory,
@@ -18,9 +20,11 @@ import {
   KEYBOARD_ENTER_KEY,
   DEFAULT_ROW_COUNT,
 } from "./constants";
-import { formatCategories } from "./utils";
-
-import { CATEGORY_VALIDATION_SCHEMA } from "../Categories/constants";
+import {
+  filteredErrors,
+  formatCategories,
+  formatTitleAndBodyErrors,
+} from "./utils";
 
 const { Menu, MenuItem } = ActionDropdown;
 
@@ -36,7 +40,8 @@ const Form = ({
 }) => {
   const [status, setStatus] = useState(initialStatus);
 
-  const { data, isFetching: isFetchingCategories } = useFetchCategories({});
+  const { data: { categories } = {}, isFetching: isFetchingCategories } =
+    useFetchCategories({});
 
   const { isLoading: isCreatingCategories, mutate: createCategory } =
     useCreateCategory();
@@ -60,10 +65,10 @@ const Form = ({
         createCategory(
           { title: title.trim() },
           {
-            onSuccess: ({ data }) => {
+            onSuccess: ({ category }) => {
               setFieldValue("category", {
-                label: data.category?.title,
-                value: data.category?.id,
+                label: category?.title,
+                value: category?.id,
               });
             },
           }
@@ -98,7 +103,7 @@ const Form = ({
                     isSearchable
                     isLoading={isFetchingCategories || isCreatingCategories}
                     name="category"
-                    options={formatCategories(data.data?.categories)}
+                    options={formatCategories(categories)}
                     placeholder={t("articles.selectCategory")}
                     onCreateOption={title =>
                       handleCreate({
@@ -157,33 +162,42 @@ const Form = ({
                 )}
               </div>
             </div>
-            <FormikEditor
-              required
-              addOns={EDITOR_ADDONS}
-              className="mt-10"
-              contentClassName="editor-content__wrapper new-article__container"
-              menuClassName="w-full neeto-ui-bg-gray-200"
-              name="body"
-              placeholder={t("articles.placeholders.body")}
-            >
-              <div className="new-article__container px-4 ">
-                <Textarea
-                  autoFocus
-                  nakedTextarea
-                  className="scribble-new-article__title"
-                  error={errors.title}
-                  name="title"
-                  placeholder={t("articles.placeholders.title")}
-                  rows={DEFAULT_ROW_COUNT}
-                  onChange={event => setFieldValue("title", event.target.value)}
-                  onKeyDown={event =>
-                    event.key === KEYBOARD_ENTER_KEY &&
-                    !event.shiftKey &&
-                    event.preventDefault()
-                  }
-                />
-              </div>
-            </FormikEditor>
+            <div className="mt-10">
+              {!isEmpty(filteredErrors(errors)) && (
+                <Typography className="neeto-ui-input__error p-1" style="body3">
+                  {formatTitleAndBodyErrors(errors)}
+                </Typography>
+              )}
+              <FormikEditor
+                required
+                addOns={EDITOR_ADDONS}
+                contentClassName="editor-content__wrapper new-article__container"
+                error={null}
+                menuClassName="w-full neeto-ui-bg-gray-200"
+                name="body"
+                placeholder={t("articles.placeholders.body")}
+              >
+                <div className="new-article__container px-4 ">
+                  <Textarea
+                    autoFocus
+                    nakedTextarea
+                    className="scribble-new-article__title"
+                    error={null}
+                    name="title"
+                    placeholder={t("articles.placeholders.title")}
+                    rows={DEFAULT_ROW_COUNT}
+                    onChange={event =>
+                      setFieldValue("title", event.target.value)
+                    }
+                    onKeyDown={event =>
+                      event.key === KEYBOARD_ENTER_KEY &&
+                      !event.shiftKey &&
+                      event.preventDefault()
+                    }
+                  />
+                </div>
+              </FormikEditor>
+            </div>
           </FormikForm>
         )}
       </Formik>

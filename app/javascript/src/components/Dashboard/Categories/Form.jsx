@@ -4,6 +4,7 @@ import { Formik, Form as FormikForm } from "formik";
 import { Button, Modal } from "neetoui";
 import { Input } from "neetoui/formik";
 import { useTranslation } from "react-i18next";
+import { ESCAPE_KEY } from "src/constants";
 
 import { INITIAL_TOUCHED, VALIDATION_SCHEMA } from "./constants";
 
@@ -15,6 +16,12 @@ const Form = ({
   isEdit = false,
 }) => {
   const { t } = useTranslation();
+
+  const handleKeyDown = event => {
+    if (event.key === ESCAPE_KEY) {
+      onClose();
+    }
+  };
 
   return (
     <Formik
@@ -33,6 +40,7 @@ const Form = ({
               label={t("category.inputLabel")}
               name="title"
               placeholder={t("category.placeholder")}
+              onKeyDown={handleKeyDown}
             />
           </Modal.Body>
           <Modal.Footer className="space-x-2">

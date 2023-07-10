@@ -2,9 +2,9 @@ import React from "react";
 
 import { useTranslation } from "react-i18next";
 
-import Table from "./Table";
+import Wrapper from "Dashboard/Settings/Wrapper";
 
-import Wrapper from "../Wrapper";
+import Table from "./Table";
 
 const Redirections = () => {
   const { t } = useTranslation();

@@ -25,3 +25,5 @@ export const SINGULAR = { count: 1 };
 export const PLURAL = { count: 2 };
 
 export const LOAD_ARTICLES_KEY = "load-articles";
+
+export const ESCAPE_KEY = "Escape";

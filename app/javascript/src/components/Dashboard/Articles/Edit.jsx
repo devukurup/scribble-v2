@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 
 import { PageLoader } from "neetoui";
+import { Container } from "neetoui/layouts";
 import { useTranslation } from "react-i18next";
 import { useParams, useHistory } from "react-router-dom";
 import routes from "src/routes";
 
+import SidebarWrapper from "Dashboard/SidebarWrapper";
 import {
   useShowArticle,
   useUpdateArticle,
@@ -15,16 +17,13 @@ import DeleteAlert from "./DeleteAlert";
 import Form from "./Form";
 import { formattedDateTime } from "./utils";
 
-import SidebarWrapper from "../SidebarWrapper";
-
 const Edit = () => {
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
 
   const { articleId } = useParams();
+  const history = useHistory();
 
   const { t } = useTranslation();
-
-  const history = useHistory();
 
   const redirectToDashboard = () => {
     history.push(routes.articles.index);
@@ -33,11 +32,14 @@ const Edit = () => {
   const { mutate: updateArticle, isLoading: isUpdating } = useUpdateArticle({
     onSuccess: redirectToDashboard,
   });
-  const { data, isLoading } = useShowArticle({ id: articleId });
+
+  const { data: { article } = {}, isLoading } = useShowArticle({
+    id: articleId,
+  });
 
   const handleSubmit = values => {
     const payload = {
-      category_id: values.category.value,
+      categoryId: values.category.value,
       title: values.title,
       body: values.body,
       status: STATUS[values.status],
@@ -62,39 +64,39 @@ const Edit = () => {
     );
   }
 
-  const article = data.data.article;
-
   return (
     <SidebarWrapper>
-      <Form
-        isEdit
-        handleDelete={handleDelete}
-        handleSubmit={handleSubmit}
-        dateString={formattedDateTime(
-          article.status === t("statuses.published").toLowerCase()
-            ? article?.last_published_at
-            : article?.updated_at
-        )}
-        initialStatus={
-          article.status === t("statuses.published").toLowerCase()
-            ? t("statuses.publish")
-            : t("statuses.saveDraft")
-        }
-        initialValues={{
-          ...article,
-          category: {
-            label: article.category.title,
-            value: article.category.id,
-          },
-        }}
-        onClose={redirectToDashboard}
-      />
-      <DeleteAlert
-        isOpen={isDeleteAlertOpen}
-        isSubmitting={isUpdating}
-        rowToBeDeleted={article}
-        onClose={handleClose}
-      />
+      <Container>
+        <Form
+          isEdit
+          handleDelete={handleDelete}
+          handleSubmit={handleSubmit}
+          dateString={formattedDateTime(
+            article.status === t("statuses.published").toLowerCase()
+              ? article?.lastPublishedAt
+              : article?.updatedAt
+          )}
+          initialStatus={
+            article.status === t("statuses.published").toLowerCase()
+              ? t("statuses.publish")
+              : t("statuses.saveDraft")
+          }
+          initialValues={{
+            ...article,
+            category: {
+              label: article.category.title,
+              value: article.category.id,
+            },
+          }}
+          onClose={redirectToDashboard}
+        />
+        <DeleteAlert
+          isOpen={isDeleteAlertOpen}
+          isSubmitting={isUpdating}
+          rowToBeDeleted={article}
+          onClose={handleClose}
+        />
+      </Container>
     </SidebarWrapper>
   );
 };

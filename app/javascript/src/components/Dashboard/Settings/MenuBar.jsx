@@ -1,23 +1,22 @@
 import React from "react";
 
 import { MenuBar as NeetoUIMenuBar } from "neetoui/layouts";
-import { useHistory, useLocation, matchPath } from "react-router-dom";
+import { useLocation, matchPath } from "react-router-dom";
 
 import { ROUTES } from "./constants";
 
-const MenuBar = () => {
-  const history = useHistory();
-  const location = useLocation();
+const MenuBar = ({ setActiveSettingsTab }) => {
+  const { pathname, search } = useLocation();
 
   return (
     <NeetoUIMenuBar showMenu title="Settings">
-      {ROUTES.map(({ path, label, description }) => (
+      {ROUTES.map(route => (
         <NeetoUIMenuBar.Item
-          active={matchPath(location.pathname, path)}
-          description={description}
-          key={path}
-          label={label}
-          onClick={() => history.push(path)}
+          active={matchPath(`${pathname}${search}`, route.path)}
+          description={route.description}
+          key={route.key}
+          label={route.label}
+          onClick={() => setActiveSettingsTab(route)}
         />
       ))}
     </NeetoUIMenuBar>

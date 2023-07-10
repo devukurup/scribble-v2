@@ -1,4 +1,4 @@
-import { Typography } from "@bigbinary/neetoui";
+import { Typography } from "neetoui";
 import { Link, useParams } from "react-router-dom";
 import React from "react";
 import classnames from "classnames";

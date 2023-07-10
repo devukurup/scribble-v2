@@ -1,9 +1,7 @@
 import React from "react";
 
-import { truncate } from "@bigbinary/neeto-commons-frontend/pure";
-import { Tooltip } from "@bigbinary/neetoui";
 import { MenuHorizontal } from "neetoicons";
-import { Dropdown, Typography } from "neetoui";
+import { Dropdown, Typography, Tooltip } from "neetoui";
 import { useTranslation } from "react-i18next";
 import { useUpdateRedirection } from "src/hooks/reactQuery/useRedirectionsApi";
 
@@ -12,7 +10,9 @@ import {
   FROM_PATH_TRUNCATE_LENGTH,
   ROOT_URL,
   TO_PATH_TRUNCATE_LENGTH,
-} from "../../constants";
+} from "Dashboard/Settings/Redirections/constants";
+import { truncate } from "neetocommons/pure";
+
 import Form from "../Form";
 import Row from "../Row";
 import Cell from "../Row/Cell";

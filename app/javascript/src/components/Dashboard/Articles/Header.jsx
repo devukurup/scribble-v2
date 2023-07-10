@@ -17,7 +17,7 @@ const Header = ({ toggleMenubar, status, setSearchTerm, searchTerm }) => {
   const history = useHistory();
 
   useEffect(() => {
-    buildUrlParams({ search: debouncedSearchTerm });
+    buildUrlParams({ search: debouncedSearchTerm.trim() });
   }, [debouncedSearchTerm]);
 
   return (
@@ -27,7 +27,6 @@ const Header = ({ toggleMenubar, status, setSearchTerm, searchTerm }) => {
       actionBlock={
         <Button
           label={t("dashboard.header.buttonLabel")}
-          size="small"
           onClick={() => history.push(routes.articles.new)}
         />
       }

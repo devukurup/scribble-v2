@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 
-import { Alert, Spinner } from "@bigbinary/neetoui";
 import { t } from "i18next";
 import { Plus } from "neetoicons";
-import { Button } from "neetoui";
+import { Alert, Spinner, Button } from "neetoui";
 import { isEmpty } from "ramda";
 import { Trans } from "react-i18next";
 import {
@@ -26,7 +25,7 @@ const Table = () => {
   const [selectedRedirection, setSelectedRedirection] = useState({});
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
 
-  const { data, isLoading } = useFetchRedirections();
+  const { data: { redirections } = {}, isLoading } = useFetchRedirections();
 
   const handleDeleteClick = redirection => {
     setIsDeleteAlertOpen(true);
@@ -51,15 +50,13 @@ const Table = () => {
     resetSelectedRedirection();
   };
 
-  if (isLoading || isCreating) {
+  if (isLoading) {
     return (
       <div className="flex justify-center">
         <Spinner />
       </div>
     );
   }
-
-  const redirections = data.data.redirections;
 
   return (
     <div className="flex w-full flex-col items-start space-y-3 bg-blue-50 p-5">
@@ -78,6 +75,7 @@ const Table = () => {
         {isEmpty(selectedRedirection?.id) && (
           <Form
             initialValues={FORM_INITIAL_VALUES}
+            isSubmitting={isCreating}
             onClose={resetSelectedRedirection}
             onSubmit={createRedirection}
           />

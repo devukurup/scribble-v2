@@ -7,12 +7,13 @@ import { Select } from "neetoui/formik";
 import { Trans, useTranslation } from "react-i18next";
 import { deleteObjectById } from "src/utils";
 
+import { formatCategories } from "Dashboard/Articles/utils";
+
 import { INITIAL_VALUES, VALIDATION_SCHEMA } from "./constants";
 
-import { formatCategories } from "../../Articles/utils";
-
 const Form = ({ onSubmit, category, onClose, categories = [], isLoading }) => {
-  const { title, articles_count: articlesCount, id } = category;
+  const { title, articlesCount, id } = category;
+
   const { t } = useTranslation();
 
   return (
