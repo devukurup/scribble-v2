@@ -7,3 +7,12 @@ export const useShowArticle = ({ slug, options = {} }) =>
   useQuery([LOAD_PUBLIC_ARTICLES_KEY, slug], () => articlesApi.show(slug), {
     ...options,
   });
+
+export const useSearchArticles = ({ searchTerm = "", options = {} }) =>
+  useQuery(
+    [LOAD_PUBLIC_ARTICLES_KEY, searchTerm],
+    () => articlesApi.search(searchTerm),
+    {
+      ...options,
+    }
+  );
