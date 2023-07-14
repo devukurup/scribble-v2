@@ -40,4 +40,15 @@ class Api::V1::Public::ArticlesControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
   end
+
+  def test_search_should_list_published_articles_based_on_search_term
+    test_article_1 = create(:article, status: :published, title: "Updated article", category: @category, site: @site, user: @user)
+    test_article_2 = create(:article, status: :published, body: "This is an updated article", category: @category, site: @site, user: @user)
+    search_term = "updated"
+
+    get search_api_v1_public_articles_path, params: { search_term: }, headers: @site_headers
+
+    assert_response :success
+    assert_equal [test_article_1.slug, test_article_2.slug].sort, response_json["articles"].pluck("slug").sort
+  end
 end
