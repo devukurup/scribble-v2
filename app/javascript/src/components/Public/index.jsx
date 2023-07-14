@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import NavBar from "./NavBar";
 import { useShowSite } from "hooks/reactQuery/useSiteApi";
 import { PageLoader } from "neetoui";
@@ -8,12 +8,20 @@ import PrivateRoute from "./PrivateRoute";
 import Articles from "./Articles";
 import PageNotFound from "src/PageNotFound";
 import routes from "src/routes";
+import Search from "./Search";
+import { useHotKeys } from "neetocommons/react-utils";
 
 const Public = () => {
+  const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
+
   const { data: { site } = {}, isLoading } = useShowSite();
 
   const authToken = getFromSessionStorage("authToken");
   const isLoggedIn = authToken ? true : false;
+
+  const handleHotKey = () => setTimeout(() => setIsSearchBarOpen(true), 100);
+
+  useHotKeys("/", handleHotKey);
 
   if (isLoading) {
     return (
@@ -25,7 +33,7 @@ const Public = () => {
 
   return (
     <div className="flex h-screen flex-col">
-      <NavBar title={site?.title} />
+      <NavBar title={site?.title} setIsSearchBarOpen={setIsSearchBarOpen} />
       <div className="h-full overflow-auto">
         <Switch>
           <PrivateRoute
@@ -45,6 +53,12 @@ const Public = () => {
           />
         </Switch>
       </div>
+      {isSearchBarOpen && (
+        <Search
+          isSearchBarOpen={isSearchBarOpen}
+          setIsSearchBarOpen={setIsSearchBarOpen}
+        />
+      )}
     </div>
   );
 };

@@ -20,8 +20,8 @@ const Content = () => {
 
   return (
     <Scrollable className="flex w-full flex-col space-y-4 p-10">
-      <Typography style="h1">{article.title}</Typography>
-      <EditorContent className="text-base" content={article.body} />
+      <Typography style="h1">{article?.title}</Typography>
+      <EditorContent className="text-base" content={article?.body} />
     </Scrollable>
   );
 };

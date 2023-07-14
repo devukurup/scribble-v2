@@ -21,7 +21,9 @@ Rails.application.routes.draw do
         namespace :public do
           resource :session, only: :create
           resources :categories, only: :index
-          resources :articles, only: :show, param: :slug
+          resources :articles, only: :show, param: :slug do
+            get :search, on: :collection
+          end
         end
       end
     end
