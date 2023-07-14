@@ -35,6 +35,7 @@ const Form = ({
   initialStatus,
   isEdit = false,
   handleDelete = () => {},
+  setIsVersionsPaneOpen = () => {},
   dateString = "",
   isSubmitting,
 }) => {
@@ -156,6 +157,11 @@ const Form = ({
                         onClick={handleDelete}
                       >
                         {t("common.delete")}
+                      </Dropdown.MenuItem.Button>
+                      <Dropdown.MenuItem.Button
+                        onClick={() => setIsVersionsPaneOpen(true)}
+                      >
+                        {t("articles.versions.view")}
                       </Dropdown.MenuItem.Button>
                     </Dropdown.Menu>
                   </Dropdown>

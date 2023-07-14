@@ -16,9 +16,14 @@ import { STATUS } from "./constants";
 import DeleteAlert from "./DeleteAlert";
 import Form from "./Form";
 import { formattedDateTime } from "./utils";
+import Versions from "./Versions";
+import VersionModal from "./Versions/Version";
 
 const Edit = () => {
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
+  const [isVersionsPaneOpen, setIsVersionsPaneOpen] = useState(false);
+  const [isRestoreModalOpen, setIsRestoreModalOpen] = useState(false);
+  const [selectedVersionId, setSelectedVersionId] = useState("");
 
   const { articleId } = useParams();
   const history = useHistory();
@@ -47,6 +52,12 @@ const Edit = () => {
     updateArticle({ id: articleId, payload });
   };
 
+  const handleRestoreSuccess = () => {
+    setIsRestoreModalOpen(false);
+    setIsVersionsPaneOpen(false);
+    redirectToDashboard();
+  };
+
   const handleClose = () => {
     setIsDeleteAlertOpen(false);
     redirectToDashboard();
@@ -54,6 +65,11 @@ const Edit = () => {
 
   const handleDelete = () => {
     setIsDeleteAlertOpen(true);
+  };
+
+  const handleRestore = id => {
+    setIsRestoreModalOpen(true);
+    setSelectedVersionId(id);
   };
 
   if (isLoading) {
@@ -71,6 +87,7 @@ const Edit = () => {
           isEdit
           handleDelete={handleDelete}
           handleSubmit={handleSubmit}
+          setIsVersionsPaneOpen={setIsVersionsPaneOpen}
           dateString={formattedDateTime(
             article.status === t("statuses.published").toLowerCase()
               ? article?.lastPublishedAt
@@ -95,6 +112,21 @@ const Edit = () => {
           isSubmitting={isUpdating}
           rowToBeDeleted={article}
           onClose={handleClose}
+        />
+        <Versions
+          articleId={articleId}
+          handleRestore={handleRestore}
+          isOpen={isVersionsPaneOpen}
+          title={article.title}
+          onClose={() => setIsVersionsPaneOpen(false)}
+        />
+        <VersionModal
+          articleId={articleId}
+          handleRestoreSuccess={handleRestoreSuccess}
+          id={selectedVersionId}
+          isOpen={isRestoreModalOpen}
+          title={article.title}
+          onClose={() => setIsRestoreModalOpen(false)}
         />
       </Container>
     </SidebarWrapper>
