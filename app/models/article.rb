@@ -14,7 +14,7 @@ class Article < ApplicationRecord
 
   validates :title, presence: true, length: { maximum: MAX_TITLE_LENGTH }, format: { with: VALID_TITLE_REGEX }
   validates :slug, presence: true, uniqueness: true
-  validates_presence_of :body, :status
+  validates_presence_of :body, :status, :visit_count
 
   before_validation :set_slug!, if: :title_changed?
   before_save :set_last_published_at
