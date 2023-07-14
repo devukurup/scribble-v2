@@ -10,6 +10,10 @@ Rails.application.routes.draw do
             patch :bulk_update
             delete :bulk_destroy
           end
+
+          resources :versions, only: %i[index show], module: :articles do
+            patch :restore, on: :member
+          end
         end
         resource :site, only: %i[show update]
         resources :redirections, except: %i[new edit show]

@@ -113,6 +113,13 @@
     "selectCategory": "Select category",
     "draftSavedAt": "Draft saved at {{date}}",
     "lastPublishedAt": "Last published at {{date}}",
+    "versions": {
+      "title": "Version history",
+      "description": "Version history of <bold>{{title}}</bold>",
+      "view": "View version history",
+      "event": "Article {{event}}",
+      "restore": "Restore version"
+    },
     "placeholders": {
       "body": "Add description here.",
       "title": "Add title here."

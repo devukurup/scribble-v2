@@ -89,3 +89,6 @@ gem "kaminari"
 
 # For securing password
 gem "bcrypt", "~> 3.1.13"
+
+# For model versioning
+gem "paper_trail"

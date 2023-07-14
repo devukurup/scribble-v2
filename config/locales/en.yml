@@ -5,6 +5,7 @@ en:
     created: "%{entity} has been successfully created!"
     updated: "%{entity} has been successfully updated!"
     deleted: "%{entity} has been successfully deleted!"
+    restored: "%{entity} has been successfully restored!"
   articles:
     success:
       updated:
