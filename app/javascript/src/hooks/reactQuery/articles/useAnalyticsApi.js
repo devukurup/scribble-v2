@@ -3,9 +3,8 @@ import { LOAD_ANALYTICS_KEY } from "src/constants";
 
 import analyticsApi from "apis/articles/analytics";
 
-export const useFetchAnalytics = ({ params, options }) =>
+export const useFetchAnalytics = ({ params = {}, options }) =>
   useQuery([LOAD_ANALYTICS_KEY, params], () => analyticsApi.list(params), {
-    refetchOnWindowFocus: false,
     keepPreviousData: true,
     ...options,
   });

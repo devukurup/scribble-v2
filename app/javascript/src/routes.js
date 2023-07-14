@@ -20,6 +20,9 @@ const routes = {
       show: "/public/articles/:slug",
     },
   },
+  analytics: {
+    index: "/analytics",
+  },
 };
 
 export default routes;

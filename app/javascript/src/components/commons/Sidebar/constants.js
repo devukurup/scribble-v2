@@ -1,5 +1,6 @@
 import { t } from "i18next";
-import { Settings, Articles, ExternalLink } from "neetoicons";
+import { Settings, Articles, ExternalLink, NeetoAnalytics } from "neetoicons";
+import routes from "src/routes";
 
 import { PLURAL } from "constants";
 import { capitalize } from "neetocommons/pure";
@@ -20,6 +21,12 @@ export const NAV_LINKS = [
     description: t("tooltips.configureSettings"),
     to: "/settings",
     icon: Settings,
+  },
+  {
+    label: t("common.analytics"),
+    description: t("tooltips.analytics"),
+    to: routes.analytics.index,
+    icon: NeetoAnalytics,
   },
   {
     label: t("common.preview"),

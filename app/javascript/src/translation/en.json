@@ -11,6 +11,7 @@
     "title": "Title",
     "description": "Description",
     "settings": "Settings",
+    "analytics": "Analytics",
     "preview": "Preview",
     "appLogo": "App Logo",
     "cancel": "Cancel",
@@ -136,7 +137,8 @@
   "tooltips": {
     "manageArticles": "Manage and list all your KB articles",
     "configureSettings": "Configure KB settings",
-    "launchPreview": "Launch your KB preview"
+    "launchPreview": "Launch your KB preview",
+    "analytics": "View your article performance"
   },
 
   "settingsDescription": {
@@ -174,7 +176,14 @@
       "switchLabel": "Password protect your site"
     }
   },
-
+  "analytics": {
+    "title": "Analytics",
+    "table": {
+      "createdAt": "Created at",
+      "category": "Category",
+      "visits": "Visits"
+    }
+  },
   "public": {
     "login": {
       "title": "{{title}} is password protected!",

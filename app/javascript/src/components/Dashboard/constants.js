@@ -1,5 +1,6 @@
 import routes from "src/routes";
 
+import Analytics from "Dashboard/Analytics";
 import Articles from "Dashboard/Articles";
 import CreateArticle from "Dashboard/Articles/Create";
 import EditArticle from "Dashboard/Articles/Edit";
@@ -24,6 +25,11 @@ export const DASHBOARD_ROUTES = [
   {
     path: routes.settings.index,
     component: Settings,
+    isExact: false,
+  },
+  {
+    path: routes.analytics.index,
+    component: Analytics,
     isExact: false,
   },
 ];

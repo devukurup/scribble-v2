@@ -24,6 +24,8 @@ export const LOAD_ARTICLES_KEY = "load-articles";
 
 export const LOAD_ARTICLE_VERSIONS_KEY = "load-article-versions";
 
+export const LOAD_ANALYTICS_KEY = "load-analytics";
+
 export const SINGULAR = { count: 1 };
 
 export const PLURAL = { count: 2 };
