@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Article < ApplicationRecord
+  include Versionable
+
   MAX_TITLE_LENGTH = 250
   VALID_TITLE_REGEX = /\A[a-zA-Z][a-zA-Z0-9& -]*\z/
 
