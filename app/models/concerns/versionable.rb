@@ -13,7 +13,7 @@ module Versionable
   def restore!(version)
     self.paper_trail_event = "restored"
     attributes_to_set = version.attributes
-      .except("updated_at")
+      .except("visit_count", "updated_at")
       .merge({ status: "draft" })
     self.update!(attributes_to_set)
   end

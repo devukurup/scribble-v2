@@ -5,6 +5,11 @@ Rails.application.routes.draw do
     namespace :v1 do
       constraints(lambda { |req| req.format == :json }) do
         resources :categories, only: %i[index create update destroy]
+
+        namespace :articles do
+          resources :analytics, only: :index
+        end
+
         resources :articles, except: %i[new edit] do
           collection do
             patch :bulk_update
