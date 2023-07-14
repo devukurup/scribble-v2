@@ -58,6 +58,13 @@ class ArticleTest < ActiveSupport::TestCase
     assert_includes @article.errors.full_messages, t("errors.blank", entity: "Slug")
   end
 
+  def test_article_should_not_be_valid_without_visit_count
+    @article.visit_count = ""
+
+    assert_not @article.valid?
+    assert_includes @article.errors.full_messages, t("errors.blank", entity: "Visit count")
+  end
+
   def test_article_should_not_be_valid_without_user
     @article.user = nil
 

@@ -51,4 +51,10 @@ class Api::V1::Public::ArticlesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_equal [test_article_1.slug, test_article_2.slug].sort, response_json["articles"].pluck("slug").sort
   end
+
+  def test_increases_visit_count_on_article_show
+    assert_difference -> { @article.reload.visit_count }, 1 do
+      get api_v1_public_article_path(@article.slug), headers: @site_headers
+    end
+  end
 end
