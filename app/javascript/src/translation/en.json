@@ -119,7 +119,11 @@
       "description": "Version history of <bold>{{title}}</bold>",
       "view": "View version history",
       "event": "Article {{event}}",
-      "restore": "Restore version"
+      "restore": "Restore version",
+      "created": "Created at {{dateString}}",
+      "error": {
+        "category": "Category doesn't exist, version cannot be restored."
+      }
     },
     "placeholders": {
       "body": "Add description here.",
@@ -190,6 +194,8 @@
       "description": "Enter the password to gain access to {{title}}.",
       "placeholder": "Enter password here.",
       "continue": "Continue"
-    }
+    },
+    "search": "Search for an article",
+    "placeholder": "Type <span>/</span> to search"
   }
 }

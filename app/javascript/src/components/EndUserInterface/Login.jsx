@@ -1,15 +1,18 @@
+import React from "react";
+
+import { Formik, Form } from "formik";
 import { Button, PageLoader, Typography } from "neetoui";
 import { Input } from "neetoui/formik";
-import React from "react";
-import NavBar from "./NavBar";
+import { useTranslation } from "react-i18next";
+import routes from "src/routes";
+
+import { setToSessionStorage } from "helpers/session";
+import { useLoginSession } from "hooks/reactQuery/public/useSessionApi";
 import { useShowSite } from "hooks/reactQuery/useSiteApi";
 import { capitalize } from "neetocommons/pure";
-import { Formik, Form } from "formik";
+
 import { INITIAL_VALUES, VALIDATION_SCHEMA } from "./constants";
-import { setToSessionStorage } from "helpers/session";
-import routes from "src/routes";
-import { useTranslation } from "react-i18next";
-import { useLoginSession } from "hooks/reactQuery/public/useSessionApi";
+import NavBar from "./NavBar";
 
 const Login = () => {
   const { isLoading, data: { site } = {} } = useShowSite();
@@ -43,11 +46,10 @@ const Login = () => {
           <Typography style="h2">
             {t("public.login.title", { title: site?.title })}
           </Typography>
-          <Typography style="body1" className="neeto-ui-text-gray-600">
+          <Typography className="neeto-ui-text-gray-600" style="body1">
             {t("public.login.description", { title: site?.title })}
           </Typography>
         </div>
-
         <Formik
           validateOnBlur
           validateOnChange
@@ -59,18 +61,18 @@ const Login = () => {
             <Form>
               <div className="flex flex-col space-y-3">
                 <Input
-                  placeholder={t("public.login.placeholder")}
                   label={capitalize(t("common.password"))}
-                  type="password"
                   name="password"
+                  placeholder={t("public.login.placeholder")}
                   size="large"
+                  type="password"
                 />
                 <Button
-                  label={t("public.login.continue")}
                   className="justify-center"
+                  disabled={isLoggingIn || !isValid || !dirty}
+                  label={t("public.login.continue")}
                   size="large"
                   type="submit"
-                  disabled={isLoggingIn || !isValid || !dirty}
                 />
               </div>
             </Form>

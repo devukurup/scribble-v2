@@ -1,23 +1,26 @@
 import React, { useState } from "react";
-import NavBar from "./NavBar";
-import { useShowSite } from "hooks/reactQuery/useSiteApi";
+
 import { PageLoader } from "neetoui";
-import { getFromSessionStorage } from "helpers/session";
 import { Switch, Route, Redirect } from "react-router-dom";
-import PrivateRoute from "./PrivateRoute";
-import Articles from "./Articles";
 import PageNotFound from "src/PageNotFound";
 import routes from "src/routes";
-import Search from "./Search";
+
+import { getFromSessionStorage } from "helpers/session";
+import { useShowSite } from "hooks/reactQuery/useSiteApi";
 import { useHotKeys } from "neetocommons/react-utils";
 
-const Public = () => {
+import Articles from "./Articles";
+import NavBar from "./NavBar";
+import PrivateRoute from "./PrivateRoute";
+import Search from "./Search";
+
+const EndUserInterface = () => {
   const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
 
   const { data: { site } = {}, isLoading } = useShowSite();
 
   const authToken = getFromSessionStorage("authToken");
-  const isLoggedIn = authToken ? true : false;
+  const isLoggedIn = !!authToken;
 
   const handleHotKey = () => setTimeout(() => setIsSearchBarOpen(true), 100);
 
@@ -33,7 +36,7 @@ const Public = () => {
 
   return (
     <div className="flex h-screen flex-col">
-      <NavBar title={site?.title} setIsSearchBarOpen={setIsSearchBarOpen} />
+      <NavBar setIsSearchBarOpen={setIsSearchBarOpen} title={site?.title} />
       <div className="h-full overflow-auto">
         <Switch>
           <PrivateRoute
@@ -63,4 +66,4 @@ const Public = () => {
   );
 };
 
-export default Public;
+export default EndUserInterface;

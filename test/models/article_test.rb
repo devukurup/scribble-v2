@@ -14,7 +14,7 @@ class ArticleTest < ActiveSupport::TestCase
     @article.title = ""
 
     assert_not @article.valid?
-    assert_includes @article.errors.full_messages, t("errors.blank", entity: "Title")
+    assert_includes @article.errors.full_messages, t("errors.blank", entity: Article.human_attribute_name("title"))
   end
 
   def test_article_title_should_be_invalid_if_length_exceeds_maximum_length
@@ -22,7 +22,7 @@ class ArticleTest < ActiveSupport::TestCase
 
     assert_not @article.valid?
     assert_includes @article.errors.full_messages,
-      t("errors.too_long", entity: "Title", maximum: Article::MAX_TITLE_LENGTH)
+      t("errors.too_long", entity: Article.human_attribute_name("title"), maximum: Article::MAX_TITLE_LENGTH)
   end
 
   def test_validation_should_accept_valid_titles
@@ -40,7 +40,7 @@ class ArticleTest < ActiveSupport::TestCase
       @article.title = title
 
       assert_not @article.valid?
-      assert_includes @article.errors.full_messages, t("errors.invalid", entity: "Title")
+      assert_includes @article.errors.full_messages, t("errors.invalid", entity: Article.human_attribute_name("title"))
     end
   end
 
@@ -48,42 +48,44 @@ class ArticleTest < ActiveSupport::TestCase
     @article.body = ""
 
     assert_not @article.valid?
-    assert_includes @article.errors.full_messages, t("errors.blank", entity: "Body")
+    assert_includes @article.errors.full_messages, t("errors.blank", entity: Article.human_attribute_name("body"))
   end
 
   def test_article_should_not_be_valid_without_slug
     @article.slug = ""
 
     assert_not @article.valid?
-    assert_includes @article.errors.full_messages, t("errors.blank", entity: "Slug")
+    assert_includes @article.errors.full_messages, t("errors.blank", entity: Article.human_attribute_name("slug"))
   end
 
   def test_article_should_not_be_valid_without_visit_count
     @article.visit_count = ""
 
     assert_not @article.valid?
-    assert_includes @article.errors.full_messages, t("errors.blank", entity: "Visit count")
+    assert_includes @article.errors.full_messages,
+      t("errors.blank", entity: Article.human_attribute_name("visit_count"))
   end
 
   def test_article_should_not_be_valid_without_user
     @article.user = nil
 
     assert_not @article.valid?
-    assert_includes @article.errors.full_messages, t("errors.must_exist", entity: "User")
+    assert_includes @article.errors.full_messages, t("errors.must_exist", entity: Article.human_attribute_name("user"))
   end
 
   def test_article_should_not_be_valid_without_category
     @article.category = nil
 
     assert_not @article.valid?
-    assert_includes @article.errors.full_messages, t("errors.must_exist", entity: "Category")
+    assert_includes @article.errors.full_messages,
+      t("errors.must_exist", entity: Article.human_attribute_name("category"))
   end
 
   def test_article_should_not_be_valid_without_site
     @article.site = nil
 
     assert_not @article.valid?
-    assert_includes @article.errors.full_messages, t("errors.must_exist", entity: "Site")
+    assert_includes @article.errors.full_messages, t("errors.must_exist", entity: Article.human_attribute_name("site"))
   end
 
   def test_last_published_at_should_be_nil_when_status_has_default_value
@@ -193,6 +195,46 @@ class ArticleTest < ActiveSupport::TestCase
     new_article = Article.create!(article_params(substring_of_existing_slug))
 
     assert_equal substring_of_existing_slug.parameterize, new_article.slug
+  end
+
+  def test_article_versions_created_on_update
+    with_versioning do
+      assert_equal 0, @article.versions.size
+
+      @article.update!(title: "new title")
+      assert_equal 1, @article.reload.versions.size
+    end
+  end
+
+  def test_article_versions_should_be_destroyed_on_article_destroy
+    with_versioning do
+      @article.update!(title: "new title")
+      assert_equal 1, @article.reload.versions.size
+
+      assert_difference "@article.versions.size", -1 do
+        @article.destroy!
+      end
+    end
+  end
+
+  def test_version_event_name_is_same_as_status_if_it_is_not_restored
+    with_versioning do
+      @article.update!(title: "new title")
+      assert_equal "drafted", @article.reload.versions.last.event
+
+      @article.update!(status: :published)
+      assert_equal "published", @article.reload.versions.last.event
+    end
+  end
+
+  def test_version_event_name_should_be_set_as_restored_upon_restoring
+    with_versioning do
+      @article.update!(title: "new title")
+      old_version = @article.versions.last
+      @article.restore!(old_version.reify)
+
+      assert_equal "restored", @article.reload.versions.last.event
+    end
   end
 
   private

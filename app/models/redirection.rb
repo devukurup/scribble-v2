@@ -27,7 +27,7 @@ class Redirection < ApplicationRecord
     end
 
     def no_cyclic_redirection(to = self.to)
-      next_to = Redirection.find_by(from: to)&.to
+      next_to = site.redirections.find_by(from: to)&.to unless site.nil?
 
       return if next_to.nil?
 

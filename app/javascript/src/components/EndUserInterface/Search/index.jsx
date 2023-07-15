@@ -1,23 +1,38 @@
+import React, { useState, useEffect } from "react";
+
 import { Search as NeetoUISearch } from "neetoicons";
 import { Input } from "neetoui";
-import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import useDebounce from "hooks/useDebounce";
+import { useTranslation } from "react-i18next";
+
 import { useSearchArticles } from "hooks/reactQuery/public/useArticlesApi";
+import useDebounce from "hooks/useDebounce";
+
+import { DEFAULT_SEARCH_LENGTH } from "./constants";
 import Results from "./Results";
 
-const Search = ({ isSearchBarOpen, setIsSearchBarOpen }) => {
+const Search = ({ setIsSearchBarOpen }) => {
   const [searchTerm, setSearchTerm] = useState("");
+
+  const { t } = useTranslation();
 
   const debouncedSearchTerm = useDebounce(searchTerm);
 
-  const { data: { articles } = {}, isFetching } = useSearchArticles({
+  const {
+    data: { articles } = {},
+    refetch,
+    isFetching,
+  } = useSearchArticles({
     searchTerm: debouncedSearchTerm.trim(),
   });
 
   const handleSearch = event => {
     setSearchTerm(event.target.value);
   };
+
+  useEffect(() => {
+    if (debouncedSearchTerm.trim().length > DEFAULT_SEARCH_LENGTH) refetch();
+  }, [debouncedSearchTerm]);
 
   return ReactDOM.createPortal(
     <div
@@ -29,19 +44,19 @@ const Search = ({ isSearchBarOpen, setIsSearchBarOpen }) => {
         onClick={event => event.stopPropagation()}
       >
         <Input
-          type="search"
+          autoFocus
+          className="w-full border-none"
+          placeholder={t("public.search")}
           prefix={<NeetoUISearch />}
+          size="large"
+          type="search"
           value={searchTerm}
           onChange={handleSearch}
-          className="w-full border-none"
-          placeholder="Search for an article"
-          size="large"
-          autoFocus
         />
-        {searchTerm.trim().length > 2 && (
+        {debouncedSearchTerm.trim().length > DEFAULT_SEARCH_LENGTH && (
           <Results
+            articles={articles ?? []}
             isFetching={isFetching}
-            articles={articles}
             searchTerm={searchTerm}
             setIsSearchBarOpen={setIsSearchBarOpen}
           />

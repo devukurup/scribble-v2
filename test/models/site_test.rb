@@ -15,7 +15,7 @@ class SiteTest < ActiveSupport::TestCase
     @site.title = ""
 
     assert_not @site.valid?
-    assert_includes @site.errors.full_messages, t("errors.blank", entity: "Title")
+    assert_includes @site.errors.full_messages, t("errors.blank", entity: Site.human_attribute_name("title"))
   end
 
   def test_site_should_not_be_valid_without_unique_title
@@ -23,7 +23,7 @@ class SiteTest < ActiveSupport::TestCase
     test_site = @site.dup
 
     assert_not test_site.valid?
-    assert_includes test_site.errors.full_messages, t("errors.taken", entity: "Title")
+    assert_includes test_site.errors.full_messages, t("errors.taken", entity: Site.human_attribute_name("title"))
   end
 
   def test_site_title_should_be_invalid_if_length_exceeds_maximum_length
@@ -31,7 +31,7 @@ class SiteTest < ActiveSupport::TestCase
 
     assert_not @site.valid?
     assert_includes @site.errors.full_messages,
-      t("errors.too_long", maximum: Site::MAX_LENGTH, entity: "Title")
+      t("errors.too_long", maximum: Site::MAX_LENGTH, entity: Site.human_attribute_name("title"))
   end
 
   def test_validation_should_accept_valid_titles
@@ -49,7 +49,7 @@ class SiteTest < ActiveSupport::TestCase
       @site.title = title
 
       assert_not @site.valid?
-      assert_includes @site.errors.full_messages, t("errors.invalid", entity: "Title")
+      assert_includes @site.errors.full_messages, t("errors.invalid", entity: Site.human_attribute_name("title"))
     end
   end
 
@@ -58,13 +58,13 @@ class SiteTest < ActiveSupport::TestCase
 
     assert_not @site.valid?
     assert_includes @site.errors.full_messages,
-      t("errors.too_short", entity: "Password", minimum: Site::MIN_PASSWORD_LENGTH)
+      t("errors.too_short", entity: Site.human_attribute_name("password"), minimum: Site::MIN_PASSWORD_LENGTH)
 
     @site.password = "1#{"a" * (Site::MAX_LENGTH)}"
 
     assert_not @site.valid?
     assert_includes @site.errors.full_messages,
-      t("errors.too_long", entity: "Password", maximum: Site::MAX_LENGTH)
+      t("errors.too_long", entity: Site.human_attribute_name("password"), maximum: Site::MAX_LENGTH)
   end
 
   def test_validation_should_accept_valid_passwords
@@ -82,7 +82,7 @@ class SiteTest < ActiveSupport::TestCase
       @site.password = password
 
       assert_not @site.valid?
-      assert_includes @site.errors.full_messages, t("errors.invalid", entity: "Password")
+      assert_includes @site.errors.full_messages, t("errors.invalid", entity: Site.human_attribute_name("password"))
     end
   end
 

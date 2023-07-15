@@ -19,7 +19,7 @@ class Api::V1::RedirectionsControllerTest < ActionDispatch::IntegrationTest
     post(api_v1_redirections_path, params: redirection_params, headers:)
 
     assert_response :success
-    assert_equal t("success.created", entity: "Redirection"), response_json["notice"]
+    assert_equal t("success.created", entity: Redirection.model_name.human), response_json["notice"]
   end
 
   def test_error_response_on_creating_redirection_with_invalid_params

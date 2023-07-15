@@ -21,7 +21,7 @@ class Api::V1::SitesControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_equal new_title, @site.reload.title
-    assert_equal t("success.updated", entity: "Site"), response_json["notice"]
+    assert_equal t("success.updated", entity: Site.model_name.human), response_json["notice"]
   end
 
   def test_error_response_on_invalid_params

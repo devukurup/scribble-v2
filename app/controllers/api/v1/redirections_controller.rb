@@ -6,7 +6,7 @@ class Api::V1::RedirectionsController < ApplicationController
   def create
     @site.redirections.create!(redirection_params)
 
-    render_notice(t("success.created", entity: "Redirection"))
+    render_notice(t("success.created", entity: Redirection.model_name.human))
   end
 
   def index
@@ -16,13 +16,13 @@ class Api::V1::RedirectionsController < ApplicationController
   def update
     @redirection.update!(redirection_params)
 
-    render_notice(t("success.updated", entity: "Redirection"))
+    render_notice(t("success.updated", entity: Redirection.model_name.human))
   end
 
   def destroy
     @redirection.destroy!
 
-    render_notice(t("success.deleted", entity: "Redirection"))
+    render_notice(t("success.deleted", entity: Redirection.model_name.human))
   end
 
   private

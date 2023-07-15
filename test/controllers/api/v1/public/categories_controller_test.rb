@@ -36,7 +36,7 @@ class Api::V1::Public::CategoriesControllerTest < ActionDispatch::IntegrationTes
     get(api_v1_public_categories_path, headers:)
 
     assert_response :unauthorized
-    assert_equal t("session.could_not_auth"), response_json["error"]
+    assert_equal t("session.authentication_failure"), response_json["error"]
   end
 
   def test_should_show_categories_in_site_without_password

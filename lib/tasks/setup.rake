@@ -16,40 +16,5 @@ end
 
 def create_sample_data!
   puts "Seeding with sample data..."
-  create_site!
-  create_user! email: "oliver@example.com"
-  5.times do
-    category = create_category!
-    2.times do
-      create_article!("draft", category)
-      create_article!("published", category)
-    end
-  end
-
-end
-
-def create_site!
-  site_attributes = { title: "Spinkart" }
-  @site = Site.create! site_attributes
-end
-
-def create_user!(options = {})
-  user_attributes = { first_name: "Oliver", last_name: "Smith" }.merge options
-  @user = @site.users.create! user_attributes
-end
-
-def create_category!
-  category_attributes = { title: Faker::Lorem.unique.word }
-  @site.categories.create! category_attributes
-end
-
-def create_article!(status, category)
-  article_attribute = {
-    title: Faker::Lorem.word,
-    body: Faker::Lorem.paragraph,
-    status: status,
-    category: category,
-    user: @user
-  }
-  @site.articles.create! article_attribute
+  SampleData::LoaderService.new.process!
 end

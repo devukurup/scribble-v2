@@ -30,7 +30,7 @@ class Api::V1::Public::ArticlesControllerTest < ActionDispatch::IntegrationTest
     get(api_v1_public_article_path(@article.slug), headers: headers("X-Auth-Token" => "invalid_token"))
 
     assert_response :unauthorized
-    assert_equal t("session.could_not_auth"), response_json["error"]
+    assert_equal t("session.authentication_failure"), response_json["error"]
   end
 
   def test_should_show_article_in_site_with_no_password_without_token
