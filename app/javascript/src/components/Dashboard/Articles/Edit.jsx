@@ -38,7 +38,7 @@ const Edit = () => {
     onSuccess: redirectToDashboard,
   });
 
-  const { data: { article } = {}, isLoading } = useShowArticle({
+  const { data: { article } = {}, isFetching } = useShowArticle({
     id: articleId,
   });
 
@@ -72,7 +72,7 @@ const Edit = () => {
     setSelectedVersionId(id);
   };
 
-  if (isLoading) {
+  if (isFetching) {
     return (
       <div className="h-screen">
         <PageLoader />
