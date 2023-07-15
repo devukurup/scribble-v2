@@ -11,14 +11,13 @@ import { isEven } from "src/utils";
 import { useFetchAnalytics } from "hooks/reactQuery/articles/useAnalyticsApi";
 
 import { COLUMN_DATA, DEFAULT_SORT_OPTION, SORT_OPTIONS } from "./constants";
-import { initializePageNumber } from "./utils";
+import { buildPageSearchParam, initializePageNumber } from "./utils";
 
 import SidebarWrapper from "../SidebarWrapper";
 
 const Analytics = () => {
-  const [currentPageNumber, setCurrentPageNumber] = useState(
-    initializePageNumber()
-  );
+  const [currentPageNumber, setCurrentPageNumber] =
+    useState(initializePageNumber);
   const [viewCountOrder, setViewCountOrder] = useState(DEFAULT_SORT_OPTION);
 
   const { t } = useTranslation();
@@ -30,13 +29,6 @@ const Analytics = () => {
       order: viewCountOrder,
     },
   });
-
-  const buildPageSearchParam = page => {
-    const currentUrlParams = new URLSearchParams(window.location.search);
-    currentUrlParams.set("page", page);
-
-    return currentUrlParams;
-  };
 
   useEffect(() => {
     const searchParams = buildPageSearchParam(currentPageNumber);

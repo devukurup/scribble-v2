@@ -63,7 +63,6 @@ const Search = ({ setIsSearchBarOpen }) => {
         )}
       </div>
     </div>,
-
     document.body
   );
 };

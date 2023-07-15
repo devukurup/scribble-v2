@@ -19,7 +19,7 @@ import { columnData, buildUrlParams } from "./utils";
 const Table = ({
   setRowToBeDeleted,
   setIsDeleteAlertOpen,
-  data,
+  articles,
   totalCount,
   isLoading,
   debouncedSearchTerm,
@@ -93,7 +93,7 @@ const Table = ({
     );
   };
 
-  if (data?.filteredArticlesCount === 0) {
+  if (articles?.filteredArticlesCount === 0) {
     return (
       <Empty
         activeStatus={activeStatus}
@@ -102,7 +102,7 @@ const Table = ({
         setActiveStatus={setActiveStatus}
         setSearch={setSearchTerm}
         setSelectedCategories={setSelectedCategories}
-        totalCount={data?.allArticlesCount}
+        totalCount={articles?.allArticlesCount}
       />
     );
   }
@@ -116,7 +116,7 @@ const Table = ({
       defaultPageSize={PAGINATION_LIMIT}
       handlePageChange={handlePagination}
       loading={isUpdating || isLoading}
-      rowData={data?.articles}
+      rowData={articles?.articles}
       selectedRowKeys={selectedRowIds}
       totalCount={totalCount}
       rowClassName={(_, index) =>

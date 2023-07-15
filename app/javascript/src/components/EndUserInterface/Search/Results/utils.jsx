@@ -1,21 +1,22 @@
 import React from "react";
 
 import classnames from "classnames";
-import { Typography } from "neetoui";
 
-import { isNotEmpty, truncate } from "neetocommons/pure";
+import { truncate } from "neetocommons/pure";
 
-import { TERM_PREFIX_TEXT_LENGTH } from "./constants";
+import {
+  TERM_PREFIX_TEXT_LENGTH,
+  TERM_SUFFIX_TEXT_LENGTH,
+  BODY_MAX_LENGTH,
+  HTML_TAG_REGEX,
+} from "./constants";
 
-const reverse = string => string.split("").reverse().join("");
+const reverseString = string => string.split("").reverse().join("");
 
-const getIndices = ({ searchTerm, source }) =>
-  [...source.trim().matchAll(new RegExp(searchTerm.trim(), "gi"))].map(
-    a => a.index
-  );
+export const removeTags = body => body.replace(HTML_TAG_REGEX, " ");
 
-export const renderHighlightedTerms = (searchResult, searchTerm) => {
-  const substrings = searchResult.split(new RegExp(`(${searchTerm})`, "gi"));
+export const renderWithHighlightedTerms = ({ text, term }) => {
+  const substrings = text.split(new RegExp(`(${term})`, "gi"));
 
   return (
     <span>
@@ -24,7 +25,7 @@ export const renderHighlightedTerms = (searchResult, searchTerm) => {
           key={index}
           className={classnames({
             "neeto-ui-bg-pastel-yellow":
-              substring.toLowerCase() === searchTerm.toLowerCase(),
+              substring.toLowerCase() === term.toLowerCase(),
           })}
         >
           {substring}
@@ -34,35 +35,29 @@ export const renderHighlightedTerms = (searchResult, searchTerm) => {
   );
 };
 
-export const renderSearchResult = ({ searchTerm, source, index }) => {
-  const endIndex = index + searchTerm.length;
-  const beforeTerm = reverse(
-    truncate(reverse(source.substring(0, index)), TERM_PREFIX_TEXT_LENGTH)
-  );
-  const highlightedTerm = source.substring(index, endIndex);
-  const afterTerm = truncate(
-    source.substring(endIndex),
-    TERM_PREFIX_TEXT_LENGTH
-  );
+export const renderSearchResult = ({ searchTerm, source }) => {
+  const startIndex = source
+    .toLowerCase()
+    .indexOf(searchTerm.toLowerCase().trim());
 
-  const searchResult = `${beforeTerm}${highlightedTerm}${afterTerm}`;
-
-  return (
-    <Typography>{renderHighlightedTerms(searchResult, searchTerm)}</Typography>
-  );
-};
-
-export const renderMatchingLines = ({ source, searchTerm }) => {
-  const matchingIndices = getIndices({
-    searchTerm,
-    source,
-  }).slice(0, 4);
-
-  if (isNotEmpty(matchingIndices)) {
-    return matchingIndices.map(index =>
-      renderSearchResult({ searchTerm, source, index })
+  if (startIndex !== -1) {
+    const endIndex = startIndex + searchTerm.length;
+    const beforeTerm = reverseString(
+      truncate(
+        reverseString(source.substring(0, startIndex)),
+        TERM_PREFIX_TEXT_LENGTH
+      )
     );
+    const searchedTerm = source.substring(startIndex, endIndex);
+    const afterTerm = truncate(
+      source.substring(endIndex),
+      TERM_SUFFIX_TEXT_LENGTH
+    );
+
+    const searchResult = `${beforeTerm}${searchedTerm}${afterTerm}`;
+
+    return renderWithHighlightedTerms({ text: searchResult, term: searchTerm });
   }
 
-  return source;
+  return truncate(source, BODY_MAX_LENGTH);
 };

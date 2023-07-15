@@ -102,7 +102,7 @@ const Articles = () => {
         />
         <Table
           activeStatus={activeStatus}
-          data={articles}
+          articles={articles}
           debouncedSearchTerm={debouncedArticleSearchTerm}
           isLoading={isFetching}
           selectedCategories={selectedCategories}
