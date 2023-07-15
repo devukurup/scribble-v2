@@ -4,7 +4,8 @@ require "test_helper"
 
 class RedirectionTest < ActiveSupport::TestCase
   def setup
-    @redirection = build(:redirection)
+    @site = create(:site)
+    @redirection = build(:redirection, site: @site)
   end
 
   def test_redirection_should_be_valid
@@ -115,8 +116,8 @@ class RedirectionTest < ActiveSupport::TestCase
 
   def test_redirection_should_not_be_valid_with_cyclic_redirection
     @redirection.save!
-    test_redirection_1 = create(:redirection, from: @redirection.to)
-    test_redirection_2 = build(:redirection, from: test_redirection_1.to, to: @redirection.from)
+    test_redirection_1 = create(:redirection, from: @redirection.to, site: @site)
+    test_redirection_2 = build(:redirection, from: test_redirection_1.to, to: @redirection.from, site: @site)
 
     assert_not test_redirection_2.valid?
     assert_includes test_redirection_2.errors.full_messages, t("errors.cyclic", entity: Redirection.model_name.human)

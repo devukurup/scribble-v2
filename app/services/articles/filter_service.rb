@@ -16,7 +16,7 @@ class Articles::FilterService
     filter_by_search_term
     filter_by_categories
     filter_by_status
-    paginate
+    apply_pagination
 
     articles
   end
@@ -39,7 +39,7 @@ class Articles::FilterService
       @articles = articles.where(status: filters[:status]) if filters[:status].present?
     end
 
-    def paginate
+    def apply_pagination
       @articles = articles.page(filters[:page]).per(filters[:limit])
     end
 end
