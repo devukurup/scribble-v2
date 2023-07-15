@@ -5,7 +5,9 @@ class Api::V1::Articles::AnalyticsController < ApplicationController
 
   def index
     @total_count = @articles.size
-    @articles = @articles.includes(:category).order(visit_count: params[:order]).page(params[:page]).per(params[:limit])
+    @articles = @articles.includes(:category)
+      .order(visit_count: params[:order])
+      .page(params[:page]).per(params[:limit])
   end
 
   private

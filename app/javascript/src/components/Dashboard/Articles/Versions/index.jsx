@@ -18,15 +18,17 @@ const Versions = ({ isOpen, onClose, title, articleId, handleRestore }) => {
         <Header title={title} />
       </Pane.Header>
       <Pane.Body className="flex flex-col space-y-2">
-        {isLoading && <Spinner />}
-        {!isLoading &&
+        {isLoading ? (
+          <Spinner />
+        ) : (
           versions.map(version => (
             <Item
               handleRestore={handleRestore}
               key={version.id}
               version={version}
             />
-          ))}
+          ))
+        )}
       </Pane.Body>
     </Pane>
   );

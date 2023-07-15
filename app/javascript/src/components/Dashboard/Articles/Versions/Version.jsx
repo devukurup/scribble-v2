@@ -41,7 +41,7 @@ const Version = ({
       </Modal.Body>
       <Modal.Footer className="flex space-x-2">
         <Button
-          disabled={isRestoring || isNil(version?.category)}
+          disabled={isLoading || isRestoring || isNil(version?.category)}
           label={t("articles.versions.restore")}
           onClick={() => restoreVersion({ id, articleId })}
         />

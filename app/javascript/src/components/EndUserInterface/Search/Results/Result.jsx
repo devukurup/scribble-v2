@@ -2,7 +2,11 @@ import React from "react";
 
 import { Typography } from "neetoui";
 
-import { renderMatchingLines, renderHighlightedTerms } from "./utils";
+import {
+  renderSearchResult,
+  removeTags,
+  renderWithHighlightedTerms,
+} from "./utils";
 
 const Result = ({ onClick, title, body, searchTerm }) => (
   <div
@@ -11,9 +15,14 @@ const Result = ({ onClick, title, body, searchTerm }) => (
   >
     <div className="flex flex-col">
       <Typography style="body1" weight="semibold">
-        {renderHighlightedTerms(title, searchTerm)}
+        {renderWithHighlightedTerms({
+          text: removeTags(title),
+          term: searchTerm,
+        })}
       </Typography>
-      {renderMatchingLines({ source: body, searchTerm })}
+      <Typography>
+        {renderSearchResult({ source: removeTags(body), searchTerm })}
+      </Typography>
     </div>
   </div>
 );

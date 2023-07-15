@@ -8,15 +8,16 @@ import { CREATED_VERSION_EVENT } from "./constants";
 import { formattedDateTime } from "../utils";
 
 const Item = ({ version, handleRestore }) => {
+  const { t } = useTranslation();
+
   const { id, createdAt, event } = version;
   const formattedDate = formattedDateTime(createdAt);
-  const { t } = useTranslation();
 
   if (event === CREATED_VERSION_EVENT) {
     return (
       <Typography className="neeto-ui-bg-gray-100 w-full p-3" style="body2">
         {t("articles.versions.created", {
-          dateString: formattedDate,
+          date: formattedDate,
         })}
       </Typography>
     );
