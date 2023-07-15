@@ -19,11 +19,9 @@ const Analytics = () => {
   const [currentPageNumber, setCurrentPageNumber] = useState(
     initializePageNumber()
   );
-
   const [viewCountOrder, setViewCountOrder] = useState(DEFAULT_SORT_OPTION);
 
   const { t } = useTranslation();
-
   const history = useHistory();
 
   const { data: { articles, totalCount } = {}, isLoading } = useFetchAnalytics({

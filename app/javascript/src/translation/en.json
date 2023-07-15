@@ -120,7 +120,10 @@
       "view": "View version history",
       "event": "Article {{event}}",
       "restore": "Restore version",
-      "created": "Created at {{dateString}}"
+      "created": "Created at {{dateString}}",
+      "error": {
+        "category": "Category doesn't exist, version cannot be restored."
+      }
     },
     "placeholders": {
       "body": "Add description here.",

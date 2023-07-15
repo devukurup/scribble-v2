@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Button, Modal } from "neetoui";
+import { isNil } from "ramda";
 import { useTranslation } from "react-i18next";
 
 import {
@@ -40,7 +41,7 @@ const Version = ({
       </Modal.Body>
       <Modal.Footer className="flex space-x-2">
         <Button
-          disabled={isRestoring}
+          disabled={isRestoring || isNil(version?.category)}
           label={t("articles.versions.restore")}
           onClick={() => restoreVersion({ id, articleId })}
         />
