@@ -1,8 +1,12 @@
 import React from "react";
 
 import { t } from "i18next";
-import { Typography } from "neetoui";
-import { formattedDate } from "src/utils";
+import { Typography, Button } from "neetoui";
+import { TITLE_TRUNCATE_LENGTH } from "src/constants";
+import routes from "src/routes";
+import { formattedDate, truncate } from "src/utils";
+
+import { buildUrl } from "neetocommons/utils";
 
 export const COLUMN_DATA = [
   {
@@ -10,6 +14,17 @@ export const COLUMN_DATA = [
     dataIndex: "title",
     title: t("common.title"),
     width: 200,
+    render: (title, { slug }) => (
+      <Button
+        label={truncate(title)}
+        style="link"
+        target="_blank"
+        to={buildUrl(routes.public.articles.show, { slug })}
+        tooltipProps={
+          title.length > TITLE_TRUNCATE_LENGTH && { content: title }
+        }
+      />
+    ),
   },
   {
     key: "createdAt",
@@ -31,5 +46,13 @@ export const COLUMN_DATA = [
     dataIndex: "visitCount",
     title: t("analytics.table.visits"),
     width: 20,
+    sorter: true,
   },
 ];
+
+export const SORT_OPTIONS = {
+  descend: "desc",
+  ascend: "asc",
+};
+
+export const DEFAULT_SORT_OPTION = "desc";
