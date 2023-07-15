@@ -1,12 +1,15 @@
+import React, { useState } from "react";
+
 import { Search as NeetoUISearch } from "neetoicons";
 import { Input } from "neetoui";
-import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import useDebounce from "hooks/useDebounce";
+
 import { useSearchArticles } from "hooks/reactQuery/public/useArticlesApi";
+import useDebounce from "hooks/useDebounce";
+
 import Results from "./Results";
 
-const Search = ({ isSearchBarOpen, setIsSearchBarOpen }) => {
+const Search = ({ setIsSearchBarOpen }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const debouncedSearchTerm = useDebounce(searchTerm);
@@ -29,19 +32,19 @@ const Search = ({ isSearchBarOpen, setIsSearchBarOpen }) => {
         onClick={event => event.stopPropagation()}
       >
         <Input
-          type="search"
-          prefix={<NeetoUISearch />}
-          value={searchTerm}
-          onChange={handleSearch}
+          autoFocus
           className="w-full border-none"
           placeholder="Search for an article"
+          prefix={<NeetoUISearch />}
           size="large"
-          autoFocus
+          type="search"
+          value={searchTerm}
+          onChange={handleSearch}
         />
         {searchTerm.trim().length > 2 && (
           <Results
-            isFetching={isFetching}
             articles={articles}
+            isFetching={isFetching}
             searchTerm={searchTerm}
             setIsSearchBarOpen={setIsSearchBarOpen}
           />

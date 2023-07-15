@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { Typography } from "neetoui";
-import Item from "./Item";
-import { DEFAULT_ACTIVE_INDEX } from "./constants";
+
 import { Down, Right } from "neetoicons";
-import { isCategoryActive } from "./utils";
+import { Typography } from "neetoui";
 import { useParams } from "react-router-dom";
+
+import { DEFAULT_ACTIVE_INDEX } from "./constants";
+import Item from "./Item";
+import { isCategoryActive } from "./utils";
 
 const Sidebar = ({ categories }) => {
   const [activeIndexes, setActiveIndexes] = useState([DEFAULT_ACTIVE_INDEX]);
@@ -22,11 +24,11 @@ const Sidebar = ({ categories }) => {
   return (
     <div className="scribble-sidebar">
       {categories.map(({ title, id, articles }, index) => (
-        <div key={id} className="flex flex-col space-y-2 p-3">
+        <div className="flex flex-col space-y-2 p-3" key={id}>
           <div
+            className="flex cursor-pointer items-center space-x-2"
             key={id}
             onClick={() => handleActiveIndexes(index)}
-            className="flex cursor-pointer items-center space-x-2"
           >
             {isCategoryActive({ articles, slug, activeIndexes, index }) ? (
               <Down />
@@ -38,7 +40,7 @@ const Sidebar = ({ categories }) => {
           {isCategoryActive({ articles, slug, activeIndexes, index }) && (
             <div className="ml-8 flex flex-col space-y-1">
               {articles.map(({ title, slug }) => (
-                <Item key={slug} title={title} slug={slug} />
+                <Item key={slug} slug={slug} title={title} />
               ))}
             </div>
           )}

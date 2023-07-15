@@ -1,13 +1,16 @@
 import React from "react";
-import Sidebar from "./Sidebar";
-import { useParams, useHistory } from "react-router-dom";
-import Content from "./Content";
-import { isEmpty } from "ramda";
-import Empty from "./Empty";
-import { buildUrl } from "neetocommons/utils";
-import routes from "src/routes";
-import { useFetchCategories } from "hooks/reactQuery/public/useCategoriesApi";
+
 import { Spinner } from "neetoui";
+import { isEmpty } from "ramda";
+import { useParams, useHistory } from "react-router-dom";
+import routes from "src/routes";
+
+import { useFetchCategories } from "hooks/reactQuery/public/useCategoriesApi";
+import { buildUrl } from "neetocommons/utils";
+
+import Content from "./Content";
+import Empty from "./Empty";
+import Sidebar from "./Sidebar";
 
 const Articles = () => {
   const { slug } = useParams();

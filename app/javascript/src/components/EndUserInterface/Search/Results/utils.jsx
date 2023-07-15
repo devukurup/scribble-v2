@@ -1,5 +1,7 @@
 import React from "react";
+
 import { truncate } from "neetocommons/pure";
+
 const reverse = string => string.split("").reverse().join("");
 
 export const renderHighlightedText = (text, term) => {
@@ -19,5 +21,6 @@ export const renderHighlightedText = (text, term) => {
       </p>
     );
   }
+
   return text;
 };

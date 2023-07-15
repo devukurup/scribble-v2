@@ -18,8 +18,8 @@ import "common/i18n";
 import { initializeLogger } from "common/logger";
 import ErrorBoundary from "components/commons/ErrorBoundary";
 import { DASHBOARD_ROUTES } from "components/Dashboard/constants";
-import Public from "components/Public";
-import Login from "components/Public/Login";
+import EndUserInterface from "components/EndUserInterface";
+import Login from "components/EndUserInterface/Login";
 import { useDisplayErrorPage } from "neetocommons/react-utils";
 
 const App = () => {
@@ -53,7 +53,7 @@ const App = () => {
         <ErrorBoundary>
           <Switch>
             <Route exact component={Login} path={routes.login} />
-            <Route component={Public} path={routes.public.index} />
+            <Route component={EndUserInterface} path={routes.public.index} />
             {DASHBOARD_ROUTES.map(({ path, component, isExact }) => (
               <Route
                 component={component}

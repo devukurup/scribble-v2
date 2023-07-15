@@ -1,10 +1,12 @@
+import React from "react";
+
+import classnames from "classnames";
 import { Typography } from "neetoui";
 import { Link, useParams } from "react-router-dom";
-import React from "react";
-import classnames from "classnames";
 
 const Item = ({ title, slug }) => {
   const { slug: currentSlug } = useParams();
+
   return (
     <Link to={`/public/articles/${slug}`}>
       <Typography

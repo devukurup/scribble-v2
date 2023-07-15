@@ -1,10 +1,11 @@
 import React from "react";
+
 import { EditorContent } from "neetoeditor";
 import { Typography, Spinner } from "neetoui";
-import Scrollable from "neetomolecules/Scrollable";
-
 import { useParams } from "react-router-dom";
+
 import { useShowArticle } from "hooks/reactQuery/public/useArticlesApi";
+import Scrollable from "neetomolecules/Scrollable";
 
 const Content = () => {
   const { slug } = useParams();

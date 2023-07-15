@@ -1,15 +1,16 @@
 import React from "react";
-import { Typography } from "neetoui";
+
 import { Search } from "neetoicons";
+import { Typography } from "neetoui";
 
 const NavBar = ({ title, setIsSearchBarOpen }) => (
   <div className="flex h-12 items-center border-b-2">
-    <Typography style="h4" weight="semibold" className="m-auto ">
+    <Typography className="m-auto " style="h4" weight="semibold">
       {title}
     </Typography>
     <div
-      onClick={() => setIsSearchBarOpen(true)}
       className="mr-5 flex cursor-pointer items-center space-x-1 rounded border py-2 px-2"
+      onClick={() => setIsSearchBarOpen(true)}
     >
       <Search size={18} />
       <Typography style="body3">
