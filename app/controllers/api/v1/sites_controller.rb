@@ -8,7 +8,7 @@ class Api::V1::SitesController < ApplicationController
   def update
     @site.update!(site_params)
 
-    render_notice(t("success.updated", entity: "Site"))
+    render_notice(t("success.updated", entity: Site.model_name.human))
   end
 
   private

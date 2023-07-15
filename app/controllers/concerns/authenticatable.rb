@@ -11,9 +11,7 @@ module Authenticatable
         @site.authentication_token,
         auth_token)
 
-      unless is_valid_token
-        render_error(t("session.could_not_auth"), :unauthorized)
-      end
+      render_error(t("session.authentication_failure"), :unauthorized) unless is_valid_token
     end
 
     def authenticatable?

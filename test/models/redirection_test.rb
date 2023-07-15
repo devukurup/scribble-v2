@@ -15,14 +15,15 @@ class RedirectionTest < ActiveSupport::TestCase
     @redirection.from = ""
 
     assert_not @redirection.valid?
-    assert_includes @redirection.errors.full_messages, t("errors.blank", entity: "From")
+    assert_includes @redirection.errors.full_messages,
+      t("errors.blank", entity: Redirection.human_attribute_name("from"))
   end
 
   def test_redirection_should_not_be_valid_without_to
     @redirection.to = ""
 
     assert_not @redirection.valid?
-    assert_includes @redirection.errors.full_messages, t("errors.blank", entity: "To")
+    assert_includes @redirection.errors.full_messages, t("errors.blank", entity: Redirection.human_attribute_name("to"))
   end
 
   def test_redirection_should_not_be_valid_without_unique_from
@@ -30,7 +31,8 @@ class RedirectionTest < ActiveSupport::TestCase
     test_redirection = build(:redirection, from: @redirection.from)
 
     assert_not test_redirection.valid?
-    assert_includes test_redirection.errors.full_messages, t("errors.taken", entity: "From")
+    assert_includes test_redirection.errors.full_messages,
+      t("errors.taken", entity: Redirection.human_attribute_name("from"))
   end
 
   def test_redirection_to_path_should_be_invalid_if_length_exceeds_maximum_length
@@ -38,7 +40,7 @@ class RedirectionTest < ActiveSupport::TestCase
 
     assert_not @redirection.valid?
     assert_includes @redirection.errors.full_messages,
-      t("errors.too_long", maximum: Redirection::MAX_TO_LENGTH, entity: "To")
+      t("errors.too_long", maximum: Redirection::MAX_TO_LENGTH, entity: Redirection.human_attribute_name("to"))
   end
 
   def test_redirection_from_path_should_be_invalid_if_length_exceeds_maximum_length
@@ -46,7 +48,7 @@ class RedirectionTest < ActiveSupport::TestCase
 
     assert_not @redirection.valid?
     assert_includes @redirection.errors.full_messages,
-      t("errors.too_long", maximum: Redirection::MAX_FROM_LENGTH, entity: "From")
+      t("errors.too_long", maximum: Redirection::MAX_FROM_LENGTH, entity: Redirection.human_attribute_name("from"))
   end
 
   def test_validation_should_accept_valid_to_paths
@@ -66,7 +68,8 @@ class RedirectionTest < ActiveSupport::TestCase
       @redirection.to = to_path
 
       assert_not @redirection.valid?
-      assert_includes @redirection.errors.full_messages, t("errors.invalid", entity: "To")
+      assert_includes @redirection.errors.full_messages,
+        t("errors.invalid", entity: Redirection.human_attribute_name("to"))
     end
   end
 
@@ -87,7 +90,8 @@ class RedirectionTest < ActiveSupport::TestCase
       @redirection.from = from_path
 
       assert_not @redirection.valid?
-      assert_includes @redirection.errors.full_messages, t("errors.invalid", entity: "From")
+      assert_includes @redirection.errors.full_messages,
+        t("errors.invalid", entity: Redirection.human_attribute_name("from"))
     end
   end
 
@@ -95,14 +99,18 @@ class RedirectionTest < ActiveSupport::TestCase
     @redirection.site = nil
 
     assert_not @redirection.valid?
-    assert_includes @redirection.errors.full_messages, t("errors.must_exist", entity: "Site")
+    assert_includes @redirection.errors.full_messages,
+      t("errors.must_exist", entity: Redirection.human_attribute_name("site"))
   end
 
   def test_redirection_should_not_be_valid_with_same_from_and_to
     @redirection.to = @redirection.from
 
     assert_not @redirection.valid?
-    assert_includes @redirection.errors.full_messages, t("errors.identical", entity_1: "From", entity_2: "to")
+    assert_includes @redirection.errors.full_messages,
+      t(
+        "errors.identical", entity_1: Redirection.human_attribute_name("from"),
+        entity_2: Redirection.human_attribute_name("to").downcase)
   end
 
   def test_redirection_should_not_be_valid_with_cyclic_redirection
@@ -111,7 +119,7 @@ class RedirectionTest < ActiveSupport::TestCase
     test_redirection_2 = build(:redirection, from: test_redirection_1.to, to: @redirection.from)
 
     assert_not test_redirection_2.valid?
-    assert_includes test_redirection_2.errors.full_messages, t("errors.cyclic", entity: "Redirection")
+    assert_includes test_redirection_2.errors.full_messages, t("errors.cyclic", entity: Redirection.model_name.human)
   end
 
   def test_redirection_should_be_valid_with_transitive_redirection

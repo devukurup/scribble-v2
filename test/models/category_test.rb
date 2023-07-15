@@ -17,7 +17,7 @@ class CategoryTest < ActiveSupport::TestCase
     @category.title = ""
 
     assert_not @category.valid?
-    assert_includes @category.errors.full_messages, t("errors.blank", entity: "Title")
+    assert_includes @category.errors.full_messages, t("errors.blank", entity: Category.human_attribute_name("title"))
   end
 
   def test_category_should_not_be_valid_without_unique_title
@@ -26,7 +26,8 @@ class CategoryTest < ActiveSupport::TestCase
     test_category.title = test_category.title.upcase
 
     assert_not test_category.valid?
-    assert_includes test_category.errors.full_messages, t("errors.taken", entity: "Title")
+    assert_includes test_category.errors.full_messages,
+      t("errors.taken", entity: Category.human_attribute_name("title"))
   end
 
   def test_category_title_should_be_invalid_if_length_exceeds_maximum_length
@@ -34,7 +35,7 @@ class CategoryTest < ActiveSupport::TestCase
 
     assert_not @category.valid?
     assert_includes @category.errors.full_messages,
-      t("errors.too_long", entity: "Title", maximum: Category::MAX_TITLE_LENGTH)
+      t("errors.too_long", entity: Category.human_attribute_name("title"), maximum: Category::MAX_TITLE_LENGTH)
   end
 
   def test_validation_should_accept_valid_titles
@@ -52,7 +53,8 @@ class CategoryTest < ActiveSupport::TestCase
       @category.title = title
 
       assert_not @category.valid?
-      assert_includes @category.errors.full_messages, t("errors.invalid", entity: "Title")
+      assert_includes @category.errors.full_messages,
+        t("errors.invalid", entity: Category.human_attribute_name("title"))
     end
   end
 
@@ -60,7 +62,8 @@ class CategoryTest < ActiveSupport::TestCase
     @category.site = nil
 
     assert_not @category.valid?
-    assert_includes @category.errors.full_messages, t("errors.must_exist", entity: "Site")
+    assert_includes @category.errors.full_messages,
+      t("errors.must_exist", entity: Category.human_attribute_name("site"))
   end
 
   def test_with_published_articles_scope_should_return_categories_with_published_articles
