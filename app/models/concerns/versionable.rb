@@ -2,6 +2,12 @@
 
 module Versionable
   extend ActiveSupport::Concern
+  VERSION_EVENTS = {
+    restored: "restored",
+    draft: "drafted",
+    published: "published",
+    created: "created"
+  }.with_indifferent_access
 
   included do
     has_paper_trail
@@ -11,19 +17,19 @@ module Versionable
   end
 
   def restore!(version)
-    self.paper_trail_event = "restored"
+    self.paper_trail_event = VERSION_EVENTS[:restored]
     attributes_to_set = version.attributes
       .except("visit_count", "updated_at")
-      .merge({ status: "draft" })
+      .merge({ status: :draft })
     self.update!(attributes_to_set)
   end
 
   private
 
     def set_paper_trail_event
-      unless self.paper_trail_event == "restored"
-        self.paper_trail_event = self.status == "draft" ? "drafted" : "published"
-      end
+      self.paper_trail_event = VERSION_EVENTS[:created] and return if id.nil?
+
+      self.paper_trail_event = VERSION_EVENTS[self.status] unless self.paper_trail_event == VERSION_EVENTS[:restored]
     end
 
     def delete_version_entries

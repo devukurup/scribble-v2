@@ -5,7 +5,7 @@ class Api::V1::Articles::VersionsController < ApplicationController
   before_action :load_version!, only: %i[show restore]
 
   def index
-    @versions = @article.versions.order(created_at: :desc)
+    @versions = @article.versions.reorder("created_at DESC")
   end
 
   def show
