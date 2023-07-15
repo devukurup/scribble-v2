@@ -197,6 +197,46 @@ class ArticleTest < ActiveSupport::TestCase
     assert_equal substring_of_existing_slug.parameterize, new_article.slug
   end
 
+  def test_article_versions_created_on_update
+    with_versioning do
+      assert_equal 0, @article.versions.size
+
+      @article.update!(title: "new title")
+      assert_equal 1, @article.reload.versions.size
+    end
+  end
+
+  def test_article_versions_should_be_destroyed_on_article_destroy
+    with_versioning do
+      @article.update!(title: "new title")
+      assert_equal 1, @article.reload.versions.size
+
+      assert_difference "@article.versions.size", -1 do
+        @article.destroy!
+      end
+    end
+  end
+
+  def test_version_event_name_is_same_as_status_if_it_is_not_restored
+    with_versioning do
+      @article.update!(title: "new title")
+      assert_equal "drafted", @article.reload.versions.last.event
+
+      @article.update!(status: :published)
+      assert_equal "published", @article.reload.versions.last.event
+    end
+  end
+
+  def test_version_event_name_should_be_set_as_restored_upon_restoring
+    with_versioning do
+      @article.update!(title: "new title")
+      old_version = @article.versions.last
+      @article.restore!(old_version.reify)
+
+      assert_equal "restored", @article.reload.versions.last.event
+    end
+  end
+
   private
 
     def article_params(title = "")
