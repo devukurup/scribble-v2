@@ -2,6 +2,7 @@ import React from "react";
 
 import { Spinner, Typography } from "neetoui";
 import { isEmpty } from "ramda";
+import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import routes from "src/routes";
 
@@ -10,6 +11,8 @@ import { buildUrl } from "neetocommons/utils";
 import Result from "./Result";
 
 const Results = ({ isFetching, articles, searchTerm, setIsSearchBarOpen }) => {
+  const { t } = useTranslation();
+
   const history = useHistory();
 
   const handleSelect = slug => {
@@ -28,7 +31,7 @@ const Results = ({ isFetching, articles, searchTerm, setIsSearchBarOpen }) => {
   if (isEmpty(articles)) {
     return (
       <div className="flex h-16 w-full items-center justify-center bg-white">
-        <Typography>No articles found!</Typography>
+        <Typography>{t("empty.article.title")}</Typography>
       </div>
     );
   }

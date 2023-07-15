@@ -1,26 +1,68 @@
 import React from "react";
 
-import { truncate } from "neetocommons/pure";
+import classnames from "classnames";
+import { Typography } from "neetoui";
+
+import { isNotEmpty, truncate } from "neetocommons/pure";
+
+import { TERM_PREFIX_TEXT_LENGTH } from "./constants";
 
 const reverse = string => string.split("").reverse().join("");
 
-export const renderHighlightedText = (text, term) => {
-  const startIndex = text.toLowerCase().indexOf(term.trim().toLowerCase());
-  if (startIndex !== -1) {
-    const endIndex = startIndex + term.length;
-    const beforeTerm = text.substring(startIndex - 20, startIndex);
-    const highlightedTerm = text.substring(startIndex, endIndex);
-    const afterTerm = text.substring(endIndex);
-    const truncatedBeforeTerm = reverse(truncate(reverse(beforeTerm), 10));
+const getIndices = ({ searchTerm, source }) =>
+  [...source.trim().matchAll(new RegExp(searchTerm.trim(), "gi"))].map(
+    a => a.index
+  );
 
-    return (
-      <p>
-        <span>{truncatedBeforeTerm}</span>
-        <span className="neeto-ui-bg-pastel-yellow">{highlightedTerm}</span>
-        <span>{truncate(afterTerm, 30)}</span>
-      </p>
+export const renderHighlightedTerms = (searchResult, searchTerm) => {
+  const substrings = searchResult.split(new RegExp(`(${searchTerm})`, "gi"));
+
+  return (
+    <span>
+      {substrings.map((substring, index) => (
+        <span
+          key={index}
+          className={classnames({
+            "neeto-ui-bg-pastel-yellow":
+              substring.toLowerCase() === searchTerm.toLowerCase(),
+          })}
+        >
+          {substring}
+        </span>
+      ))}
+    </span>
+  );
+};
+
+export const renderSearchResult = ({ searchTerm, source, index }) => {
+  const endIndex = index + searchTerm.length;
+  const beforeTerm = reverse(
+    truncate(reverse(source.substring(0, index)), TERM_PREFIX_TEXT_LENGTH)
+  );
+  const highlightedTerm = source.substring(index, endIndex);
+  const afterTerm = truncate(
+    source.substring(endIndex),
+    TERM_PREFIX_TEXT_LENGTH
+  );
+
+  const searchResult = `${beforeTerm}${highlightedTerm}${afterTerm}`;
+
+  return (
+    <Typography>{renderHighlightedTerms(searchResult, searchTerm)}</Typography>
+  );
+};
+
+export const renderMatchingLines = ({ source, searchTerm }) => {
+  const matchingIndices = getIndices({
+    searchTerm,
+    source,
+  }).slice(0, 4);
+
+  if (isNotEmpty(matchingIndices)) {
+    return matchingIndices.map(index =>
+      renderSearchResult({ searchTerm, source, index })
     );
   }
 
-  return text;
+  return source;
 };

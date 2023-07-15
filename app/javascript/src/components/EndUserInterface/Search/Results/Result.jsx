@@ -2,7 +2,7 @@ import React from "react";
 
 import { Typography } from "neetoui";
 
-import { renderHighlightedText } from "./utils";
+import { renderMatchingLines, renderHighlightedTerms } from "./utils";
 
 const Result = ({ onClick, title, body, searchTerm }) => (
   <div
@@ -11,9 +11,9 @@ const Result = ({ onClick, title, body, searchTerm }) => (
   >
     <div className="flex flex-col">
       <Typography style="body1" weight="semibold">
-        {renderHighlightedText(title, searchTerm)}
+        {renderHighlightedTerms(title, searchTerm)}
       </Typography>
-      <Typography>{renderHighlightedText(body, searchTerm)}</Typography>
+      {renderMatchingLines({ source: body, searchTerm })}
     </div>
   </div>
 );

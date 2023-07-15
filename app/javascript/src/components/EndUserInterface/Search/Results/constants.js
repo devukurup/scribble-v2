@@ -1,0 +1,1 @@
+export const TERM_PREFIX_TEXT_LENGTH = 20;

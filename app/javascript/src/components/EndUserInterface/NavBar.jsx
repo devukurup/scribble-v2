@@ -1,7 +1,9 @@
 import React from "react";
 
+import { t } from "i18next";
 import { Search } from "neetoicons";
 import { Typography } from "neetoui";
+import { Trans } from "react-i18next";
 
 const NavBar = ({ title, setIsSearchBarOpen }) => (
   <div className="flex h-12 items-center border-b-2">
@@ -14,11 +16,14 @@ const NavBar = ({ title, setIsSearchBarOpen }) => (
     >
       <Search size={18} />
       <Typography style="body3">
-        Type
-        <span className="neeto-ui-text-gray-600 neeto-ui-bg-gray-100 mx-1 rounded border p-1 ">
-          /
-        </span>
-        to search
+        <Trans
+          defaults={t("public.placeholder")}
+          components={{
+            span: (
+              <span className="neeto-ui-text-gray-600 neeto-ui-bg-gray-100 mx-1 rounded border p-1 " />
+            ),
+          }}
+        />
       </Typography>
     </div>
   </div>

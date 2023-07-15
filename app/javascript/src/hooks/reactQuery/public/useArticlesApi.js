@@ -14,6 +14,7 @@ export const useSearchArticles = ({ searchTerm = "", options = {} }) =>
     () => articlesApi.search(searchTerm),
     {
       ...options,
+      enabled: false,
       refetchOnMount: false,
       refetchOnWindowFocus: false,
     }

@@ -194,6 +194,8 @@
       "description": "Enter the password to gain access to {{title}}.",
       "placeholder": "Enter password here.",
       "continue": "Continue"
-    }
+    },
+    "search": "Search for an article",
+    "placeholder": "Type <span>/</span> to search"
   }
 }
