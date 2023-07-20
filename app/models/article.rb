@@ -12,6 +12,8 @@ class Article < ApplicationRecord
   belongs_to :user
   belongs_to :category, counter_cache: true
 
+  has_one :schedule, dependent: :destroy
+
   validates :title, presence: true, length: { maximum: MAX_TITLE_LENGTH }, format: { with: VALID_TITLE_REGEX }
   validates :slug, presence: true, uniqueness: true
   validates_presence_of :body, :status, :visit_count
