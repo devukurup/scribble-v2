@@ -34,7 +34,7 @@ class ScheduleTest < ActiveSupport::TestCase
   end
 
   def test_schedule_time_should_be_in_future
-    @schedule.time = Time.zone.now.yesterday
+    @schedule.time = Time.zone.yesterday
 
     assert_not @schedule.valid?
     assert_includes @schedule.errors.full_messages, t("errors.not_future")

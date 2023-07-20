@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :schedule do
-    time { Time.zone.now + 1.day }
+    time { Time.zone.tomorrow }
     event { :publish }
     article
   end
