@@ -14,24 +14,30 @@ const Show = ({ articleId, schedule, isLoading }) => {
 
   const { mutate: destroy, isLoading: isDeleting } = useDeleteSchedule();
 
-  if (isLoading || isDeleting) {
-    return <Spinner />;
-  }
+  if (isLoading) return <Spinner />;
 
   return (
-    <div className="neeto-ui-bg-gray-200 m-2 flex items-center justify-end">
-      <Typography>
-        {t("articles.schedule.description", {
-          event,
-          time: formattedDate(time),
-        })}
+    <div className="flex items-center justify-between rounded-md border-2 py-1 px-3">
+      <Typography style="body2" weight="semibold">
+        {t("articles.schedule.label")}:
       </Typography>
-      <Button
-        icon={Delete}
-        style="danger-text"
-        tooltipProps={{ content: t("articles.schedule.delete") }}
-        onClick={() => destroy(articleId)}
-      />
+      <div className="flex items-center space-x-2">
+        <Typography style="body2">
+          {t("articles.schedule.description", {
+            event,
+            time: formattedDate(time),
+          })}
+        </Typography>
+        <Button
+          disabled={isDeleting}
+          icon={Delete}
+          loading={isDeleting}
+          size="small"
+          style="danger-text"
+          tooltipProps={{ content: t("articles.schedule.delete") }}
+          onClick={() => destroy(articleId)}
+        />
+      </div>
     </div>
   );
 };

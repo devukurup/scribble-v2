@@ -139,6 +139,7 @@
     },
     "schedule": {
       "description": "Article will be {{event}}ed at {{time}}",
+      "label": "Scheduled event",
       "modalTitle": "Schedule {{event}}",
       "delete": "Delete schedule",
       "placeholders": {

@@ -41,6 +41,7 @@ const Edit = () => {
 
   const { data: { article } = {}, isFetching } = useShowArticle({
     id: articleId,
+    options: { refetchOnWindowFocus: false },
   });
 
   const handleSubmit = values => {
