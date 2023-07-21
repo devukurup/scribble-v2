@@ -7,7 +7,8 @@ module SampleData
         SampleData::SiteService,
         SampleData::UserService,
         SampleData::CategoriesService,
-        SampleData::ArticlesService
+        SampleData::ArticlesService,
+        SampleData::RedirectionsService
     ]
     end
   end
