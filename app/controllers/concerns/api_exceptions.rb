@@ -36,7 +36,7 @@ module ApiExceptions
     end
 
     def handle_generic_exception(exception, status = :internal_server_error)
-      log_exception(exception) unless Rails.env.test?
+      log_exception(exception)
       error = Rails.env.production? ? t("generic_error") : exception
       render_error(error, status)
     end
