@@ -92,3 +92,9 @@ gem "bcrypt", "~> 3.1.13"
 
 # For model versioning
 gem "paper_trail"
+
+# For background jobs
+gem "sidekiq", "<7"
+
+# For periodic sidekiq jobs
+gem "sidekiq-cron"

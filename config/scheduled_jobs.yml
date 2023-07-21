@@ -1,0 +1,5 @@
+development:
+  article_schedule_worker:
+    cron: "* * * * *"
+    class: "ArticleScheduleWorker"
+    queue: "default"
