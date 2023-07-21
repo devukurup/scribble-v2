@@ -237,6 +237,13 @@ class ArticleTest < ActiveSupport::TestCase
     end
   end
 
+  def test_should_destroy_schedule_on_article_update_with_same_status
+    schedule = create(:schedule, article: @article)
+    @article.update!(status: :published)
+
+    assert_nil @article.reload.schedule
+  end
+
   private
 
     def article_params(title = "")
