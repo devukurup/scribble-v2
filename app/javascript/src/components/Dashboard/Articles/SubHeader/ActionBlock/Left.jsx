@@ -12,10 +12,9 @@ import Categories from "./Dropdown/Categories";
 import Statuses from "./Dropdown/Statuses";
 
 const Left = ({
-  searchTerm,
+  filters,
+  setFilters,
   totalCount,
-  selectedCategories,
-  setSelectedCategories,
   selectedArticleRowIds,
   setSelectedArticleRowIds,
   setIsDeleteAlertOpen,
@@ -23,10 +22,15 @@ const Left = ({
 }) => {
   const { t } = useTranslation();
 
-  const handleClose = id =>
-    setSelectedCategories(categories =>
-      categories.filter(category => category.id !== id)
+  const { selectedCategories, searchTerm } = filters;
+
+  const handleClose = id => {
+    const newCategories = selectedCategories.filter(
+      category => category.id !== id
     );
+
+    setFilters({ selectedCategories: newCategories });
+  };
 
   const { mutate: bulkUpdate } = useBulkUpdateArticles({
     onSuccess: () => setSelectedArticleRowIds([]),

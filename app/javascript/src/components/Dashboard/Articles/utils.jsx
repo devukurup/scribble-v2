@@ -127,11 +127,9 @@ export const getEmptyArticleProps = ({
   activeStatus,
   search,
   selectedCategories,
-  setActiveStatus,
-  setSearch,
-  setSelectedCategories,
   totalCount,
   redirectToNewArticle,
+  setFilters,
 }) => {
   if (totalCount === 0) {
     return {
@@ -145,21 +143,21 @@ export const getEmptyArticleProps = ({
       title: t("empty.article.search.title", { search }),
       description: t("empty.article.search.description"),
       label: t("empty.article.search.label"),
-      onClick: () => setSearch(""),
+      onClick: () => setFilters({ searchTerm: "" }),
     };
   } else if (!isEmpty(selectedCategories)) {
     return {
       title: t("empty.article.selectedCategories.title"),
       description: t("empty.article.selectedCategories.description"),
       label: t("empty.article.selectedCategories.label"),
-      onClick: () => setSelectedCategories([]),
+      onClick: () => setFilters({ selectedCategories: [] }),
     };
   } else if (activeStatus !== DEFAULT_ACTIVE_STATUS) {
     return {
       title: t("empty.article.status.title"),
       description: t("empty.article.status.description"),
       label: t("empty.article.status.label"),
-      onClick: () => setActiveStatus(DEFAULT_ACTIVE_STATUS),
+      onClick: () => setFilters({ activeStatus: DEFAULT_ACTIVE_STATUS }),
     };
   }
 

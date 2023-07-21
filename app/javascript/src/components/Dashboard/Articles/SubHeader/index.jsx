@@ -6,10 +6,9 @@ import Left from "./ActionBlock/Left";
 import Right from "./ActionBlock/Right";
 
 const SubHeader = ({
-  searchTerm,
+  filters,
+  setFilters,
   totalCount,
-  selectedCategories,
-  setSelectedCategories,
   selectedColumns,
   setSelectedColumns,
   selectedArticleRowIds,
@@ -20,13 +19,12 @@ const SubHeader = ({
   <NeetoUISubHeader
     leftActionBlock={
       <Left
-        searchTerm={searchTerm}
+        filters={filters}
         selectedArticleRowIds={selectedArticleRowIds}
-        selectedCategories={selectedCategories}
+        setFilters={setFilters}
         setIsBulkDelete={setIsBulkDelete}
         setIsDeleteAlertOpen={setIsDeleteAlertOpen}
         setSelectedArticleRowIds={setSelectedArticleRowIds}
-        setSelectedCategories={setSelectedCategories}
         totalCount={totalCount}
       />
     }

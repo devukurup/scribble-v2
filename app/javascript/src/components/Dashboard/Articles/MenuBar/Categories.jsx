@@ -10,9 +10,9 @@ import { isPresent } from "utils";
 import { isCategoryPresent, removeCategory } from "./utils";
 
 const Categories = ({
-  debouncedSearchTerm,
   selectedCategories,
-  setSelectedCategories,
+  debouncedSearchTerm,
+  setFilters,
   isSearchCollapsed,
 }) => {
   const { t } = useTranslation();
@@ -28,14 +28,16 @@ const Categories = ({
         categories: selectedCategories,
       })
     ) {
-      setSelectedCategories(
-        removeCategory({
+      setFilters({
+        selectedCategories: removeCategory({
           categoryId: category.id,
           categories: selectedCategories,
-        })
-      );
+        }),
+      });
     } else {
-      setSelectedCategories([...selectedCategories, category]);
+      setFilters({
+        selectedCategories: [...selectedCategories, category],
+      });
     }
   };
 

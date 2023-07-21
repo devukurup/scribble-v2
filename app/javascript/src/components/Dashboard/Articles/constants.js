@@ -13,6 +13,12 @@ export const ARTICLE_STATUSES = {
 
 export const DEFAULT_ACTIVE_STATUS = ARTICLE_STATUSES.all;
 
+export const INITIAL_FILTERS = {
+  activeStatus: DEFAULT_ACTIVE_STATUS,
+  searchTerm: "",
+  selectedCategories: [],
+};
+
 export const EDITOR_ADDONS = [
   "highlight",
   "code-block",

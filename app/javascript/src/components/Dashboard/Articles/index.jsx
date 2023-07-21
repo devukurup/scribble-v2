@@ -7,9 +7,8 @@ import { DEFAULT_PAGE_NUMBER, PAGINATION_LIMIT } from "src/constants";
 import SidebarWrapper from "components/Dashboard/SidebarWrapper";
 import CreateCategory from "Dashboard/Categories/Create";
 import { useFetchArticles } from "hooks/reactQuery/useArticlesApi";
-import useDebounce from "hooks/useDebounce";
 
-import { COLUMNS, DEFAULT_ACTIVE_STATUS } from "./constants";
+import { COLUMNS, INITIAL_FILTERS } from "./constants";
 import ArticleDeleteAlert from "./DeleteAlert";
 import Header from "./Header";
 import MenuBar from "./MenuBar";
@@ -17,24 +16,24 @@ import SubHeader from "./SubHeader";
 import Table from "./Table";
 
 const Articles = () => {
-  const [activeStatus, setActiveStatus] = useState(DEFAULT_ACTIVE_STATUS);
+  const [filters, setFilters] = useState(INITIAL_FILTERS);
   const [isMenuBarOpen, setIsMenuBarOpen] = useState(true);
-  const [searchTerm, setSearchTerm] = useState("");
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
   const [rowToBeDeleted, setRowToBeDeleted] = useState({});
-  const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedColumns, setSelectedColumns] = useState(COLUMNS);
   const [selectedArticleRowIds, setSelectedArticleRowIds] = useState([]);
   const [isBulkDelete, setIsBulkDelete] = useState(false);
 
-  const debouncedArticleSearchTerm = useDebounce(searchTerm);
   const searchParams = new URLSearchParams(window.location.search);
   const page = searchParams.get("page") || DEFAULT_PAGE_NUMBER;
   const limit = searchParams.get("limit") || PAGINATION_LIMIT;
   const search = searchParams.get("search") || "";
   const status = searchParams.get("status") || "";
-  const selectedCategoryIds = selectedCategories?.map(({ id }) => id);
+  const selectedCategoryIds = filters.selectedCategories?.map(({ id }) => id);
+
+  const setEachFilters = newFilters =>
+    setFilters({ ...filters, ...newFilters });
 
   const {
     data: articles,
@@ -73,46 +72,38 @@ const Articles = () => {
   return (
     <SidebarWrapper>
       <MenuBar
-        activeStatus={activeStatus}
         articles={articles}
+        filters={filters}
         isMenuBarOpen={isMenuBarOpen}
-        selectedCategories={selectedCategories}
-        setActiveStatus={setActiveStatus}
+        setFilters={setEachFilters}
         setIsCreateModalOpen={setIsCreateModalOpen}
-        setSelectedCategories={setSelectedCategories}
       />
       <Container className="mx-4 w-full">
         <Header
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          status={activeStatus}
+          filters={filters}
+          setFilters={setEachFilters}
           toggleMenubar={toggleMenubar}
         />
         <SubHeader
-          searchTerm={searchTerm}
+          filters={filters}
           selectedArticleRowIds={selectedArticleRowIds}
-          selectedCategories={selectedCategories}
           selectedColumns={selectedColumns}
+          setFilters={setEachFilters}
           setIsBulkDelete={setIsBulkDelete}
           setIsDeleteAlertOpen={setIsDeleteAlertOpen}
           setSelectedArticleRowIds={setSelectedArticleRowIds}
-          setSelectedCategories={setSelectedCategories}
           setSelectedColumns={setSelectedColumns}
           totalCount={articles?.filteredArticlesCount}
         />
         <Table
-          activeStatus={activeStatus}
           articles={articles}
-          debouncedSearchTerm={debouncedArticleSearchTerm}
+          filters={filters}
           isLoading={isFetching}
-          selectedCategories={selectedCategories}
           selectedColumns={selectedColumns}
           selectedRowIds={selectedArticleRowIds}
-          setActiveStatus={setActiveStatus}
+          setFilters={setEachFilters}
           setIsDeleteAlertOpen={setIsDeleteAlertOpen}
           setRowToBeDeleted={setRowToBeDeleted}
-          setSearchTerm={setSearchTerm}
-          setSelectedCategories={setSelectedCategories}
           setSelectedRowIds={setSelectedArticleRowIds}
           totalCount={articles?.filteredArticlesCount}
         />

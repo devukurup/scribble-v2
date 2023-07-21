@@ -10,7 +10,8 @@ import useDebounce from "hooks/useDebounce";
 
 import { buildUrlParams } from "./utils";
 
-const Header = ({ toggleMenubar, status, setSearchTerm, searchTerm }) => {
+const Header = ({ toggleMenubar, filters, setFilters }) => {
+  const { activeStatus: status, searchTerm } = filters;
   const { t } = useTranslation();
   const debouncedSearchTerm = useDebounce(searchTerm);
 
@@ -32,7 +33,7 @@ const Header = ({ toggleMenubar, status, setSearchTerm, searchTerm }) => {
       }
       searchProps={{
         value: searchTerm,
-        onChange: event => setSearchTerm(event.target.value),
+        onChange: event => setFilters({ searchTerm: event.target.value }),
         placeholder: t("dashboard.header.placeholder"),
       }}
     />

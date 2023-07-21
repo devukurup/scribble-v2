@@ -13,20 +13,19 @@ import Categories from "./Categories";
 import { statuses } from "./utils";
 
 const MenuBar = ({
-  activeStatus,
-  setActiveStatus,
   isMenuBarOpen,
   setIsCreateModalOpen,
-  selectedCategories,
-  setSelectedCategories,
+  setFilters,
   articles,
+  filters,
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
 
+  const { t } = useTranslation();
   const debouncedSearchTerm = useDebounce(searchTerm);
 
-  const { t } = useTranslation();
+  const { activeStatus, selectedCategories } = filters;
 
   const handleClose = () => {
     setSearchTerm("");
@@ -50,7 +49,7 @@ const MenuBar = ({
           count={count}
           key={value}
           label={label}
-          onClick={() => setActiveStatus(value)}
+          onClick={() => setFilters({ activeStatus: value })}
         />
       ))}
       <NeetoUIMenuBar.SubTitle
@@ -87,7 +86,7 @@ const MenuBar = ({
         debouncedSearchTerm={debouncedSearchTerm}
         isSearchCollapsed={isSearchCollapsed}
         selectedCategories={selectedCategories}
-        setSelectedCategories={setSelectedCategories}
+        setFilters={setFilters}
       />
     </NeetoUIMenuBar>
   );
