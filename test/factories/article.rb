@@ -7,5 +7,16 @@ FactoryBot.define do
     site
     user
     category
+
+    trait :with_schedule do
+      transient do
+        time { Time.zone.tomorrow }
+        event { :publish }
+      end
+
+      after(:create) do |article, context|
+        create :schedule, article:, event: context.event, time: context.time
+      end
+    end
   end
 end
