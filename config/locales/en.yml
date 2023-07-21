@@ -27,9 +27,12 @@ en:
     taken: "%{entity} has already been taken"
     identical: "%{entity_1} and %{entity_2} values are identical"
     cyclic: "%{entity} forms a cycle, Try with different values"
+    not_future: "Time must be in the future"
     redirection:
       non_unique: "and to values are identical"
       cyclic: "forms a cycle, Try with different values"
     category:
       last_general_category: "Last category cannot be deleted"
       missing_target_category: "Target category id is missing"
+    schedule:
+      not_future: "must be in the future"

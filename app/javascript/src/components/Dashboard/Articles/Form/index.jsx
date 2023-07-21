@@ -3,30 +3,33 @@ import React, { useState } from "react";
 import { Formik, Form as FormikForm } from "formik";
 import { FormikEditor } from "neetoeditor";
 import { MenuHorizontal } from "neetoicons";
-import { ActionDropdown, Dropdown, Typography, Button, Spinner } from "neetoui";
+import { Dropdown, Typography, Button, Spinner } from "neetoui";
 import { Textarea, Select } from "neetoui/formik";
-import { isEmpty } from "ramda";
+import { isEmpty, isNil } from "ramda";
 import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 
 import { CATEGORY_VALIDATION_SCHEMA } from "Dashboard/Categories/constants";
+import { useShowSchedule } from "hooks/reactQuery/articles/useScheduleApi";
 import {
   useFetchCategories,
   useCreateCategory,
 } from "hooks/reactQuery/useCategoriesApi";
+
+import ShowSchedule from "./Schedule/Show";
+import StatusDropdown from "./StatusDropdown";
 
 import {
   VALIDATION_SCHEMA,
   EDITOR_ADDONS,
   KEYBOARD_ENTER_KEY,
   DEFAULT_ROW_COUNT,
-} from "./constants";
+} from "../constants";
 import {
   filteredErrors,
   formatCategories,
   formatTitleAndBodyErrors,
-} from "./utils";
-
-const { Menu, MenuItem } = ActionDropdown;
+} from "../utils";
 
 const Form = ({
   handleSubmit,
@@ -41,11 +44,19 @@ const Form = ({
 }) => {
   const [status, setStatus] = useState(initialStatus);
 
+  const { articleId } = useParams();
+
   const { data: { categories } = {}, isFetching: isFetchingCategories } =
     useFetchCategories({});
 
   const { isLoading: isCreatingCategories, mutate: createCategory } =
     useCreateCategory();
+
+  const { data: { schedule } = {}, isLoading: isFetchingSchedule } =
+    useShowSchedule({
+      id: articleId,
+      options: { enabled: isEdit },
+    });
 
   const { t } = useTranslation();
 
@@ -131,24 +142,16 @@ const Form = ({
                   type="reset"
                   onClick={onClose}
                 />
-                <ActionDropdown
-                  buttonProps={{ type: "submit" }}
-                  disabled={isSubmitting || !isValid || !dirty}
-                  label={status}
-                >
-                  <Menu>
-                    <MenuItem.Button
-                      onClick={() => setStatus(t("statuses.publish"))}
-                    >
-                      {t("statuses.publish")}
-                    </MenuItem.Button>
-                    <MenuItem.Button
-                      onClick={() => setStatus(t("statuses.saveDraft"))}
-                    >
-                      {t("statuses.saveDraft")}
-                    </MenuItem.Button>
-                  </Menu>
-                </ActionDropdown>
+                {isEdit && !isNil(schedule) ? (
+                  <Button label={status} type="submit" />
+                ) : (
+                  <StatusDropdown
+                    isDisabled={isSubmitting || !isValid || !dirty}
+                    isEdit={isEdit}
+                    setStatus={setStatus}
+                    status={status}
+                  />
+                )}
                 {isEdit && (
                   <Dropdown buttonStyle="text" icon={MenuHorizontal}>
                     <Dropdown.Menu>
@@ -169,6 +172,13 @@ const Form = ({
               </div>
             </div>
             <div className="mt-10">
+              {isEdit && !isNil(schedule) && (
+                <ShowSchedule
+                  articleId={articleId}
+                  isLoading={isFetchingSchedule}
+                  schedule={schedule}
+                />
+              )}
               {!isEmpty(filteredErrors(errors)) && (
                 <Typography className="neeto-ui-input__error p-1" style="body3">
                   {formatTitleAndBodyErrors(errors)}

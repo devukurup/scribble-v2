@@ -1,20 +1,20 @@
 import React from "react";
 
 import { Container } from "neetoui/layouts";
-import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import routes from "src/routes";
 
 import SidebarWrapper from "Dashboard/SidebarWrapper";
 import { useCreateArticle } from "hooks/reactQuery/useArticlesApi";
+import { findBy } from "neetocommons/pure";
 
-import { INITIAL_VALUES, STATUS } from "./constants";
+import { INITIAL_VALUES } from "./constants";
 import Form from "./Form";
+import { STATUS_DROPDOWN_MENU } from "./Form/constants";
 
 const Create = () => {
   const history = useHistory();
 
-  const { t } = useTranslation();
   const redirectToDashboard = () => history.push(routes.articles.index);
 
   const { mutate: createArticle, isLoading: isCreating } = useCreateArticle({
@@ -26,7 +26,7 @@ const Create = () => {
       categoryId: values.category.value,
       title: values.title,
       body: values.body,
-      status: STATUS[values.status],
+      status: findBy({ label: values.status }, STATUS_DROPDOWN_MENU).value,
     };
     createArticle(payload);
   };
@@ -36,7 +36,7 @@ const Create = () => {
       <Container>
         <Form
           handleSubmit={handleSubmit}
-          initialStatus={t("statuses.publish")}
+          initialStatus={STATUS_DROPDOWN_MENU[0].label}
           initialValues={INITIAL_VALUES}
           isSubmitting={isCreating}
           onClose={redirectToDashboard}

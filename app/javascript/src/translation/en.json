@@ -30,7 +30,9 @@
     "errorImage": "Error Image",
     "articleCount_one": "{{count}} article",
     "articleCount_other": "{{count}} articles",
-    "continue": "Continue"
+    "continue": "Continue",
+    "date": "Date",
+    "time": "Time"
   },
 
   "dashboard": {
@@ -88,7 +90,11 @@
     "draft": "Draft",
     "publish": "Publish",
     "saveDraft": "Save as draft",
-    "unpublish": "Unpublish"
+    "unpublish": "Unpublish",
+    "later": {
+      "publish": "Publish later",
+      "unpublish": "Unpublish later"
+    }
   },
   "validations": {
     "required": "{{field}} is required",
@@ -97,7 +103,8 @@
     "invalidPassword": "Include at least {{letterCount}} letter and {{digitCount}} number",
     "minPasswordCharacters": "Have at least {{count}} characters",
     "invalidFromPath": "From path must be valid",
-    "invalidToPath": "To path must be a valid URL or a path"
+    "invalidToPath": "To path must be a valid URL or a path",
+    "notInPast": "{{entity}} cannot be in the past."
   },
   "delete": {
     "title": "Delete {{entity}}",
@@ -128,6 +135,15 @@
     "placeholders": {
       "body": "Add description here.",
       "title": "Add title here."
+    },
+    "schedule": {
+      "description": "Article will be {{event}}ed at {{time}}",
+      "modalTitle": "Schedule {{event}}",
+      "delete": "Delete schedule",
+      "placeholders": {
+        "date": "Enter date",
+        "time": "Enter time"
+      }
     }
   },
   "category": {

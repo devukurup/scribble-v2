@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
+require "sidekiq/testing"
+
 def enable_test_coverage
   require "simplecov"
+
   SimpleCov.start do
     add_filter "/test/"
     add_group "Models", "app/models"

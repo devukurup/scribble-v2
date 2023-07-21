@@ -19,6 +19,7 @@ Rails.application.routes.draw do
           resources :versions, only: %i[index show], module: :articles do
             patch :restore, on: :member
           end
+          resource :schedule, only: %i[show create destroy], module: :articles
         end
         resource :site, only: %i[show update]
         resources :redirections, except: %i[new edit show]
