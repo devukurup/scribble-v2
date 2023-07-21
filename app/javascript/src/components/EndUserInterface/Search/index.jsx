@@ -4,6 +4,7 @@ import { Search as NeetoUISearch } from "neetoicons";
 import { Input } from "neetoui";
 import ReactDOM from "react-dom";
 import { useTranslation } from "react-i18next";
+import { ESCAPE_KEY } from "src/constants";
 
 import { useSearchArticles } from "hooks/reactQuery/public/useArticlesApi";
 import useDebounce from "hooks/useDebounce";
@@ -30,6 +31,12 @@ const Search = ({ setIsSearchBarOpen }) => {
     setSearchTerm(event.target.value);
   };
 
+  const handleKeyDown = event => {
+    if (event.key === ESCAPE_KEY) {
+      setIsSearchBarOpen(false);
+    }
+  };
+
   useEffect(() => {
     if (debouncedSearchTerm.trim().length > DEFAULT_SEARCH_LENGTH) refetch();
   }, [debouncedSearchTerm]);
@@ -38,6 +45,7 @@ const Search = ({ setIsSearchBarOpen }) => {
     <div
       className="fixed inset-0 z-50 flex h-full w-full items-center justify-center overflow-y-auto bg-gray-400 bg-opacity-80 "
       onClick={() => setIsSearchBarOpen(false)}
+      onKeyDown={handleKeyDown}
     >
       <div
         className="flex w-1/2 flex-col"
