@@ -105,77 +105,81 @@ const Form = ({
       >
         {({ errors, setFieldValue, isValid, dirty, setErrors }) => (
           <FormikForm>
-            <div className="mx-4 flex items-center justify-between">
-              <div className="w-96">
-                {isFetchingCategories ? (
-                  <Spinner />
-                ) : (
-                  <Select
-                    isCreateable
-                    isSearchable
-                    isLoading={isFetchingCategories || isCreatingCategories}
-                    name="category"
-                    options={formatCategories(categories)}
-                    placeholder={t("articles.selectCategory")}
-                    onCreateOption={title =>
-                      handleCreate({
-                        title,
-                        setErrors,
-                        errors,
-                        setFieldValue,
-                      })
-                    }
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="w-96">
+                  {isFetchingCategories ? (
+                    <Spinner />
+                  ) : (
+                    <Select
+                      isCreateable
+                      isSearchable
+                      isLoading={isFetchingCategories || isCreatingCategories}
+                      name="category"
+                      options={formatCategories(categories)}
+                      placeholder={t("articles.selectCategory")}
+                      onCreateOption={title =>
+                        handleCreate({
+                          title,
+                          setErrors,
+                          errors,
+                          setFieldValue,
+                        })
+                      }
+                    />
+                  )}
+                </div>
+                <div className="flex items-center space-x-3">
+                  {isEdit && (
+                    <Typography>
+                      {initialStatus === t("statuses.publish")
+                        ? t("articles.lastPublishedAt", { date: dateString })
+                        : t("articles.draftSavedAt", { date: dateString })}
+                    </Typography>
+                  )}
+                  <Button
+                    label={t("common.cancel")}
+                    style="text"
+                    type="reset"
+                    onClick={onClose}
                   />
-                )}
+                  {isEdit && !isNil(schedule) ? (
+                    <Button
+                      disabled={!isValid || isSubmitting}
+                      label={status}
+                      type="submit"
+                    />
+                  ) : (
+                    <StatusDropdown
+                      isEdit={isEdit}
+                      setStatus={setStatus}
+                      status={status}
+                      isDisabled={
+                        isEdit
+                          ? !isValid || isSubmitting
+                          : isSubmitting || !isValid || !dirty
+                      }
+                    />
+                  )}
+                  {isEdit && (
+                    <Dropdown buttonStyle="text" icon={MenuHorizontal}>
+                      <Dropdown.Menu>
+                        <Dropdown.MenuItem.Button
+                          style="danger"
+                          onClick={handleDelete}
+                        >
+                          {t("common.delete")}
+                        </Dropdown.MenuItem.Button>
+                        <Dropdown.MenuItem.Button
+                          onClick={() => setIsVersionsPaneOpen(true)}
+                        >
+                          {t("articles.versions.view")}
+                        </Dropdown.MenuItem.Button>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  )}
+                </div>
               </div>
-              <div className="flex items-center space-x-3">
-                {isEdit && (
-                  <Typography>
-                    {initialStatus === t("statuses.publish")
-                      ? t("articles.lastPublishedAt", { date: dateString })
-                      : t("articles.draftSavedAt", { date: dateString })}
-                  </Typography>
-                )}
-                <Button
-                  label={t("common.cancel")}
-                  style="text"
-                  type="reset"
-                  onClick={onClose}
-                />
-                {isEdit && !isNil(schedule) ? (
-                  <Button label={status} type="submit" />
-                ) : (
-                  <StatusDropdown
-                    isEdit={isEdit}
-                    setStatus={setStatus}
-                    status={status}
-                    isDisabled={
-                      isEdit
-                        ? !isValid || isSubmitting
-                        : isSubmitting || !isValid || !dirty
-                    }
-                  />
-                )}
-                {isEdit && (
-                  <Dropdown buttonStyle="text" icon={MenuHorizontal}>
-                    <Dropdown.Menu>
-                      <Dropdown.MenuItem.Button
-                        style="danger"
-                        onClick={handleDelete}
-                      >
-                        {t("common.delete")}
-                      </Dropdown.MenuItem.Button>
-                      <Dropdown.MenuItem.Button
-                        onClick={() => setIsVersionsPaneOpen(true)}
-                      >
-                        {t("articles.versions.view")}
-                      </Dropdown.MenuItem.Button>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                )}
-              </div>
-            </div>
-            <div className="mt-10">
               {isEdit && !isNil(schedule) && (
                 <ShowSchedule
                   articleId={articleId}
@@ -183,6 +187,8 @@ const Form = ({
                   schedule={schedule}
                 />
               )}
+            </div>
+            <div className="mt-5">
               {!isEmpty(filteredErrors(errors)) && (
                 <Typography className="neeto-ui-input__error p-1" style="body3">
                   {formatTitleAndBodyErrors(errors)}

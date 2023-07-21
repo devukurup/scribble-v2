@@ -7,6 +7,7 @@ import { DEFAULT_PAGE_NUMBER, PAGINATION_LIMIT } from "src/constants";
 import { isEven } from "src/utils";
 
 import { useUpdateArticle } from "hooks/reactQuery/useArticlesApi";
+import useDebounce from "hooks/useDebounce";
 
 import {
   ACTION_KEY,
@@ -22,12 +23,8 @@ const Table = ({
   articles,
   totalCount,
   isLoading,
-  debouncedSearchTerm,
-  activeStatus,
-  setActiveStatus,
-  setSearchTerm,
-  selectedCategories,
-  setSelectedCategories,
+  filters,
+  setFilters,
   selectedColumns,
   selectedRowIds,
   setSelectedRowIds,
@@ -36,6 +33,10 @@ const Table = ({
   const [currentPageNumber, setCurrentPageNumber] =
     useState(DEFAULT_PAGE_NUMBER);
   const searchParams = new URLSearchParams(window.location.search);
+
+  const { searchTerm, selectedCategories, activeStatus } = filters;
+
+  const debouncedSearchTerm = useDebounce(searchTerm);
 
   const handleDelete = row => {
     setIsDeleteAlertOpen(true);
@@ -68,8 +69,11 @@ const Table = ({
   useEffect(() => {
     const urlStatus = searchParams.get("status");
     const urlSearchTerm = searchParams.get("search");
-    setActiveStatus(ARTICLE_STATUSES[urlStatus] ?? DEFAULT_ACTIVE_STATUS);
-    urlSearchTerm ? setSearchTerm(urlSearchTerm) : setSearchTerm("");
+    setFilters({
+      activeStatus: ARTICLE_STATUSES[urlStatus] ?? DEFAULT_ACTIVE_STATUS,
+      searchTerm: urlSearchTerm ?? "",
+    });
+
     setCurrentPageNumber(
       parseInt(searchParams.get("page") || DEFAULT_PAGE_NUMBER)
     );
@@ -99,12 +103,9 @@ const Table = ({
   if (articles?.filteredArticlesCount === 0) {
     return (
       <Empty
-        activeStatus={activeStatus}
+        filters={filters}
         search={debouncedSearchTerm}
-        selectedCategories={selectedCategories}
-        setActiveStatus={setActiveStatus}
-        setSearch={setSearchTerm}
-        setSelectedCategories={setSelectedCategories}
+        setFilters={setFilters}
         totalCount={articles?.allArticlesCount}
       />
     );

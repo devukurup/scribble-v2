@@ -8,16 +8,10 @@ import EmptyImage from "images/Empty";
 
 import { getEmptyArticleProps } from "./utils";
 
-const Empty = ({
-  activeStatus,
-  search,
-  selectedCategories,
-  setActiveStatus,
-  setSearch,
-  setSelectedCategories,
-  totalCount,
-}) => {
+const Empty = ({ search, filters, setFilters, totalCount }) => {
   const history = useHistory();
+
+  const { activeStatus, selectedCategories } = filters;
 
   const redirectToNewArticle = () => {
     history.push(routes.articles.new);
@@ -27,9 +21,7 @@ const Empty = ({
     activeStatus,
     search,
     selectedCategories,
-    setActiveStatus,
-    setSearch,
-    setSelectedCategories,
+    setFilters,
     totalCount,
     redirectToNewArticle,
   });

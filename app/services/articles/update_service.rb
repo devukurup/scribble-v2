@@ -10,7 +10,6 @@ class Articles::UpdateService
   def process!
     load_schedule!
     update_article!
-    destroy_schedule!
   rescue ActiveRecord::RecordNotFound
   end
 
@@ -24,9 +23,5 @@ class Articles::UpdateService
       schedule.article.published! and return if schedule.publish?
 
       schedule.article.draft! if schedule.unpublish?
-    end
-
-    def destroy_schedule!
-      schedule.destroy!
     end
 end
