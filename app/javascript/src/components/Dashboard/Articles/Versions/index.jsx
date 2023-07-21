@@ -21,9 +21,11 @@ const Versions = ({ isOpen, onClose, title, articleId, handleRestore }) => {
         {isLoading ? (
           <Spinner />
         ) : (
-          versions.map(version => (
+          versions.map((version, index) => (
             <Item
               handleRestore={handleRestore}
+              isCreated={index === versions.length - 1}
+              isRecent={index === 0}
               key={version.id}
               version={version}
             />
