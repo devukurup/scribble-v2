@@ -56,6 +56,8 @@ group :development, :test do
   gem "faker"
 
   gem "pry-byebug"
+
+  gem "database_cleaner"
 end
 
 group :development do
@@ -75,6 +77,10 @@ end
 group :test do
   # Code coverage analysis tool
   gem "simplecov", require: false
+
+  # for stubbing and setting expectations on HTTP requests
+  gem "webmock"
+
 end
 
 gem "shakapacker"
