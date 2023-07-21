@@ -84,7 +84,7 @@ const Table = ({
     });
     setCurrentPageNumber(DEFAULT_PAGE_NUMBER);
     history.push({ search: `?${currentUrlParams.toString()}` });
-  }, [debouncedSearchTerm, activeStatus]);
+  }, [debouncedSearchTerm, activeStatus, selectedCategories]);
 
   const filterColumns = () => {
     const availableColumnKeys = selectedColumns
