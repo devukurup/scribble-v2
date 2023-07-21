@@ -146,10 +146,14 @@ const Form = ({
                   <Button label={status} type="submit" />
                 ) : (
                   <StatusDropdown
-                    isDisabled={isSubmitting || !isValid || !dirty}
                     isEdit={isEdit}
                     setStatus={setStatus}
                     status={status}
+                    isDisabled={
+                      isEdit
+                        ? !isValid || isSubmitting
+                        : isSubmitting || !isValid || !dirty
+                    }
                   />
                 )}
                 {isEdit && (

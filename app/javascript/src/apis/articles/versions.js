@@ -1,15 +1,16 @@
 import axios from "axios";
 import { API_V1_BASE_URL } from "src/constants";
 
-const BASE_URL = articleId =>
+const buildBaseUrl = articleId =>
   `${API_V1_BASE_URL}/articles/${articleId}/versions`;
 
-const list = articleId => axios.get(BASE_URL(articleId));
+const list = articleId => axios.get(buildBaseUrl(articleId));
 
-const show = ({ articleId, id }) => axios.get(`${BASE_URL(articleId)}/${id}`);
+const show = ({ articleId, id }) =>
+  axios.get(`${buildBaseUrl(articleId)}/${id}`);
 
 const restore = ({ articleId, id }) =>
-  axios.patch(`${BASE_URL(articleId)}/${id}/restore`);
+  axios.patch(`${buildBaseUrl(articleId)}/${id}/restore`);
 
 const versionsApi = { list, show, restore };
 

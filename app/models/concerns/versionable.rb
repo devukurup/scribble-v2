@@ -27,8 +27,6 @@ module Versionable
   private
 
     def set_paper_trail_event
-      self.paper_trail_event = VERSION_EVENTS[:created] and return if id.nil?
-
       self.paper_trail_event = VERSION_EVENTS[self.status] unless self.paper_trail_event == VERSION_EVENTS[:restored]
     end
 

@@ -49,7 +49,7 @@ const Modal = ({ isOpen, onClose, scheduleEvent, setScheduleEvent }) => {
   return (
     <NeetoUIModal isOpen={isOpen} onClose={onClose}>
       <NeetoUIModal.Header>
-        <Typography style="h4" weight="semibold">
+        <Typography style="h3" weight="semibold">
           {t("articles.schedule.modalTitle", { event: scheduleEvent })}
         </Typography>
       </NeetoUIModal.Header>

@@ -1,0 +1,23 @@
+th.ant-table-cell.ant-table-column-has-sorters {
+  &:hover {
+    color: rgb(var(--neeto-ui-gray-700)) !important;
+  }
+  .ant-table-column-sorters {
+    .ant-table-column-sorter.ant-table-column-sorter-full {
+      .ant-table-column-sorter-inner {
+        .anticon-caret-up,
+        .anticon-caret-down {
+          opacity: 1;
+          visibility: visible;
+        }
+        .ant-table-column-sorter-up,
+        .ant-table-column-sorter-down {
+          color: rgb(var(--neeto-ui-gray-200)) !important;
+        }
+        .active {
+          color: rgb(var(--neeto-ui-gray-700)) !important;
+        }
+      }
+    }
+  }
+}
