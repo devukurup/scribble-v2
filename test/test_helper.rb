@@ -22,6 +22,10 @@ enable_test_coverage if ENV["COVERAGE"]
 ENV["RAILS_ENV"] ||= "test"
 require_relative "../config/environment"
 require "rails/test_help"
+require "minitest/spec"
+require "minitest/autorun"
+require "webmock/minitest"
+require "mocha/minitest"
 
 class ActiveSupport::TestCase
   include ActionView::Helpers::TranslationHelper
