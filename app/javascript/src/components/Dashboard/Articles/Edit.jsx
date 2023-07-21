@@ -11,10 +11,11 @@ import {
   useShowArticle,
   useUpdateArticle,
 } from "hooks/reactQuery/useArticlesApi";
+import { findBy } from "neetocommons/pure";
 
-import { STATUS } from "./constants";
 import DeleteAlert from "./DeleteAlert";
 import Form from "./Form";
+import { STATUS_DROPDOWN_MENU } from "./Form/constants";
 import { formattedDateTime } from "./utils";
 import Versions from "./Versions";
 import VersionModal from "./Versions/Version";
@@ -47,7 +48,7 @@ const Edit = () => {
       categoryId: values.category.value,
       title: values.title,
       body: values.body,
-      status: STATUS[values.status],
+      status: findBy({ label: values.status }, STATUS_DROPDOWN_MENU).value,
     };
     updateArticle({ id: articleId, payload });
   };
@@ -94,9 +95,7 @@ const Edit = () => {
               : article?.updatedAt
           )}
           initialStatus={
-            article.status === t("statuses.published").toLowerCase()
-              ? t("statuses.publish")
-              : t("statuses.saveDraft")
+            findBy({ value: article.status }, STATUS_DROPDOWN_MENU).label
           }
           initialValues={{
             ...article,

@@ -46,7 +46,10 @@ const Table = ({
 
   const handleUpdate = ({ id, publishStatus }) => {
     const payload = {
-      status: publishStatus === "Publish" ? "published" : "draft",
+      status:
+        publishStatus === "Publish"
+          ? ARTICLE_STATUSES.published
+          : ARTICLE_STATUSES.draft,
     };
     updateArticle({ id, payload });
   };
