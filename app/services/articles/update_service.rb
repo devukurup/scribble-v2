@@ -12,7 +12,6 @@ class Articles::UpdateService
     update_article!
     destroy_schedule!
   rescue ActiveRecord::RecordNotFound
-    nil
   end
 
   private

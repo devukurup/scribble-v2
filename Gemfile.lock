@@ -168,6 +168,8 @@ GEM
     method_source (1.0.0)
     mini_mime (1.1.2)
     minitest (5.18.0)
+    mocha (2.0.4)
+      ruby2_keywords (>= 0.0.5)
     msgpack (1.7.1)
     net-imap (0.3.4)
       date
@@ -263,6 +265,7 @@ GEM
       rack (>= 1.1)
       rubocop (>= 1.33.0, < 2.0)
     ruby-progressbar (1.11.0)
+    ruby2_keywords (0.0.5)
     semantic_range (3.0.0)
     shakapacker (6.6.0)
       activesupport (>= 5.2)
@@ -326,6 +329,7 @@ DEPENDENCIES
   faker
   jbuilder
   kaminari
+  mocha
   paper_trail
   pg (~> 1.1)
   pry-byebug

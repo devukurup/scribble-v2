@@ -81,6 +81,8 @@ group :test do
   # for stubbing and setting expectations on HTTP requests
   gem "webmock"
 
+  # To mock and stub objects in tests
+  gem "mocha"
 end
 
 gem "shakapacker"

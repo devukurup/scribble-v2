@@ -77,10 +77,10 @@ class Api::V1::CategoriesControllerTest < ActionDispatch::IntegrationTest
 
   private
 
-    def category_params
+    def category_params(title = "test title")
       {
         category: {
-          title: "test title"
+          title:
         }
       }
     end

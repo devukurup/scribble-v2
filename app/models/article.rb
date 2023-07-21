@@ -20,6 +20,7 @@ class Article < ApplicationRecord
 
   before_validation :set_slug!, if: :title_changed?
   before_save :set_last_published_at
+  before_update :destroy_shedule!, if: :schedule_invalid?
 
   private
 
@@ -43,5 +44,17 @@ class Article < ApplicationRecord
       if status_changed? && status_was == "draft"
         self.last_published_at = Time.zone.now
       end
+    end
+
+    def schedule_invalid?
+      schedule.present? && status_changed? && same_status_and_event?
+    end
+
+    def same_status_and_event?
+      schedule.publish? && self.published? || schedule.unpublish? && self.draft?
+    end
+
+    def destroy_shedule!
+      schedule.destroy!
     end
 end
