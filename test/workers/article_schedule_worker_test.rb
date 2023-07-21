@@ -5,6 +5,8 @@ require "sidekiq/testing"
 
 class ArticleScheduleWorkerTest < ActiveJob::TestCase
   def test_schedule_service_is_triggered
+    Sidekiq::Testing.inline!
+
     schedule_service_mock = MiniTest::Mock.new
     schedule_service_mock.expect(:process, true)
 
