@@ -39,4 +39,12 @@ class Api::V1::Articles::SchedulesControllerTest < ActionDispatch::IntegrationTe
     assert_response :success
     assert_nil response_json["schedule"]
   end
+
+  def test_should_destroy_schedule
+    delete(api_v1_article_schedule_path(@article.id), headers:)
+
+    assert_response :success
+    assert_nil @article.reload.schedule
+    assert_equal t("success.deleted", entity: Schedule.model_name.human), response_json["notice"]
+  end
 end
