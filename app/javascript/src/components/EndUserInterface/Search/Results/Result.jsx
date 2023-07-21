@@ -1,5 +1,6 @@
 import React from "react";
 
+import classNames from "classnames";
 import { Typography } from "neetoui";
 
 import {
@@ -8,9 +9,14 @@ import {
   renderWithHighlightedTerms,
 } from "./utils";
 
-const Result = ({ onClick, title, body, searchTerm }) => (
+const Result = ({ onClick, title, body, searchTerm, isFocussed }) => (
   <div
-    className="flex w-full cursor-pointer items-center justify-start border-t-2 bg-white px-6 py-3 hover:bg-gray-50"
+    className={classNames(
+      "flex w-full cursor-pointer items-center justify-start border-t-2 px-6 py-3 hover:bg-gray-50",
+      {
+        "neeto-ui-bg-gray-200": isFocussed,
+      }
+    )}
     onClick={onClick}
   >
     <div className="flex flex-col">
