@@ -10,6 +10,7 @@ module.exports = {
     components: absolutePath("src/components"),
     constants: absolutePath("src/constants"),
     contexts: absolutePath("src/contexts"),
+    channels: absolutePath("src/channels"),
     reducers: absolutePath("src/reducers"),
     helpers: absolutePath("src/helpers"),
     Dashboard: absolutePath("src/components/Dashboard"),
@@ -21,6 +22,7 @@ module.exports = {
     neetoeditor: "@bigbinary/neeto-editor",
     neetocommons: "@bigbinary/neeto-commons-frontend",
     neetomolecules: "@bigbinary/neeto-molecules",
+    progressbar: "@ramonak/react-progress-bar",
   },
   fallback: {
     crypto: require.resolve("crypto-browserify"),
