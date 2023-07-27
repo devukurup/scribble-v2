@@ -7,6 +7,7 @@ class User < ApplicationRecord
   belongs_to :site
 
   has_many :articles
+  has_one_attached :report
 
   validates :email, presence: true, uniqueness: true, format: { with: VALID_EMAIL_REGEX }
   validates :first_name, presence: true, length: { maximum: MAX_NAME_LENGTH }
