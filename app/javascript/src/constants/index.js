@@ -13,3 +13,5 @@ export const SINGULAR = { count: 1 };
 export const PLURAL = { count: 2 };
 
 export const ESCAPE_KEY = "Escape";
+
+export const ENTER_KEY = "Enter";

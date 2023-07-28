@@ -34,6 +34,7 @@ const App = () => {
   const queryClient = new QueryClient();
 
   const displayErrorPage = useDisplayErrorPage();
+
   if (displayErrorPage) {
     return <PageNotFound route={routes.dashboard} />;
   }
