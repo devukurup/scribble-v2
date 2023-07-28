@@ -1,9 +1,11 @@
 import { useQuery } from "react-query";
-import { LOAD_PUBLIC_CATEGORIES_KEY } from "src/constants";
 
 import categoriesApi from "apis/public/categories";
+import { QUERY_KEYS } from "constants/query";
+
+const { PUBLIC_CATEGORIES } = QUERY_KEYS;
 
 export const useFetchCategories = (options = {}) =>
-  useQuery([LOAD_PUBLIC_CATEGORIES_KEY], () => categoriesApi.list(), {
+  useQuery([PUBLIC_CATEGORIES], () => categoriesApi.list(), {
     ...options,
   });

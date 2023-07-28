@@ -1,17 +1,15 @@
 import { useQuery, useMutation, useQueryClient } from "react-query";
-import { LOAD_CATEGORIES_KEY } from "src/constants";
 
 import categoriesApi from "apis/categories";
+import { QUERY_KEYS } from "constants/query";
+
+const { CATEGORIES } = QUERY_KEYS;
 
 export const useFetchCategories = ({ searchTerm = "", options = {} }) =>
-  useQuery(
-    [LOAD_CATEGORIES_KEY, searchTerm],
-    () => categoriesApi.list(searchTerm),
-    {
-      ...options,
-      refetchOnWindowFocus: false,
-    }
-  );
+  useQuery([CATEGORIES, searchTerm], () => categoriesApi.list(searchTerm), {
+    ...options,
+    refetchOnWindowFocus: false,
+  });
 
 export const useUpdateCategory = (options = {}) => {
   const queryClient = useQueryClient();
@@ -23,7 +21,7 @@ export const useUpdateCategory = (options = {}) => {
       ...options,
       onSuccess: data => {
         options.onSuccess?.(data);
-        queryClient.invalidateQueries(LOAD_CATEGORIES_KEY);
+        queryClient.invalidateQueries(CATEGORIES);
       },
     }
   );
@@ -36,7 +34,7 @@ export const useCreateCategory = (options = {}) => {
     ...options,
     onSuccess: data => {
       options.onSuccess?.(data);
-      queryClient.invalidateQueries(LOAD_CATEGORIES_KEY);
+      queryClient.invalidateQueries(CATEGORIES);
     },
   });
 };
@@ -48,7 +46,7 @@ export const useDeleteCategory = (options = {}) => {
     ...options,
     onSuccess: data => {
       options.onSuccess?.(data);
-      queryClient.invalidateQueries(LOAD_CATEGORIES_KEY);
+      queryClient.invalidateQueries(CATEGORIES);
     },
   });
 };

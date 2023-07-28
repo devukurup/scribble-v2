@@ -1,8 +1,8 @@
 import { t } from "i18next";
 import { Settings, Articles, ExternalLink, NeetoAnalytics } from "neetoicons";
+import { PLURAL } from "src/constants";
 import routes from "src/routes";
 
-import { PLURAL } from "constants";
 import { capitalize } from "neetocommons/pure";
 
 export const RANDOM_PROFILE_IMAGE_URL = "https://i.pravatar.cc/300";

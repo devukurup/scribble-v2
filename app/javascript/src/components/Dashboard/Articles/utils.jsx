@@ -4,28 +4,19 @@ import dayjs from "dayjs";
 import { t } from "i18next";
 import { MenuHorizontal } from "neetoicons";
 import { Button, Typography, Dropdown } from "neetoui";
-import { isEmpty, join, pick, values } from "ramda";
+import { isEmpty } from "ramda";
 import { TITLE_TRUNCATE_LENGTH, SINGULAR } from "src/constants";
 import routes from "src/routes";
 import { formattedDate, truncate } from "src/utils";
 
 import { buildUrl } from "neetocommons/utils";
 
-import {
-  ARTICLE_STATUSES,
-  DEFAULT_ACTIVE_STATUS,
-  TITLE_BODY_KEYS,
-} from "./constants";
+import { ARTICLE_STATUSES, DEFAULT_ACTIVE_STATUS } from "./constants";
 
 const { Menu, MenuItem } = Dropdown;
 
 export const formatCategories = categories =>
   categories?.map(({ title, id }) => ({ label: title, value: id }));
-
-export const filteredErrors = errors => pick(TITLE_BODY_KEYS, errors);
-
-export const formatTitleAndBodyErrors = errors =>
-  join(", ", values(filteredErrors(errors)));
 
 export const columnData = ({ handleDelete, handleUpdate }) => [
   {

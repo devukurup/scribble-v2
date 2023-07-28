@@ -40,4 +40,5 @@ export const NEW_REDIRECTION = {
 export const DEFAULT_SELECTED_REDIRECTION = {};
 
 export const FROM_PATH_TRUNCATE_LENGTH = 20;
+
 export const TO_PATH_TRUNCATE_LENGTH = 30;

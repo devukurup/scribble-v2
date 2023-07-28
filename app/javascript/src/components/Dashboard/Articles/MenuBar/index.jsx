@@ -4,8 +4,8 @@ import { Plus, Search } from "neetoicons";
 import { Typography } from "neetoui";
 import { MenuBar as NeetoUIMenuBar } from "neetoui/layouts";
 import { useTranslation } from "react-i18next";
+import { PLURAL, ESCAPE_KEY } from "src/constants";
 
-import { PLURAL, ESCAPE_KEY } from "constants";
 import useDebounce from "hooks/useDebounce";
 import { capitalize } from "neetocommons/pure";
 

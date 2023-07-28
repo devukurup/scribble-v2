@@ -2,12 +2,6 @@ import { t } from "i18next";
 
 import { ARTICLE_STATUSES } from "Dashboard/Articles/constants";
 
-export const isCategoryPresent = ({ categoryId, categories }) =>
-  categories.some(({ id }) => categoryId === id);
-
-export const removeCategory = ({ categoryId, categories }) =>
-  categories.filter(({ id }) => categoryId !== id);
-
 export const statuses = articles => [
   {
     label: t("statuses.all"),

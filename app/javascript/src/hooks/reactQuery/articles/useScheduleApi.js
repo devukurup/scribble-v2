@@ -1,10 +1,12 @@
 import { useQuery, useQueryClient, useMutation } from "react-query";
-import { LOAD_ARTICLE_SCHEDULE_KEY } from "src/constants";
 
 import scheduleApi from "apis/articles/schedule";
+import { QUERY_KEYS } from "constants/query";
+
+const { ARTICLE_SCHEDULE } = QUERY_KEYS;
 
 export const useShowSchedule = ({ id, options = {} }) =>
-  useQuery([LOAD_ARTICLE_SCHEDULE_KEY, id], () => scheduleApi.show(id), {
+  useQuery([ARTICLE_SCHEDULE, id], () => scheduleApi.show(id), {
     ...options,
   });
 
@@ -15,7 +17,7 @@ export const useCreateSchedule = (options = {}) => {
     ...options,
     onSuccess: data => {
       options.onSuccess?.(data);
-      queryClient.invalidateQueries(LOAD_ARTICLE_SCHEDULE_KEY);
+      queryClient.invalidateQueries(ARTICLE_SCHEDULE);
     },
   });
 };
@@ -27,7 +29,7 @@ export const useDeleteSchedule = (options = {}) => {
     ...options,
     onSuccess: data => {
       options.onSuccess?.(data);
-      queryClient.invalidateQueries(LOAD_ARTICLE_SCHEDULE_KEY);
+      queryClient.invalidateQueries(ARTICLE_SCHEDULE);
     },
   });
 };

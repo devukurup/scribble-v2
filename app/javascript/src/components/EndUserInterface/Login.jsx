@@ -6,10 +6,10 @@ import { Input } from "neetoui/formik";
 import { useTranslation } from "react-i18next";
 import routes from "src/routes";
 
-import { setToSessionStorage } from "helpers/session";
 import { useLoginSession } from "hooks/reactQuery/public/useSessionApi";
 import { useShowSite } from "hooks/reactQuery/useSiteApi";
 import { capitalize } from "neetocommons/pure";
+import { setToSessionStorage } from "utils/storage";
 
 import { INITIAL_VALUES, VALIDATION_SCHEMA } from "./constants";
 import NavBar from "./NavBar";

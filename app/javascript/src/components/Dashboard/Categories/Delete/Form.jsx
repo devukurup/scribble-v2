@@ -5,9 +5,9 @@ import { Warning } from "neetoicons";
 import { Button, Callout, Spinner, Modal, Typography } from "neetoui";
 import { Select } from "neetoui/formik";
 import { Trans, useTranslation } from "react-i18next";
-import { deleteObjectById } from "src/utils";
 
 import { formatCategories } from "Dashboard/Articles/utils";
+import { removeById } from "neetocommons/pure";
 
 import { INITIAL_VALUES, VALIDATION_SCHEMA } from "./constants";
 
@@ -53,10 +53,8 @@ const Form = ({ onSubmit, category, onClose, categories = [], isLoading }) => {
                 required
                 label={t("delete.category.selectLabel")}
                 name="category"
+                options={formatCategories(removeById(id, categories ?? []))}
                 placeholder={t("articles.selectCategory")}
-                options={formatCategories(
-                  deleteObjectById({ arr: categories ?? [], id })
-                )}
               />
             </Modal.Body>
             <Modal.Footer className="flex space-x-2">

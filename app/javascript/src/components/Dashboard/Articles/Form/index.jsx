@@ -5,9 +5,9 @@ import { FormikEditor } from "neetoeditor";
 import { MenuHorizontal } from "neetoicons";
 import { Dropdown, Typography, Button, Spinner } from "neetoui";
 import { Textarea, Select } from "neetoui/formik";
-import { isEmpty, isNil } from "ramda";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
+import { ENTER_KEY } from "src/constants";
 
 import { CATEGORY_VALIDATION_SCHEMA } from "Dashboard/Categories/constants";
 import { useShowSchedule } from "hooks/reactQuery/articles/useScheduleApi";
@@ -15,21 +15,15 @@ import {
   useFetchCategories,
   useCreateCategory,
 } from "hooks/reactQuery/useCategoriesApi";
+import { noop, isNotEmpty, isNotNil } from "neetocommons/pure";
 
+import { DEFAULT_ROW_COUNT, EDITOR_ADDONS } from "./constants";
 import ShowSchedule from "./Schedule/Show";
 import StatusDropdown from "./StatusDropdown";
+import { filteredErrors, formatTitleAndBodyErrors } from "./utils";
 
-import {
-  VALIDATION_SCHEMA,
-  EDITOR_ADDONS,
-  KEYBOARD_ENTER_KEY,
-  DEFAULT_ROW_COUNT,
-} from "../constants";
-import {
-  filteredErrors,
-  formatCategories,
-  formatTitleAndBodyErrors,
-} from "../utils";
+import { VALIDATION_SCHEMA } from "../constants";
+import { formatCategories } from "../utils";
 
 const Form = ({
   handleSubmit,
@@ -37,8 +31,8 @@ const Form = ({
   onClose,
   initialStatus,
   isEdit = false,
-  handleDelete = () => {},
-  setIsVersionsPaneOpen = () => {},
+  handleDelete = noop,
+  setIsVersionsPaneOpen = noop,
   dateString = "",
   isSubmitting,
 }) => {
@@ -143,7 +137,7 @@ const Form = ({
                     type="reset"
                     onClick={onClose}
                   />
-                  {isEdit && !isNil(schedule) ? (
+                  {isEdit && isNotNil(schedule) ? (
                     <Button
                       disabled={!isValid || isSubmitting}
                       label={status}
@@ -180,7 +174,7 @@ const Form = ({
                   )}
                 </div>
               </div>
-              {isEdit && !isNil(schedule) && (
+              {isEdit && isNotNil(schedule) && (
                 <ShowSchedule
                   articleId={articleId}
                   isLoading={isFetchingSchedule}
@@ -189,7 +183,7 @@ const Form = ({
               )}
             </div>
             <div className="mt-5">
-              {!isEmpty(filteredErrors(errors)) && (
+              {isNotEmpty(filteredErrors(errors)) && (
                 <Typography className="neeto-ui-input__error p-1" style="body3">
                   {formatTitleAndBodyErrors(errors)}
                 </Typography>
@@ -216,7 +210,7 @@ const Form = ({
                       setFieldValue("title", event.target.value)
                     }
                     onKeyDown={event =>
-                      event.key === KEYBOARD_ENTER_KEY &&
+                      event.key === ENTER_KEY &&
                       !event.shiftKey &&
                       event.preventDefault()
                     }

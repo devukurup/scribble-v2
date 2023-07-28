@@ -1,10 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { LOAD_SITE_KEY } from "src/constants";
 
 import siteApi from "apis/site";
+import { QUERY_KEYS } from "constants/query";
+
+const { SITE } = QUERY_KEYS;
 
 export const useShowSite = (options = {}) =>
-  useQuery([LOAD_SITE_KEY], () => siteApi.show(), { ...options });
+  useQuery([SITE], () => siteApi.show(), { ...options });
 
 export const useUpdateSite = (options = {}) => {
   const queryClient = useQueryClient();
@@ -13,7 +15,7 @@ export const useUpdateSite = (options = {}) => {
     ...options,
     onSuccess: data => {
       options.onSuccess?.(data);
-      queryClient.invalidateQueries(LOAD_SITE_KEY);
+      queryClient.invalidateQueries(SITE);
     },
   });
 };

@@ -1,11 +1,12 @@
+import { SINGULAR } from "constants";
+
 import { t } from "i18next";
 import * as yup from "yup";
 
-import { SINGULAR } from "constants";
-import { capitalize } from "neetocommons/pure";
+import { toLabelAndValue, capitalize } from "neetocommons/pure";
 
 export const INITIAL_VALUES = {
-  category: { value: "", label: "" },
+  category: toLabelAndValue(""),
 };
 
 export const VALIDATION_SCHEMA = yup.object().shape({

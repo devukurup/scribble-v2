@@ -1,17 +1,19 @@
 import { useQuery, useQueryClient, useMutation } from "react-query";
-import { LOAD_ARTICLES_KEY, LOAD_CATEGORIES_KEY } from "src/constants";
 
 import articlesApi from "apis/articles";
+import { QUERY_KEYS } from "constants/query";
+
+const { CATEGORIES, ARTICLES } = QUERY_KEYS;
 
 export const useFetchArticles = ({ params, options }) =>
-  useQuery([LOAD_ARTICLES_KEY, params], () => articlesApi.list(params), {
+  useQuery([ARTICLES, params], () => articlesApi.list(params), {
     refetchOnWindowFocus: false,
     keepPreviousData: true,
     ...options,
   });
 
 export const useShowArticle = ({ id, options = {} }) =>
-  useQuery([LOAD_ARTICLES_KEY, id], () => articlesApi.show(id), {
+  useQuery([ARTICLES, id], () => articlesApi.show(id), {
     ...options,
   });
 
@@ -22,7 +24,7 @@ export const useCreateArticle = (options = {}) => {
     ...options,
     onSuccess: data => {
       options.onSuccess?.(data);
-      queryClient.invalidateQueries(LOAD_ARTICLES_KEY);
+      queryClient.invalidateQueries(ARTICLES);
     },
   });
 };
@@ -34,8 +36,8 @@ export const useUpdateArticle = (options = {}) => {
     ...options,
     onSuccess: data => {
       options.onSuccess?.(data);
-      queryClient.invalidateQueries(LOAD_ARTICLES_KEY);
-      queryClient.invalidateQueries(LOAD_CATEGORIES_KEY);
+      queryClient.invalidateQueries(ARTICLES);
+      queryClient.invalidateQueries(CATEGORIES);
     },
   });
 };
@@ -47,8 +49,8 @@ export const useDeleteArticle = (options = {}) => {
     ...options,
     onSuccess: data => {
       options.onSuccess?.(data);
-      queryClient.invalidateQueries(LOAD_ARTICLES_KEY);
-      queryClient.invalidateQueries(LOAD_CATEGORIES_KEY);
+      queryClient.invalidateQueries(ARTICLES);
+      queryClient.invalidateQueries(CATEGORIES);
     },
   });
 };
@@ -62,8 +64,8 @@ export const useBulkDeleteArticles = (options = {}) => {
       ...options,
       onSuccess: data => {
         options.onSuccess?.(data);
-        queryClient.invalidateQueries(LOAD_ARTICLES_KEY);
-        queryClient.invalidateQueries(LOAD_CATEGORIES_KEY);
+        queryClient.invalidateQueries(ARTICLES);
+        queryClient.invalidateQueries(CATEGORIES);
       },
     }
   );
@@ -76,8 +78,8 @@ export const useBulkUpdateArticles = (options = {}) => {
     ...options,
     onSuccess: data => {
       options.onSuccess?.(data);
-      queryClient.invalidateQueries(LOAD_ARTICLES_KEY);
-      queryClient.invalidateQueries(LOAD_CATEGORIES_KEY);
+      queryClient.invalidateQueries(ARTICLES);
+      queryClient.invalidateQueries(CATEGORIES);
     },
   });
 };

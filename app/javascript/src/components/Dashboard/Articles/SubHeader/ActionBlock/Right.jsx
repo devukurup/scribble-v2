@@ -1,7 +1,8 @@
 import React from "react";
 
 import { ActionDropdown, Checkbox } from "neetoui";
-import { isPresent } from "src/utils";
+
+import { isNotPresent } from "neetocommons/pure";
 
 const Right = ({
   selectedColumns,
@@ -17,7 +18,7 @@ const Right = ({
 
   return (
     <>
-      {!isPresent(selectedArticleRowIds) && (
+      {isNotPresent(selectedArticleRowIds) && (
         <ActionDropdown
           buttonStyle="secondary"
           dropdownProps={{ closeOnSelect: false }}

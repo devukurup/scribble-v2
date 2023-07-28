@@ -1,10 +1,12 @@
 import { useQuery, useMutation, useQueryClient } from "react-query";
-import { LOAD_REDIRECTIONS_KEY } from "src/constants";
 
 import redirectionsApi from "apis/redirections";
+import { QUERY_KEYS } from "constants/query";
+
+const { REDIRECTIONS } = QUERY_KEYS;
 
 export const useFetchRedirections = (options = {}) =>
-  useQuery([LOAD_REDIRECTIONS_KEY], () => redirectionsApi.list(), options);
+  useQuery([REDIRECTIONS], () => redirectionsApi.list(), options);
 
 export const useUpdateRedirection = ({ isQuiet = false, options = {} }) => {
   const queryClient = useQueryClient();
@@ -16,7 +18,7 @@ export const useUpdateRedirection = ({ isQuiet = false, options = {} }) => {
       ...options,
       onSuccess: data => {
         options.onSuccess?.(data);
-        queryClient.invalidateQueries(LOAD_REDIRECTIONS_KEY);
+        queryClient.invalidateQueries(REDIRECTIONS);
       },
     }
   );
@@ -29,7 +31,7 @@ export const useCreateRedirection = (options = {}) => {
     ...options,
     onSuccess: data => {
       options.onSuccess?.(data);
-      queryClient.invalidateQueries(LOAD_REDIRECTIONS_KEY);
+      queryClient.invalidateQueries(REDIRECTIONS);
     },
   });
 };
@@ -41,7 +43,7 @@ export const useDeleteRedirection = (options = {}) => {
     ...options,
     onSuccess: data => {
       options.onSuccess?.(data);
-      queryClient.invalidateQueries(LOAD_REDIRECTIONS_KEY);
+      queryClient.invalidateQueries(REDIRECTIONS);
     },
   });
 };

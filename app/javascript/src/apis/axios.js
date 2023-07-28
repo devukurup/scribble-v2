@@ -3,9 +3,9 @@ import { t } from "i18next";
 import { Toastr } from "neetoui";
 import { evolve, pipe } from "ramda";
 
-import { getFromSessionStorage } from "helpers/session";
 import { keysToCamelCase, serializeKeysToSnakeCase } from "neetocommons/pure";
 import { useErrorDisplayStore } from "neetocommons/react-utils";
+import { getFromSessionStorage } from "utils/storage";
 
 axios.defaults.baseURL = "/";
 

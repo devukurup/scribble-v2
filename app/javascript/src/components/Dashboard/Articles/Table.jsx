@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import classnames from "classnames";
 import { Table as NeetoUITable } from "neetoui";
+import { pluck, prop } from "ramda";
 import { useHistory } from "react-router-dom";
 import { DEFAULT_PAGE_NUMBER, PAGINATION_LIMIT } from "src/constants";
 import { isEven } from "src/utils";
@@ -91,9 +92,10 @@ const Table = ({
   }, [debouncedSearchTerm, activeStatus, selectedCategories]);
 
   const filterColumns = () => {
-    const availableColumnKeys = selectedColumns
-      .filter(({ checked }) => checked)
-      .map(column => column.key);
+    const availableColumnKeys = pluck(
+      "key",
+      selectedColumns.filter(prop("checked"))
+    );
 
     return columnData({ handleDelete, handleUpdate }).filter(
       ({ key }) => key === ACTION_KEY || availableColumnKeys.includes(key)

@@ -1,7 +1,9 @@
 import { useMutation, useQueryClient } from "react-query";
-import { LOAD_SESSION_KEY } from "src/constants";
 
 import sessionApi from "apis/public/session";
+import { QUERY_KEYS } from "constants/query";
+
+const { SESSION } = QUERY_KEYS;
 
 export const useLoginSession = (options = {}) => {
   const queryClient = useQueryClient();
@@ -10,7 +12,7 @@ export const useLoginSession = (options = {}) => {
     ...options,
     onSuccess: data => {
       options.onSuccess?.(data);
-      queryClient.invalidateQueries(LOAD_SESSION_KEY);
+      queryClient.invalidateQueries(SESSION);
     },
   });
 };

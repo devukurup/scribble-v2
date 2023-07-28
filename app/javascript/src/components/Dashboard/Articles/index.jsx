@@ -2,11 +2,13 @@ import React, { useState } from "react";
 
 import { PageLoader } from "neetoui";
 import { Container } from "neetoui/layouts";
+import { pluck } from "ramda";
 import { DEFAULT_PAGE_NUMBER, PAGINATION_LIMIT } from "src/constants";
 
 import SidebarWrapper from "components/Dashboard/SidebarWrapper";
 import CreateCategory from "Dashboard/Categories/Create";
 import { useFetchArticles } from "hooks/reactQuery/useArticlesApi";
+import { nullSafe } from "neetocommons/pure";
 
 import { COLUMNS, INITIAL_FILTERS } from "./constants";
 import ArticleDeleteAlert from "./DeleteAlert";
@@ -30,7 +32,8 @@ const Articles = () => {
   const limit = searchParams.get("limit") || PAGINATION_LIMIT;
   const search = searchParams.get("search") || "";
   const status = searchParams.get("status") || "";
-  const selectedCategoryIds = filters.selectedCategories?.map(({ id }) => id);
+
+  const selectedCategoryIds = nullSafe(pluck)("id", filters.selectedCategories);
 
   const setEachFilters = newFilters =>
     setFilters({ ...filters, ...newFilters });

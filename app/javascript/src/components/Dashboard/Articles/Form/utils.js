@@ -1,9 +1,13 @@
 import dayjs from "dayjs";
-import { range } from "ramda";
+import { join, pick, values, range } from "ramda";
 
 import { findBy } from "neetocommons/pure";
 
-import { STATUS_DROPDOWN_MENU, ARTICLE_STATUSES } from "./constants";
+import {
+  STATUS_DROPDOWN_MENU,
+  ARTICLE_STATUSES,
+  TITLE_BODY_KEYS,
+} from "./constants";
 
 export const filterStatusOptions = ({ isEdit, status }) => {
   const statusValue = findBy({ label: status }, STATUS_DROPDOWN_MENU).value;
@@ -49,3 +53,8 @@ export const isMinutesInPast = (date, hour) => {
 
 export const mergeDateAndTime = ({ time, date }) =>
   dayjs(date).set("hour", time.hour()).set("minute", time.minute());
+
+export const filteredErrors = errors => pick(TITLE_BODY_KEYS, errors);
+
+export const formatTitleAndBodyErrors = errors =>
+  join(", ", values(filteredErrors(errors)));

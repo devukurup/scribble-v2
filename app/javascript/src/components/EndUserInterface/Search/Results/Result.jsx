@@ -9,12 +9,12 @@ import {
   renderWithHighlightedTerms,
 } from "./utils";
 
-const Result = ({ onClick, title, body, searchTerm, isFocussed }) => (
+const Result = ({ onClick, title, body, searchTerm, isFocused }) => (
   <div
     className={classNames(
       "flex w-full cursor-pointer items-center justify-start border-t-2 px-6 py-3 hover:bg-gray-50",
       {
-        "neeto-ui-bg-gray-200": isFocussed,
+        "neeto-ui-bg-gray-200": isFocused,
       }
     )}
     onClick={onClick}
