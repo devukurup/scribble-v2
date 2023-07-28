@@ -2,9 +2,9 @@ import React from "react";
 
 import { Spinner, Dropdown, Typography } from "neetoui";
 import { useTranslation } from "react-i18next";
-import { isPresent } from "src/utils";
 
 import { useFetchCategories } from "hooks/reactQuery/useCategoriesApi";
+import { isPresent } from "neetocommons/pure";
 
 const { Menu, MenuItem } = Dropdown;
 

@@ -5,8 +5,8 @@ import { Warning } from "neetoicons";
 import { Typography, Spinner, Callout } from "neetoui";
 import { isNil } from "ramda";
 import { useTranslation } from "react-i18next";
+import { SINGULAR } from "src/constants";
 
-import { SINGULAR } from "constants";
 import { capitalize } from "neetocommons/pure";
 import Scrollable from "neetomolecules/Scrollable";
 

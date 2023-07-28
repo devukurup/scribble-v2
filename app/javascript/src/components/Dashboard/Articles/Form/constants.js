@@ -61,3 +61,14 @@ export const INITIAL_VALUES = {
 };
 
 export const TIME_FORMAT = "hh:mm";
+
+export const EDITOR_ADDONS = [
+  "highlight",
+  "code-block",
+  "block-quote",
+  "divider",
+  "paste-unformatted",
+];
+export const DEFAULT_ROW_COUNT = 1;
+
+export const TITLE_BODY_KEYS = ["title", "body"];

@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import { Search } from "neetoicons";
 import { Dropdown, Input } from "neetoui";
 import { useTranslation } from "react-i18next";
+import { SINGULAR } from "src/constants";
 
-import { SINGULAR } from "constants";
 import useDebounce from "hooks/useDebounce";
 
 import List from "./List";

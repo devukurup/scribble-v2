@@ -19,14 +19,14 @@ const DownloadModal = ({ isOpen, onClose }) => {
   const [progress, setProgress] = useState(INITIAL_PROGRESS);
   const [message, setMessage] = useState("");
 
-  const { t } = useTranslation();
-  const { mutate: generatePdf } = useGeneratePdf();
-
   const handleSuccess = response => {
     FileSaver.saveAs(new Blob([response.request.response]), FILE_NAME);
     onClose();
   };
 
+  const { t } = useTranslation();
+
+  const { mutate: generatePdf } = useGeneratePdf();
   const { isLoading: isDownloading, refetch } = useDownloadPdf({
     onSuccess: response => handleSuccess(response),
   });

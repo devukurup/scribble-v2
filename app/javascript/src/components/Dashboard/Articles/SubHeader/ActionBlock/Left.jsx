@@ -4,9 +4,9 @@ import { Delete } from "neetoicons";
 import { Button, Tag, Typography } from "neetoui";
 import { isEmpty } from "ramda";
 import { useTranslation } from "react-i18next";
-import { isPresent } from "src/utils";
 
 import { useBulkUpdateArticles } from "hooks/reactQuery/useArticlesApi";
+import { removeById, isPresent } from "neetocommons/pure";
 
 import Categories from "./Dropdown/Categories";
 import Statuses from "./Dropdown/Statuses";
@@ -25,9 +25,7 @@ const Left = ({
   const { selectedCategories, searchTerm } = filters;
 
   const handleClose = id => {
-    const newCategories = selectedCategories.filter(
-      category => category.id !== id
-    );
+    const newCategories = removeById(id, selectedCategories);
 
     setFilters({ selectedCategories: newCategories });
   };
