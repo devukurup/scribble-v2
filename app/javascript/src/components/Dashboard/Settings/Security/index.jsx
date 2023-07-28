@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 
 import { Switch, Typography, Spinner } from "neetoui";
 import { useTranslation } from "react-i18next";
-import { isPresent } from "src/utils";
 
 import Wrapper from "Dashboard/Settings/Wrapper";
 import { useShowSite, useUpdateSite } from "hooks/reactQuery/useSiteApi";
+import { isPresent } from "neetocommons/pure";
 
 import Password from "./Password";
 

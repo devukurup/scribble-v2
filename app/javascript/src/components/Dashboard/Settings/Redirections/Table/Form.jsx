@@ -7,7 +7,7 @@ import { Input } from "neetoui/formik";
 
 import { FORM_VALIDATION_SCHEMA } from "Dashboard/Settings/Redirections/constants";
 
-import { FROM_PATH_PLACHOLDER, TO_PATH_PLACEHOLDER } from "./constants";
+import { FROM_PATH_PLACEHOLDER, TO_PATH_PLACEHOLDER } from "./constants";
 import Row from "./Row";
 import Cell from "./Row/Cell";
 import { formatPaths } from "./utils";
@@ -28,7 +28,7 @@ const Form = ({ isSubmitting = false, initialValues, onSubmit, onClose }) => (
               <Cell>
                 <Input
                   name="from"
-                  placeholder={FROM_PATH_PLACHOLDER}
+                  placeholder={FROM_PATH_PLACEHOLDER}
                   size="large"
                 />
               </Cell>

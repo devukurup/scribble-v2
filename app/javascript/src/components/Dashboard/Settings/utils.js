@@ -1,4 +1,5 @@
+import { findBy } from "neetocommons/pure";
+
 import { ROUTES } from "./constants";
 
-export const getActiveSettingsTab = key =>
-  ROUTES.find(route => key === route.key);
+export const getActiveSettingsTab = key => findBy({ key }, ROUTES);
