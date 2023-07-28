@@ -2,7 +2,6 @@
 
 class GenerateReportPdfWorker
   include Sidekiq::Worker
-  include ActionView::Helpers::TranslationHelper
 
   sidekiq_options retry: false
 
