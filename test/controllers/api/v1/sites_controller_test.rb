@@ -40,6 +40,16 @@ class Api::V1::SitesControllerTest < ActionDispatch::IntegrationTest
     assert_includes response_json["error"], exception.to_s
   end
 
+  def test_exception_responds_with_database_error_message_on_unknown_exceptions
+    exception = StandardError.new("PG::Error")
+    Site.any_instance.expects(:update!).raises exception
+
+    put(api_v1_site_path, params: site_params(""), headers:)
+
+    assert_response :internal_server_error
+    assert_includes response_json["error"], exception.to_s
+  end
+
   def test_exception_responds_with_unprocessible_entity_status_on_non_unique_record
     exception = ActiveRecord::RecordNotUnique
     Site.any_instance.expects(:update!).raises exception

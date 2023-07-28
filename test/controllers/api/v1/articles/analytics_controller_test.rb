@@ -40,11 +40,19 @@ class Api::V1::Articles::AnalyticsControllerTest < ActionDispatch::IntegrationTe
   end
 
   def test_should_download_pdf
-    post(generate_pdf_api_v1_analytics_path, headers:)
+    attach_pdf_to_user
 
     get(download_pdf_api_v1_analytics_path, headers:)
 
     assert_response :success
     assert_equal "application/pdf", response["Content-Type"]
   end
+
+  private
+
+    def attach_pdf_to_user
+      file = File.open(Rails.root.join("test/fixtures/files/sample.pdf"))
+      blob = ActiveStorage::Blob.create_and_upload!(io: file, filename: "sample.pdf")
+      @user.report.attach(blob.signed_id)
+    end
 end
