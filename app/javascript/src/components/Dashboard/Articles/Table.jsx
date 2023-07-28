@@ -9,6 +9,7 @@ import { isEven } from "src/utils";
 
 import { useUpdateArticle } from "hooks/reactQuery/useArticlesApi";
 import useDebounce from "hooks/useDebounce";
+import useArticlesStore from "stores/useArticlesStore";
 
 import {
   ACTION_KEY,
@@ -18,22 +19,23 @@ import {
 import Empty from "./Empty";
 import { columnData, buildUrlParams } from "./utils";
 
-const Table = ({
-  setRowToBeDeleted,
-  setIsDeleteAlertOpen,
-  articles,
-  totalCount,
-  isLoading,
-  filters,
-  setFilters,
-  selectedColumns,
-  selectedRowIds,
-  setSelectedRowIds,
-}) => {
+const Table = ({ setRowToBeDeleted, isLoading }) => {
   const history = useHistory();
   const [currentPageNumber, setCurrentPageNumber] =
     useState(DEFAULT_PAGE_NUMBER);
   const searchParams = new URLSearchParams(window.location.search);
+
+  const {
+    filters,
+    setFilters,
+    setIsDeleteAlertOpen,
+    setSelectedArticleRowIds,
+    selectedArticleRowIds,
+    selectedColumns,
+    articles,
+  } = useArticlesStore.pick();
+
+  const totalCount = articles?.filteredArticlesCount;
 
   const { searchTerm, selectedCategories, activeStatus } = filters;
 
@@ -105,9 +107,7 @@ const Table = ({
   if (articles?.filteredArticlesCount === 0) {
     return (
       <Empty
-        filters={filters}
         search={debouncedSearchTerm}
-        setFilters={setFilters}
         totalCount={articles?.allArticlesCount}
       />
     );
@@ -123,12 +123,12 @@ const Table = ({
       handlePageChange={handlePagination}
       loading={isUpdating || isLoading}
       rowData={articles?.articles}
-      selectedRowKeys={selectedRowIds}
+      selectedRowKeys={selectedArticleRowIds}
       totalCount={totalCount}
       rowClassName={(_, index) =>
         classnames({ "neeto-ui-bg-gray-100": isEven(index) })
       }
-      onRowSelect={setSelectedRowIds}
+      onRowSelect={setSelectedArticleRowIds}
     />
   );
 };

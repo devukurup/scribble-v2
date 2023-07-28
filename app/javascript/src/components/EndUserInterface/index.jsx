@@ -20,7 +20,6 @@ const EndUserInterface = () => {
   const { data: { site } = {}, isLoading } = useShowSite();
 
   const authToken = getFromSessionStorage("authToken");
-  const isLoggedIn = !!authToken;
 
   const handleHotKey = () => setTimeout(() => setIsSearchBarOpen(true), 100);
 
@@ -41,7 +40,7 @@ const EndUserInterface = () => {
         <Switch>
           <PrivateRoute
             component={Articles}
-            condition={site?.isPasswordProtected && !isLoggedIn}
+            condition={site?.isPasswordProtected && !authToken}
             path={[routes.public.articles.show, routes.public.articles.index]}
             redirectRoute={routes.login}
           />

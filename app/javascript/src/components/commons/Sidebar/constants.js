@@ -13,13 +13,13 @@ export const NAV_LINKS = [
   {
     label: capitalize(t("common.article", PLURAL)),
     description: t("tooltips.manageArticles"),
-    to: "/articles",
+    to: routes.articles.index,
     icon: Articles,
   },
   {
     label: t("common.settings"),
     description: t("tooltips.configureSettings"),
-    to: "/settings",
+    to: routes.settings.index,
     icon: Settings,
   },
   {
@@ -31,7 +31,7 @@ export const NAV_LINKS = [
   {
     label: t("common.preview"),
     description: t("tooltips.launchPreview"),
-    to: "/public/articles",
+    to: routes.public.articles.index,
     target: "_blank",
     icon: ExternalLink,
   },

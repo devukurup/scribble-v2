@@ -3,12 +3,12 @@ import React from "react";
 import { ActionDropdown, Checkbox } from "neetoui";
 
 import { isNotPresent } from "neetocommons/pure";
+import useArticlesStore from "stores/useArticlesStore";
 
-const Right = ({
-  selectedColumns,
-  setSelectedColumns,
-  selectedArticleRowIds,
-}) => {
+const Right = () => {
+  const { selectedArticleRowIds, selectedColumns, setSelectedColumns } =
+    useArticlesStore.pick();
+
   const handleChange = key => {
     const updatedColumns = selectedColumns.map(column =>
       column.key === key ? { ...column, checked: !column.checked } : column

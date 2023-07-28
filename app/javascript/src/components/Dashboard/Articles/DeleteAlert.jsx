@@ -7,19 +7,20 @@ import {
   useBulkDeleteArticles,
   useDeleteArticle,
 } from "hooks/reactQuery/useArticlesApi";
+import useArticlesStore from "stores/useArticlesStore";
 
 import { SINGLE_ARTICLE_COUNT } from "./constants";
 
-const DeleteAlert = ({
-  isOpen,
-  rowToBeDeleted,
-  isBulkDelete = false,
-  selectedArticleRowIds = [],
-  onClose,
-}) => {
+const DeleteAlert = ({ rowToBeDeleted, isBulkDelete = false, onClose }) => {
   const { title, id } = rowToBeDeleted;
 
   const { t } = useTranslation();
+
+  const {
+    isDeleteAlertOpen: isOpen,
+    selectedArticleRowIds,
+    setIsDeleteAlertOpen,
+  } = useArticlesStore.pick();
 
   const { mutate: bulkDelete, isLoading: isBulkDeleting } =
     useBulkDeleteArticles({ onSuccess: onClose });
@@ -57,7 +58,7 @@ const DeleteAlert = ({
             : SINGLE_ARTICLE_COUNT,
         }),
       })}
-      onClose={onClose}
+      onClose={() => setIsDeleteAlertOpen(false)}
       onSubmit={handleDelete}
     />
   );

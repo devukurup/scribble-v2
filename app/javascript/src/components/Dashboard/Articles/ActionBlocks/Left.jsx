@@ -7,20 +7,24 @@ import { useTranslation } from "react-i18next";
 
 import { useBulkUpdateArticles } from "hooks/reactQuery/useArticlesApi";
 import { removeById, isPresent } from "neetocommons/pure";
+import useArticlesStore from "stores/useArticlesStore";
 
 import Categories from "./Dropdown/Categories";
 import Statuses from "./Dropdown/Statuses";
 
-const Left = ({
-  filters,
-  setFilters,
-  totalCount,
-  selectedArticleRowIds,
-  setSelectedArticleRowIds,
-  setIsDeleteAlertOpen,
-  setIsBulkDelete,
-}) => {
+const Left = ({ setIsBulkDelete }) => {
   const { t } = useTranslation();
+
+  const {
+    filters,
+    setFilters,
+    setIsDeleteAlertOpen,
+    setSelectedArticleRowIds,
+    selectedArticleRowIds,
+    articles,
+  } = useArticlesStore.pick();
+
+  const totalCount = articles?.filteredArticlesCount;
 
   const { selectedCategories, searchTerm } = filters;
 
