@@ -17,7 +17,12 @@ en:
   session:
     authentication_failure: "Could not authenticate with the provided credentials."
     incorrect_password: "Incorrect password, try again."
-
+  report:
+    render: "Rendering the report"
+    generate: "Generating the PDF report"
+    upload: "Uploading to server"
+    attach: "Attaching the report to the user"
+  
   errors:
     blank: "%{entity} can't be blank"
     too_long: "%{entity} is too long (maximum is %{maximum} characters)"

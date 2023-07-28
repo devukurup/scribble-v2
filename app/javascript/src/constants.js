@@ -28,6 +28,8 @@ export const LOAD_ANALYTICS_KEY = "load-analytics";
 
 export const LOAD_ARTICLE_SCHEDULE_KEY = "load-article-schedule";
 
+export const LOAD_ANALYTICS_DOWNLOAD_KEY = "load-analytics-download";
+
 export const SINGULAR = { count: 1 };
 
 export const PLURAL = { count: 2 };

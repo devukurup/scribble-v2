@@ -73,7 +73,13 @@ const showSuccessToastr = response => {
   return response;
 };
 
-const extractData = response => response.data;
+const extractData = response => {
+  if (response.config.skipPullDataFromResponse) {
+    return response;
+  }
+
+  return response.data;
+};
 
 const handleSuccessResponse = pipe(
   transformSuccessKeysToCamelCase,

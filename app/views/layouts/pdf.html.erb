@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  </head>
+  <style>
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-family: "Helvetica", sans-serif;
+}
+
+.table th {
+  background-color: #f2f2f2;
+  padding: 12px;
+  text-align: left;
+}
+
+.table td {
+  padding: 12px;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+  </style>
+  <body onload="number_pages">
+    <div id="header"></div>
+    <div id="content"><%= yield %></div>
+  </body>
+</html>

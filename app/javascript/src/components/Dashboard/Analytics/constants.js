@@ -38,3 +38,9 @@ export const SORT_OPTIONS = {
 };
 
 export const DEFAULT_SORT_OPTION = SORT_OPTIONS.descend;
+
+export const INITIAL_PROGRESS = 0;
+
+export const FINAL_PROGRESS = 100;
+
+export const FILE_NAME = "analytics_report.pdf";

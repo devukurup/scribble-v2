@@ -8,6 +8,9 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+# Load dotenv file
+Dotenv::Railtie.load
+
 module ScribbleByDevuKurup
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.

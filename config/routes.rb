@@ -6,14 +6,16 @@ Rails.application.routes.draw do
       constraints(lambda { |req| req.format == :json }) do
         resources :categories, only: %i[index create update destroy]
 
-        namespace :articles do
-          resources :analytics, only: :index
-        end
-
         resources :articles, except: %i[new edit] do
           collection do
             patch :bulk_update
             delete :bulk_destroy
+            resources :analytics, only: :index, module: :articles do
+              collection do
+                post :generate_pdf
+                get :download_pdf
+              end
+            end
           end
 
           resources :versions, only: %i[index show], module: :articles do

@@ -2,6 +2,7 @@
 
 class Articles::ScheduleService
   attr_reader :schedules
+
   def process
     load_schedules
     update_articles

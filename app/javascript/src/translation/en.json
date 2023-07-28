@@ -32,7 +32,8 @@
     "articleCount_other": "{{count}} articles",
     "continue": "Continue",
     "date": "Date",
-    "time": "Time"
+    "time": "Time",
+    "download": "Download"
   },
 
   "dashboard": {
@@ -204,6 +205,9 @@
       "createdAt": "Created at",
       "category": "Category",
       "visits": "Visits"
+    },
+    "download": {
+      "ready": "Report is ready to be downloaded"
     }
   },
   "public": {
