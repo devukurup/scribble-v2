@@ -17,6 +17,7 @@ module.exports = {
     images: absolutePath("src/assets/images"),
     hooks: absolutePath("src/hooks"),
     utils: absolutePath("src/utils"),
+    stores: absolutePath("src/stores"),
     neetoui: "@bigbinary/neetoui",
     neetoicons: "@bigbinary/neeto-icons",
     neetoeditor: "@bigbinary/neeto-editor",
