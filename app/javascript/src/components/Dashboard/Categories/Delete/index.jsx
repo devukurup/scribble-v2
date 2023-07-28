@@ -17,14 +17,17 @@ const Delete = ({
   categoryToBeDeleted,
   isSingleCategoryPresent,
 }) => {
-  const { title, articlesCount, id } = categoryToBeDeleted;
   const { data, isLoading: isLoadingCategories } = useFetchCategories({
     enabled: false,
   });
 
-  const { mutate } = useDeleteCategory({ onSuccess: onClose });
+  const { mutate, isLoading: isDeleting } = useDeleteCategory({
+    onSuccess: onClose,
+  });
 
   const { t } = useTranslation();
+
+  const { title, articlesCount, id } = categoryToBeDeleted;
 
   const handleDelete = (values = {}) => {
     const payload =
@@ -74,7 +77,9 @@ const Delete = ({
           </Modal.Body>
           <Modal.Footer className="flex space-x-2">
             <Button
+              disabled={isDeleting}
               label={t("common.continue")}
+              loading={isDeleting}
               style="danger"
               type="submit"
               onClick={handleDelete}
