@@ -7,14 +7,17 @@ import { useHistory } from "react-router-dom";
 import routes from "src/routes";
 
 import useDebounce from "hooks/useDebounce";
+import useArticlesStore from "stores/useArticlesStore";
 
 import { buildUrlParams } from "./utils";
 
-const Header = ({ toggleMenubar, filters, setFilters }) => {
+const Header = ({ toggleMenubar }) => {
+  const { filters, setFilters } = useArticlesStore.pick();
+
   const { activeStatus: status, searchTerm } = filters;
+
   const { t } = useTranslation();
   const debouncedSearchTerm = useDebounce(searchTerm);
-
   const history = useHistory();
 
   useEffect(() => {

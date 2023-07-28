@@ -8,22 +8,19 @@ import { PLURAL, ESCAPE_KEY } from "src/constants";
 
 import useDebounce from "hooks/useDebounce";
 import { capitalize } from "neetocommons/pure";
+import useArticlesStore from "stores/useArticlesStore";
 
 import Categories from "./Categories";
 import { statuses } from "./utils";
 
-const MenuBar = ({
-  isMenuBarOpen,
-  setIsCreateModalOpen,
-  setFilters,
-  articles,
-  filters,
-}) => {
+const MenuBar = ({ isMenuBarOpen, setIsCreateModalOpen }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
 
   const { t } = useTranslation();
   const debouncedSearchTerm = useDebounce(searchTerm);
+
+  const { filters, setFilters, articles } = useArticlesStore.pick();
 
   const { activeStatus, selectedCategories } = filters;
 
@@ -86,7 +83,6 @@ const MenuBar = ({
         debouncedSearchTerm={debouncedSearchTerm}
         isSearchCollapsed={isSearchCollapsed}
         selectedCategories={selectedCategories}
-        setFilters={setFilters}
       />
     </NeetoUIMenuBar>
   );

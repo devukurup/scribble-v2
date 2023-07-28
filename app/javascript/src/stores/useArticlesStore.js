@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 import { INITIAL_FILTERS, COLUMNS } from "Dashboard/Articles/constants";
 
-const useArticleStore = create(set => ({
+const useArticlesStore = create(set => ({
   filters: INITIAL_FILTERS,
   isDeleteAlertOpen: false,
   selectedArticleRowIds: [],
@@ -17,4 +17,4 @@ const useArticleStore = create(set => ({
   setArticles: payload => set({ articles: payload }),
 }));
 
-export default useArticleStore;
+export default useArticlesStore;

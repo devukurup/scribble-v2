@@ -5,11 +5,14 @@ import { useHistory } from "react-router-dom";
 import routes from "src/routes";
 
 import EmptyImage from "images/Empty";
+import useArticlesStore from "stores/useArticlesStore";
 
 import { getEmptyArticleProps } from "./utils";
 
-const Empty = ({ search, filters, setFilters, totalCount }) => {
+const Empty = ({ search, totalCount }) => {
   const history = useHistory();
+
+  const { filters, setFilters } = useArticlesStore.pick();
 
   const { activeStatus, selectedCategories } = filters;
 

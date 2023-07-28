@@ -6,11 +6,11 @@ import { useTranslation } from "react-i18next";
 
 import { useFetchCategories } from "hooks/reactQuery/useCategoriesApi";
 import { removeById, existsById, isNotPresent } from "neetocommons/pure";
+import useArticlesStore from "stores/useArticlesStore";
 
 const Categories = ({
   selectedCategories,
   debouncedSearchTerm,
-  setFilters,
   isSearchCollapsed,
 }) => {
   const { t } = useTranslation();
@@ -18,6 +18,8 @@ const Categories = ({
   const { data: { categories } = {}, isFetching } = useFetchCategories({
     searchTerm: debouncedSearchTerm.trim(),
   });
+
+  const { setFilters } = useArticlesStore.pick();
 
   const handleCategoryClick = category => {
     if (existsById(category.id, selectedCategories)) {

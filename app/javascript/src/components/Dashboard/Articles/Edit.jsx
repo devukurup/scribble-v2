@@ -12,6 +12,7 @@ import {
   useUpdateArticle,
 } from "hooks/reactQuery/useArticlesApi";
 import { findBy } from "neetocommons/pure";
+import useArticlesStore from "stores/useArticlesStore";
 
 import DeleteAlert from "./DeleteAlert";
 import Form from "./Form";
@@ -21,7 +22,6 @@ import Versions from "./Versions";
 import VersionModal from "./Versions/Version";
 
 const Edit = () => {
-  const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
   const [isVersionsPaneOpen, setIsVersionsPaneOpen] = useState(false);
   const [isRestoreModalOpen, setIsRestoreModalOpen] = useState(false);
   const [selectedVersionId, setSelectedVersionId] = useState("");
@@ -30,6 +30,8 @@ const Edit = () => {
   const history = useHistory();
 
   const { t } = useTranslation();
+
+  const { setIsDeleteAlertOpen } = useArticlesStore.pick();
 
   const redirectToDashboard = () => {
     history.push(routes.articles.index);
@@ -65,10 +67,6 @@ const Edit = () => {
     redirectToDashboard();
   };
 
-  const handleDelete = () => {
-    setIsDeleteAlertOpen(true);
-  };
-
   const handleRestore = id => {
     setIsRestoreModalOpen(true);
     setSelectedVersionId(id);
@@ -87,7 +85,7 @@ const Edit = () => {
       <Container>
         <Form
           isEdit
-          handleDelete={handleDelete}
+          handleDelete={() => setIsDeleteAlertOpen(true)}
           handleSubmit={handleSubmit}
           setIsVersionsPaneOpen={setIsVersionsPaneOpen}
           dateString={formattedDateTime(
@@ -108,7 +106,6 @@ const Edit = () => {
           onClose={redirectToDashboard}
         />
         <DeleteAlert
-          isOpen={isDeleteAlertOpen}
           isSubmitting={isUpdating}
           rowToBeDeleted={article}
           onClose={handleClose}
