@@ -17,9 +17,34 @@ class Api::V1::Articles::AnalyticsControllerTest < ActionDispatch::IntegrationTe
     2.times do
       get api_v1_public_article_path(test_article_1.slug), headers: @site_headers
     end
-    get(api_v1_articles_analytics_path, params: { page: 1, limit: 10, order: "asc" }, headers:)
+    get(api_v1_analytics_path, params: { page: 1, limit: 10, order: "asc" }, headers:)
 
     assert_response :success
     assert_equal @site.articles.published.pluck(:visit_count).sort, response_json["articles"].pluck("visit_count")
+  end
+
+  def test_should_generate_pdf
+    Sidekiq::Testing.fake!
+
+    assert_difference "GenerateReportPdfWorker.jobs.size", 1 do
+      post(generate_pdf_api_v1_analytics_path, headers:)
+    end
+
+    assert_response :success
+  end
+
+  def test_should_return_error_if_report_not_attached
+    get(download_pdf_api_v1_analytics_path, headers:)
+
+    assert_response :not_found
+  end
+
+  def test_should_download_pdf
+    post(generate_pdf_api_v1_analytics_path, headers:)
+
+    get(download_pdf_api_v1_analytics_path, headers:)
+
+    assert_response :success
+    assert_equal "application/pdf", response["Content-Type"]
   end
 end
