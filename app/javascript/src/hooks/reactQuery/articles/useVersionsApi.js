@@ -1,17 +1,15 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { LOAD_ARTICLE_VERSIONS_KEY } from "src/constants";
 
 import versionsApi from "apis/articles/versions";
+import { QUERY_KEYS } from "constants/query";
+
+const { ARTICLE_VERSIONS } = QUERY_KEYS;
 
 export const useFetchVersions = ({ articleId, options = {} }) =>
-  useQuery(
-    [LOAD_ARTICLE_VERSIONS_KEY, articleId],
-    () => versionsApi.list(articleId),
-    {
-      ...options,
-      refetchOnWindowFocus: false,
-    }
-  );
+  useQuery([ARTICLE_VERSIONS, articleId], () => versionsApi.list(articleId), {
+    ...options,
+    refetchOnWindowFocus: false,
+  });
 
 export const useShowVersion = ({ articleId, id, options = {} }) =>
   useQuery([articleId, id], () => versionsApi.show({ articleId, id }), {
@@ -27,7 +25,7 @@ export const useRestoreVersion = (options = {}) => {
       ...options,
       onSuccess: data => {
         options.onSuccess?.(data);
-        queryClient.invalidateQueries(LOAD_ARTICLE_VERSIONS_KEY);
+        queryClient.invalidateQueries(ARTICLE_VERSIONS);
       },
     }
   );

@@ -1,10 +1,12 @@
 import { useQuery, useMutation } from "react-query";
-import { LOAD_ANALYTICS_KEY, LOAD_ANALYTICS_DOWNLOAD_KEY } from "src/constants";
 
 import analyticsApi from "apis/articles/analytics";
+import { QUERY_KEYS } from "constants/query";
+
+const { ANALYTICS, ANALYTICS_DOWNLOAD } = QUERY_KEYS;
 
 export const useFetchAnalytics = ({ params = {}, options }) =>
-  useQuery([LOAD_ANALYTICS_KEY, params], () => analyticsApi.list(params), {
+  useQuery([ANALYTICS, params], () => analyticsApi.list(params), {
     keepPreviousData: true,
     ...options,
   });
@@ -15,7 +17,7 @@ export const useGeneratePdf = (options = {}) =>
   });
 
 export const useDownloadPdf = (options = {}) =>
-  useQuery([LOAD_ANALYTICS_DOWNLOAD_KEY], () => analyticsApi.downloadPdf(), {
+  useQuery([ANALYTICS_DOWNLOAD], () => analyticsApi.downloadPdf(), {
     enabled: false,
     ...options,
   });
