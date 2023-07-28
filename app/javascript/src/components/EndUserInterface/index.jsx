@@ -5,9 +5,9 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import PageNotFound from "src/PageNotFound";
 import routes from "src/routes";
 
-import { getFromSessionStorage } from "helpers/session";
 import { useShowSite } from "hooks/reactQuery/useSiteApi";
 import { useHotKeys } from "neetocommons/react-utils";
+import { getFromSessionStorage } from "utils/storage";
 
 import Articles from "./Articles";
 import NavBar from "./NavBar";

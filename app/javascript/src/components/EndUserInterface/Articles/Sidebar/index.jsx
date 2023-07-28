@@ -2,7 +2,10 @@ import React, { useState } from "react";
 
 import { Down, Right } from "neetoicons";
 import { Typography } from "neetoui";
+import { append } from "ramda";
 import { useParams } from "react-router-dom";
+
+import { isNot } from "neetocommons/pure";
 
 import { DEFAULT_ACTIVE_INDEX } from "./constants";
 import Item from "./Item";
@@ -15,10 +18,8 @@ const Sidebar = ({ categories }) => {
 
   const handleActiveIndexes = index => {
     activeIndexes.includes(index)
-      ? setActiveIndexes(activeIndexes =>
-          activeIndexes.filter(activeIndex => activeIndex !== index)
-        )
-      : setActiveIndexes(activeIndexes => [...activeIndexes, index]);
+      ? setActiveIndexes(activeIndexes => activeIndexes.filter(isNot(index)))
+      : setActiveIndexes(append(index));
   };
 
   return (

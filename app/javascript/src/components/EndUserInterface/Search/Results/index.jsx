@@ -14,7 +14,7 @@ import Result from "./Result";
 const Results = ({ isFetching, articles, searchTerm, setIsSearchBarOpen }) => {
   const { t } = useTranslation();
 
-  const { index: focussedIndex } = useKeyboardListNavigation({
+  const { index: focusedIndex } = useKeyboardListNavigation({
     list: articles,
     onEnter: ({ element }) => handleSelect(element.slug),
   });
@@ -47,7 +47,7 @@ const Results = ({ isFetching, articles, searchTerm, setIsSearchBarOpen }) => {
       {articles.map(({ slug, body, title }, index) => (
         <Result
           body={body}
-          isFocussed={index === focussedIndex}
+          isFocused={index === focusedIndex}
           key={slug}
           searchTerm={searchTerm}
           title={title}
