@@ -1,4 +1,5 @@
 const VALID_ENVIRONMENTS = ["development", "test", "production"];
+const zustandPickPlugin = require("@bigbinary/babel-preset-neeto/src/plugins/zustand-pick");
 
 module.exports = function (api) {
   const currentEnv = api.env();
@@ -31,8 +32,10 @@ module.exports = function (api) {
             },
           ],
       ["@babel/preset-react", { development: isDevelopmentEnv || isTestEnv }],
+      "@bigbinary/neeto",
     ].filter(Boolean),
     plugins: [
+      zustandPickPlugin,
       "babel-plugin-macros",
       "js-logger",
       "@babel/plugin-transform-runtime",
