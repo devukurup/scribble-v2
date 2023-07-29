@@ -2,8 +2,6 @@ import dayjs from "dayjs";
 import { t } from "i18next";
 import * as yup from "yup";
 
-export const STATUS_OPTIONS = ["draft", "unpublishLater"];
-
 export const ARTICLE_STATUSES = {
   published: "published",
   draft: "draft",
@@ -15,19 +13,23 @@ export const STATUS_DROPDOWN_MENU = [
   {
     label: t("statuses.publish"),
     value: ARTICLE_STATUSES.published,
+    pattern: { status: ARTICLE_STATUSES.draft },
   },
   {
     label: t("statuses.saveDraft"),
     value: ARTICLE_STATUSES.draft,
+    pattern: { status: ARTICLE_STATUSES.published },
   },
   {
     label: t("statuses.later.publish"),
     value: ARTICLE_STATUSES.publishLater,
+    pattern: { articleStatus: ARTICLE_STATUSES.draft, isEdit: true },
     event: "publish",
   },
   {
     label: t("statuses.later.unpublish"),
     value: ARTICLE_STATUSES.unpublishLater,
+    pattern: { articleStatus: ARTICLE_STATUSES.published, isEdit: true },
     event: "unpublish",
   },
 ];

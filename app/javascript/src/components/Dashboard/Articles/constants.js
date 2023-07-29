@@ -93,3 +93,7 @@ export const COLUMNS = [
 export const SINGLE_ARTICLE_COUNT = 1;
 
 export const ACTION_KEY = "action";
+
+export const PUBLISH_STATUS = "Publish";
+
+export const DRAFT_STATUS = "draft";

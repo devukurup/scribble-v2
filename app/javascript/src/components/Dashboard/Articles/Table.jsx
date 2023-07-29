@@ -15,6 +15,7 @@ import {
   ACTION_KEY,
   DEFAULT_ACTIVE_STATUS,
   ARTICLE_STATUSES,
+  PUBLISH_STATUS,
 } from "./constants";
 import Empty from "./Empty";
 import { columnData, buildUrlParams } from "./utils";
@@ -51,7 +52,7 @@ const Table = ({ setRowToBeDeleted, isLoading }) => {
   const handleUpdate = ({ id, publishStatus }) => {
     const payload = {
       status:
-        publishStatus === "Publish"
+        publishStatus === PUBLISH_STATUS
           ? ARTICLE_STATUSES.published
           : ARTICLE_STATUSES.draft,
     };

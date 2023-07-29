@@ -6,7 +6,6 @@ import routes from "src/routes";
 
 import SidebarWrapper from "Dashboard/SidebarWrapper";
 import { useCreateArticle } from "hooks/reactQuery/useArticlesApi";
-import { findBy } from "neetocommons/pure";
 
 import { INITIAL_VALUES } from "./constants";
 import Form from "./Form";
@@ -26,7 +25,7 @@ const Create = () => {
       categoryId: values.category.value,
       title: values.title,
       body: values.body,
-      status: findBy({ label: values.status }, STATUS_DROPDOWN_MENU).value,
+      status: values.status.value,
     };
     createArticle(payload);
   };
@@ -36,7 +35,7 @@ const Create = () => {
       <Container>
         <Form
           handleSubmit={handleSubmit}
-          initialStatus={STATUS_DROPDOWN_MENU[0].label}
+          initialStatus={STATUS_DROPDOWN_MENU[0]}
           initialValues={INITIAL_VALUES}
           isSubmitting={isCreating}
           onClose={redirectToDashboard}

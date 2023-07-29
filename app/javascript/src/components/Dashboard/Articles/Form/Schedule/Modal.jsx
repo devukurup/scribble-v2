@@ -28,8 +28,8 @@ const Modal = ({ isOpen, onClose, scheduleEvent, setScheduleEvent }) => {
   const { t } = useTranslation();
 
   const handleSuccess = () => {
-    setScheduleEvent("");
     onClose();
+    setScheduleEvent("");
   };
 
   const { mutate: createSchedule, isLoading: isCreating } = useCreateSchedule({

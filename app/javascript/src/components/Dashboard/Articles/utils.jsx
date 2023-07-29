@@ -11,9 +11,32 @@ import { formattedDate, truncate } from "src/utils";
 
 import { buildUrl } from "neetocommons/utils";
 
-import { ARTICLE_STATUSES, DEFAULT_ACTIVE_STATUS } from "./constants";
+import {
+  ARTICLE_STATUSES,
+  DEFAULT_ACTIVE_STATUS,
+  DRAFT_STATUS,
+} from "./constants";
 
 const { Menu, MenuItem } = Dropdown;
+
+const renderActionDropdown = ({ row, handleDelete, handleUpdate }) => {
+  const { status, id } = row;
+  const publishStatus =
+    status === DRAFT_STATUS ? t("statuses.publish") : t("statuses.unpublish");
+
+  return (
+    <Dropdown buttonStyle="text" icon={MenuHorizontal} strategy="fixed">
+      <Menu>
+        <MenuItem.Button onClick={() => handleUpdate({ id, publishStatus })}>
+          {publishStatus}
+        </MenuItem.Button>
+        <MenuItem.Button style="danger" onClick={() => handleDelete(row)}>
+          {t("common.delete")}
+        </MenuItem.Button>
+      </Menu>
+    </Dropdown>
+  );
+};
 
 export const formatCategories = categories =>
   categories?.map(({ title, id }) => ({ label: title, value: id }));
@@ -73,26 +96,8 @@ export const columnData = ({ handleDelete, handleUpdate }) => [
     dataIndex: "action",
     key: "action",
     width: 25,
-    render: (_, row) => {
-      const { status, id } = row;
-      const publishStatus =
-        status === "draft" ? t("statuses.publish") : t("statuses.unpublish");
-
-      return (
-        <Dropdown buttonStyle="text" icon={MenuHorizontal} strategy="fixed">
-          <Menu>
-            <MenuItem.Button
-              onClick={() => handleUpdate({ id, publishStatus })}
-            >
-              {publishStatus}
-            </MenuItem.Button>
-            <MenuItem.Button style="danger" onClick={() => handleDelete(row)}>
-              {t("common.delete")}
-            </MenuItem.Button>
-          </Menu>
-        </Dropdown>
-      );
-    },
+    render: (_, row) =>
+      renderActionDropdown({ row, handleDelete, handleUpdate }),
   },
 ];
 

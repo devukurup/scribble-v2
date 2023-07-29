@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 import { PageLoader } from "neetoui";
 import { Container } from "neetoui/layouts";
-import { useTranslation } from "react-i18next";
 import { useParams, useHistory } from "react-router-dom";
 import routes from "src/routes";
 
@@ -16,7 +15,7 @@ import useArticlesStore from "stores/useArticlesStore";
 
 import DeleteAlert from "./DeleteAlert";
 import Form from "./Form";
-import { STATUS_DROPDOWN_MENU } from "./Form/constants";
+import { ARTICLE_STATUSES, STATUS_DROPDOWN_MENU } from "./Form/constants";
 import { formattedDateTime } from "./utils";
 import Versions from "./Versions";
 import VersionModal from "./Versions/Version";
@@ -28,8 +27,6 @@ const Edit = () => {
 
   const { articleId } = useParams();
   const history = useHistory();
-
-  const { t } = useTranslation();
 
   const { setIsDeleteAlertOpen } = useArticlesStore.pick();
 
@@ -51,7 +48,7 @@ const Edit = () => {
       categoryId: values.category.value,
       title: values.title,
       body: values.body,
-      status: findBy({ label: values.status }, STATUS_DROPDOWN_MENU).value,
+      status: values.status.value,
     };
     updateArticle({ id: articleId, payload });
   };
@@ -87,15 +84,17 @@ const Edit = () => {
           isEdit
           handleDelete={() => setIsDeleteAlertOpen(true)}
           handleSubmit={handleSubmit}
+          isSubmitting={isUpdating}
           setIsVersionsPaneOpen={setIsVersionsPaneOpen}
           dateString={formattedDateTime(
-            article.status === t("statuses.published").toLowerCase()
+            article.status === ARTICLE_STATUSES.published
               ? article?.lastPublishedAt
               : article?.updatedAt
           )}
-          initialStatus={
-            findBy({ value: article.status }, STATUS_DROPDOWN_MENU).label
-          }
+          initialStatus={findBy(
+            { value: article.status },
+            STATUS_DROPDOWN_MENU
+          )}
           initialValues={{
             ...article,
             category: {
@@ -105,13 +104,10 @@ const Edit = () => {
           }}
           onClose={redirectToDashboard}
         />
-        <DeleteAlert
-          isSubmitting={isUpdating}
-          rowToBeDeleted={article}
-          onClose={handleClose}
-        />
+        <DeleteAlert rowToBeDeleted={article} onClose={handleClose} />
         <Versions
           articleId={articleId}
+          currentStatus={article.status}
           handleRestore={handleRestore}
           isOpen={isVersionsPaneOpen}
           title={article.title}

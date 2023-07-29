@@ -10,7 +10,14 @@ import { filterStatusOptions } from "./utils";
 
 const { Menu, MenuItem } = ActionDropdown;
 
-const StatusDropdown = ({ isDisabled, setStatus, status, isEdit }) => {
+const StatusDropdown = ({
+  isDisabled,
+  setStatus,
+  status,
+  isEdit,
+  articleStatus,
+  isSubmitting,
+}) => {
   const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
   const [scheduleEvent, setScheduleEvent] = useState("");
 
@@ -19,7 +26,7 @@ const StatusDropdown = ({ isDisabled, setStatus, status, isEdit }) => {
       value === ARTICLE_STATUSES.published ||
       value === ARTICLE_STATUSES.draft
     ) {
-      setStatus(findBy({ value }, STATUS_DROPDOWN_MENU).label);
+      setStatus(findBy({ value }, STATUS_DROPDOWN_MENU));
     } else {
       setScheduleEvent(findBy({ value }, STATUS_DROPDOWN_MENU).event);
       setIsScheduleModalOpen(true);
@@ -29,20 +36,25 @@ const StatusDropdown = ({ isDisabled, setStatus, status, isEdit }) => {
   return (
     <>
       <ActionDropdown
-        buttonProps={{ type: "submit" }}
-        disabled={isDisabled}
-        label={status}
+        label={status.label}
+        buttonProps={{
+          type: "submit",
+          disabled: isDisabled,
+          loading: isSubmitting,
+        }}
       >
         <Menu>
-          {filterStatusOptions({ isEdit, status })?.map(({ label, value }) => (
-            <MenuItem.Button
-              isActive={status === label}
-              key={value}
-              onClick={() => handleStatusChange(value)}
-            >
-              {label}
-            </MenuItem.Button>
-          ))}
+          {filterStatusOptions({ isEdit, status, articleStatus })?.map(
+            ({ label, value }) => (
+              <MenuItem.Button
+                isActive={status.label === label}
+                key={value}
+                onClick={() => handleStatusChange(value)}
+              >
+                {label}
+              </MenuItem.Button>
+            )
+          )}
         </Menu>
       </ActionDropdown>
       <ScheduleModal

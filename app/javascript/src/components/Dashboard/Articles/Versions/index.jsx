@@ -1,13 +1,24 @@
 import React from "react";
 
-import { Pane, Spinner } from "neetoui";
+import { Pane, Spinner, Typography, Tag } from "neetoui";
+import { useTranslation } from "react-i18next";
 
 import { useFetchVersions } from "hooks/reactQuery/articles/useVersionsApi";
 
 import Header from "./Header";
 import Item from "./Item";
 
-const Versions = ({ isOpen, onClose, title, articleId, handleRestore }) => {
+import { DRAFT_STATUS } from "../constants";
+
+const Versions = ({
+  isOpen,
+  onClose,
+  title,
+  articleId,
+  handleRestore,
+  currentStatus,
+}) => {
+  const { t } = useTranslation();
   const { data: { versions } = {}, isLoading } = useFetchVersions({
     articleId,
   });
@@ -21,15 +32,31 @@ const Versions = ({ isOpen, onClose, title, articleId, handleRestore }) => {
         {isLoading ? (
           <Spinner />
         ) : (
-          versions.map((version, index) => (
-            <Item
-              handleRestore={handleRestore}
-              isCreated={index === versions.length - 1}
-              isRecent={index === 0}
-              key={version.id}
-              version={version}
-            />
-          ))
+          <>
+            <div className="neeto-ui-bg-gray-100 sticky top-0 my-2 flex w-full items-center justify-between p-3">
+              <Typography style="h4" weight="semibold">
+                {t("articles.versions.event", {
+                  event:
+                    currentStatus === DRAFT_STATUS
+                      ? t("articles.versions.draft")
+                      : currentStatus,
+                })}
+              </Typography>
+              <Tag
+                label={t("articles.versions.current")}
+                size="large"
+                style="success"
+              />
+            </div>
+            {versions.map((version, index) => (
+              <Item
+                handleRestore={handleRestore}
+                isCreated={index === versions.length - 1}
+                key={version.id}
+                version={version}
+              />
+            ))}
+          </>
         )}
       </Pane.Body>
     </Pane>

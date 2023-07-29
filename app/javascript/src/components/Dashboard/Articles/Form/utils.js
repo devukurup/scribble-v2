@@ -1,39 +1,18 @@
 import dayjs from "dayjs";
 import { join, pick, values, range } from "ramda";
 
-import { findBy } from "neetocommons/pure";
+import { matches } from "neetocommons/pure";
 
-import {
-  STATUS_DROPDOWN_MENU,
-  ARTICLE_STATUSES,
-  TITLE_BODY_KEYS,
-} from "./constants";
+import { STATUS_DROPDOWN_MENU, TITLE_BODY_KEYS } from "./constants";
 
-export const filterStatusOptions = ({ isEdit, status }) => {
-  const statusValue = findBy({ label: status }, STATUS_DROPDOWN_MENU).value;
-  if (isEdit) {
-    if (statusValue === ARTICLE_STATUSES.published) {
-      return STATUS_DROPDOWN_MENU.filter(
-        ({ value }) =>
-          value === ARTICLE_STATUSES.draft ||
-          value === ARTICLE_STATUSES.unpublishLater
-      );
-    }
-
-    if (statusValue === ARTICLE_STATUSES.draft) {
-      return STATUS_DROPDOWN_MENU.filter(
-        ({ value }) =>
-          value === ARTICLE_STATUSES.published ||
-          value === ARTICLE_STATUSES.publishLater
-      );
-    }
-  }
-
-  return STATUS_DROPDOWN_MENU.filter(
-    ({ value }) =>
-      value === ARTICLE_STATUSES.published || value === ARTICLE_STATUSES.draft
+export const filterStatusOptions = ({ isEdit, status, articleStatus }) =>
+  STATUS_DROPDOWN_MENU.filter(({ pattern }) =>
+    matches(pattern, {
+      status: status.value,
+      articleStatus: articleStatus.value,
+      isEdit,
+    })
   );
-};
 
 export const isDateInPast = date => date < dayjs().startOf("day");
 
