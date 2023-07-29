@@ -145,14 +145,10 @@ const Form = ({
                     />
                   ) : (
                     <StatusDropdown
+                      isDisabled={isSubmitting || !isValid || !dirty}
                       isEdit={isEdit}
                       setStatus={setStatus}
                       status={status}
-                      isDisabled={
-                        isEdit
-                          ? !isValid || isSubmitting
-                          : isSubmitting || !isValid || !dirty
-                      }
                     />
                   )}
                   {isEdit && (

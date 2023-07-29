@@ -29,8 +29,7 @@ const StatusDropdown = ({ isDisabled, setStatus, status, isEdit }) => {
   return (
     <>
       <ActionDropdown
-        buttonProps={{ type: "submit" }}
-        disabled={isDisabled}
+        buttonProps={{ type: "submit", disabled: isDisabled }}
         label={status}
       >
         <Menu>
