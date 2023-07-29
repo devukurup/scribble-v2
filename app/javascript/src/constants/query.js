@@ -5,6 +5,7 @@ export const QUERY_KEYS = {
   PUBLIC_CATEGORIES: "public-categories",
   SESSION: "session",
   PUBLIC_ARTICLES: "public-articles",
+  PUBLIC_ARTICLE: "public-article",
   ARTICLES: "articles",
   ARTICLE_VERSIONS: "article-versions",
   ANALYTICS: "analytics",
