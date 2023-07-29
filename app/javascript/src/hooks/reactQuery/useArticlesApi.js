@@ -7,7 +7,6 @@ const { CATEGORIES, ARTICLES } = QUERY_KEYS;
 
 export const useFetchArticles = ({ params, options }) =>
   useQuery([ARTICLES, params], () => articlesApi.list(params), {
-    refetchOnWindowFocus: false,
     keepPreviousData: true,
     ...options,
   });

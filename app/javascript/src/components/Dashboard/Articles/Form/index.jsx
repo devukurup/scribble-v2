@@ -17,7 +17,11 @@ import {
 } from "hooks/reactQuery/useCategoriesApi";
 import { noop, isNotEmpty, isNotNil } from "neetocommons/pure";
 
-import { DEFAULT_ROW_COUNT, EDITOR_ADDONS } from "./constants";
+import {
+  DEFAULT_ROW_COUNT,
+  EDITOR_ADDONS,
+  STATUS_DROPDOWN_MENU,
+} from "./constants";
 import ShowSchedule from "./Schedule/Show";
 import StatusDropdown from "./StatusDropdown";
 import { filteredErrors, formatTitleAndBodyErrors } from "./utils";
@@ -126,7 +130,7 @@ const Form = ({
                 <div className="flex items-center space-x-3">
                   {isEdit && (
                     <Typography>
-                      {initialStatus === t("statuses.publish")
+                      {initialStatus === STATUS_DROPDOWN_MENU[0]
                         ? t("articles.lastPublishedAt", { date: dateString })
                         : t("articles.draftSavedAt", { date: dateString })}
                     </Typography>
@@ -139,16 +143,23 @@ const Form = ({
                   />
                   {isEdit && isNotNil(schedule) ? (
                     <Button
-                      disabled={!isValid || isSubmitting}
-                      label={status}
+                      disabled={!isValid || isSubmitting || !dirty}
+                      label={initialStatus.label}
+                      loading={isSubmitting}
                       type="submit"
                     />
                   ) : (
                     <StatusDropdown
-                      isDisabled={isSubmitting || !isValid || !dirty}
+                      articleStatus={initialStatus}
                       isEdit={isEdit}
+                      isSubmitting={isSubmitting}
                       setStatus={setStatus}
                       status={status}
+                      isDisabled={
+                        isSubmitting ||
+                        !isValid ||
+                        (!dirty && initialStatus === status)
+                      }
                     />
                   )}
                   {isEdit && (
