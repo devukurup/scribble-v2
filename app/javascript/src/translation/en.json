@@ -128,8 +128,9 @@
       "view": "View version history",
       "event": "Article {{event}}",
       "restore": "Restore version",
-      "recent": "Recent",
+      "current": "Current version",
       "created": "Created and {{event}} at {{date}}",
+      "draft": "drafted",
       "error": {
         "category": "Category doesn't exist, version cannot be restored."
       }

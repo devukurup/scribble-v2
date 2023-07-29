@@ -107,6 +107,7 @@ const Edit = () => {
         <DeleteAlert rowToBeDeleted={article} onClose={handleClose} />
         <Versions
           articleId={articleId}
+          currentStatus={article.status}
           handleRestore={handleRestore}
           isOpen={isVersionsPaneOpen}
           title={article.title}
