@@ -1,24 +1,27 @@
-# README
+# scribble-v2
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A blog management app where users can log in, create and manage categories, write and publish articles, schedule publishing, view article history, and track basic analytics.
 
-Things you may want to cover:
+---
 
-* Ruby version
+## ✨ Features
 
-* System dependencies
+* Login and dashboard
+* Category management with reordering
+* Article creation, editing, filtering, and bulk actions
+* Version history for articles
+* Scheduled publishing
+* Basic analytics and PDF download
 
-* Configuration
+---
 
-* Database creation
+## 🛠 Tech Stack
 
-* Database initialization
+* Ruby on Rails
+* React JS
+* Tailwind CSS
+* PostgreSQL
+* Zustand, React Query, Ramda
+* CircleCI
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+This is an enhanced version of [scribble-v1](https://github.com/devukurup/scribble-v1).
